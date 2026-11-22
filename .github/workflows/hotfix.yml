@@ -1,11 +1,11 @@
 # SPDX-License-Identifier: Apache-2.0
-# Hotfix branch management for the Steam release.
+# Hotfix branch management for a published release.
 #
 # This workflow has two jobs:
 #
 #   create   — Opens a hotfix branch from a release tag, runs the smoke check,
-#              and prints the rollback record template for the maintainer to
-#              paste into publishing/ROLLBACK_AND_SUPPORT_MESSAGING.md.
+#              and prints the hotfix branch record for the maintainer to keep
+#              with the rollback record.
 #
 #   validate — Runs the full smoke check on any branch named hotfix/* so that
 #              PRs targeting main or a release tag from a hotfix branch are
@@ -19,15 +19,13 @@
 # fields, and milestones).  The workflow:
 #   1. Creates `hotfix/<tag>-<slug>` from the given release tag.
 #   2. Runs the smoke check on the new branch.
-#   3. Prints the rollback record template (copy into ROLLBACK_AND_SUPPORT_MESSAGING.md).
+#   3. Prints the hotfix branch record.
 #
 # After the fix is committed to the hotfix branch, open a PR to main and tag
-# a new patch release.  Then re-run steam-deploy.yml + steam-promote.yml to
-# stage and promote the fixed build.
-#
-# See publishing/ROLLBACK_AND_SUPPORT_MESSAGING.md for the rollback procedure
-# and player-facing message templates.
-# See publishing/LAUNCH_DAY_RUNBOOK.md for the rollback trigger criteria.
+# a new patch release.  Publishing that release is all this repository does:
+# building, signing and shipping it to the stores follow from the published
+# release, in the studio's publishing pipeline, which also holds the rollback
+# procedure and the player-facing messages.
 
 name: Hotfix
 
@@ -58,7 +56,7 @@ on:
       defect_summary:
         description: >
           One-sentence plain-language description of the defect. Included in
-          the printed rollback record template.
+          the printed hotfix branch record.
         required: true
         type: string
       rollback_initiated:
@@ -137,7 +135,7 @@ jobs:
       - name: Run smoke check
         run: bash scripts/smoke-check.sh
 
-      - name: Print rollback record template
+      - name: Print hotfix branch record
         env:
           TAG:      ${{ inputs.release_tag }}
           SLUG:     ${{ inputs.slug }}
@@ -166,12 +164,9 @@ jobs:
           echo "  2. Open a PR from '$BRANCH' to main."
           echo "  3. After merge, tag a new patch release (e.g. ${TAG%.*}.$((${TAG##*.} + 1)))."
           echo "     (If the version has a pre-release suffix, increment the patch segment.)"
-          echo "  4. Run steam-deploy.yml with the new patch tag to stage the fixed build."
-          echo "  5. Run steam-promote.yml to record provenance, then set the fixed"
-          echo "     build live on 'default' in Steamworks App Admin."
-          echo "  6. Post the appropriate player-facing message from"
-          echo "     publishing/ROLLBACK_AND_SUPPORT_MESSAGING.md."
-          echo "  7. Close the P0 — blocker GitHub issue opened during rollback."
+          echo "     The Release workflow publishes it. That is all that is needed here:"
+          echo "     distribution to the stores follows from the published release."
+          echo "  4. Close the P0 — blocker GitHub issue opened during rollback."
           echo "========================================================"
 
   # ── Validate hotfix branches on push / PR ─────────────────────────────────

@@ -66,7 +66,7 @@ user explicitly enables LAN access (`CONVSIM_LAN_ACCESS_ENABLED=true`).
 | `schemas/`                   | JSON Schema definitions               |
 | `~/.convsim/`                | Runtime data root (db, packs, logs)   |
 
-These paths are relative to the [repository root](https://github.com/outrightmental/ConversationSimulator).
+These paths are relative to the [repository root](https://github.com/ConversationSimulator/ConversationSimulator).
 
 ---
 

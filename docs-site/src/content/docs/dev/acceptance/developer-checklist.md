@@ -39,7 +39,7 @@ All automated checks must pass before any manual step begins.
 ### D-M1 — Run locally from scratch
 
 ```bash
-git clone https://github.com/outrightmental/ConversationSimulator.git
+git clone https://github.com/ConversationSimulator/ConversationSimulator.git
 cd ConversationSimulator
 ./scripts/setup.sh
 ./scripts/dev.sh
@@ -51,10 +51,10 @@ cd ConversationSimulator
 
 ### D-M2 — Understand the documentation
 
-Read the [repository README](https://github.com/outrightmental/ConversationSimulator), [Architecture](/reference/architecture/), and [Runtime adapters](/reference/runtime-adapters/).
+Read the [repository README](https://github.com/ConversationSimulator/ConversationSimulator), [Architecture](/reference/architecture/), and [Runtime adapters](/reference/runtime-adapters/).
 
 - [ ] Developer can describe the 5 services and their ports (from [Architecture](/reference/architecture/))
-- [ ] Developer can locate the fake runtime source in [`services/convsim-core/convsim_core/runtime/fake.py`](https://github.com/outrightmental/ConversationSimulator/blob/main/services/convsim-core/convsim_core/runtime/fake.py)
+- [ ] Developer can locate the fake runtime source in [`services/convsim-core/convsim_core/runtime/fake.py`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/services/convsim-core/convsim_core/runtime/fake.py)
 - [ ] Developer can describe the difference between a PLAY-mode and EXPLICIT_DOWNLOAD network call
 
 ### D-M3 — Add a runtime adapter
@@ -107,7 +107,7 @@ curl -s -X POST http://127.0.0.1:7355/api/sessions \
 
 ### D-M7 — File an issue
 
-- [ ] Developer can find the issue templates in [`.github/ISSUE_TEMPLATE/`](https://github.com/outrightmental/ConversationSimulator/tree/main/.github/ISSUE_TEMPLATE/)
+- [ ] Developer can find the issue templates in [`.github/ISSUE_TEMPLATE/`](https://github.com/ConversationSimulator/ConversationSimulator/tree/main/.github/ISSUE_TEMPLATE/)
 - [ ] Bug report template includes reproduction steps and environment fields
 - [ ] Developer can link to [Contributing](/project/contributing/) for guidelines
 

@@ -1422,7 +1422,7 @@ def _contributing(
 # A new-issue link the way the docs and the app write one.  It lives in this
 # script, which `load_scannable` skips, so the deliberately broken variants
 # built from it below cannot fail `validate`.
-_LINK = "https://github.com/outrightmental/ConversationSimulator/issues/new?template=x.yml"
+_LINK = "https://github.com/ConversationSimulator/ConversationSimulator/issues/new?template=x.yml"
 
 
 def _loaded_template_names() -> list[str]:

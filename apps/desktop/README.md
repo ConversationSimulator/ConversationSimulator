@@ -87,7 +87,7 @@ readiness, loopback-only binding, official-pack seeding, an offline
 `convsim offline-smoke-test` run against a pack the binary shipped, and both
 teardown paths — closing the stdin pipe, and the SIGTERM the shell falls back
 to — draining the FastAPI lifespan and releasing the port.
-`release.yml` runs it on every non-Windows release build.
+The release build runs it on every non-Windows platform.
 
 ### Editions
 
@@ -101,7 +101,7 @@ The shell is compiled as one of two editions (issue #495):
 `build.rs` rejects any other value. Whatever the edition, the shell keys the
 per-user data directory (`CONVSIM_DATA_ROOT`) to the **full** app's bundle
 identifier, so a model downloaded in the demo is reused by the full app. The
-release workflow's `edition` input drives all of this in CI — see
+studio's release build sets all of this for the edition it is building — see
 [docs/steam-next-fest-demo.md](../../docs/steam-next-fest-demo.md).
 
 Both editions' app icons are the official Conversation Simulator icon,
@@ -111,21 +111,18 @@ by `bundle.icon` in `tauri.demo.conf.json` — for the demo, which is the same
 icon with an amber "DEMO" badge in its lower-right corner. Without its own set
 the demo and the full game are indistinguishable in the Steam client.
 
-Neither set is drawn by hand or by `tauri icon`. Both are generated, with the
-Steamworks icons, the Microsoft Store logos and the web favicons, from the
-brand source:
-
-```bash
-python3 publishing/assets/source/gen_icons.py
-```
+Neither set is drawn by hand or by `tauri icon`. Both are generated from the
+brand source by the studio's icon generator, which also draws the store
+artwork and is kept with the store files, outside this repository; the
+generated sets are checked in here.
 
 The PNGs and the `.ico` use the icon's rounded-square tile; the `.icns` puts
 that tile on Apple's icon grid (824 of 1024 px, centred), which is what keeps
-macOS from setting it on a grey plate of its own. Re-run the script only when
-the source changes. The rasters are deterministic per librsvg build and not
-across builds, so judge a regeneration by
+macOS from setting it on a grey plate of its own. The sets are regenerated only
+when the source changes. The rasters are deterministic per librsvg build and
+not across builds, so judge a regeneration by
 `tests/acceptance/test_demo_branding.py` and by eye, do not commit the churn
-unless the drawing changed, and when you do, name your librsvg build
+unless the drawing changed, and when you do, name the librsvg build
 (`rsvg-convert --version`) in the commit message.
 
 ---
@@ -362,8 +359,8 @@ apps/desktop/
     ├── tauri.conf.json          # Product name, window, bundle settings
     ├── capabilities/
     │   └── default.json         # Window permission grants
-    ├── icons/                   # App icons (gen_icons.py, from docs/assets/brand/)
-    ├── icons-demo/              # Demo app icons: the icon + DEMO badge (gen_icons.py)
+    ├── icons/                   # App icons (generated from docs/assets/brand/)
+    ├── icons-demo/              # Demo app icons: the icon + DEMO badge (generated)
     └── src/
         ├── main.rs              # OS entry point
         └── lib.rs               # Tauri Builder, core process management

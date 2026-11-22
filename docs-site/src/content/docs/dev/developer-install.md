@@ -98,7 +98,7 @@ for your platform. See [Desktop app](#desktop-app-optional) below.
 ## 2. Clone the repository
 
 ```bash
-git clone https://github.com/outrightmental/ConversationSimulator
+git clone https://github.com/ConversationSimulator/ConversationSimulator
 cd ConversationSimulator
 ```
 

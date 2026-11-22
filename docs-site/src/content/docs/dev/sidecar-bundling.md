@@ -110,7 +110,7 @@ so the two builds live in separate directories and the sidecar is always
 started with its own directory as the working directory. The CPU build
 therefore never loads the Vulkan backend or touches the graphics driver: a
 machine with a broken Vulkan driver starts the CPU engine exactly as it did
-before the Vulkan build shipped. The release workflow asserts that the CPU
+before the Vulkan build shipped. The release build asserts that the CPU
 directory contains no Vulkan backend library and that the CPU build's
 `llama-server --list-devices` exits 0.
 
@@ -262,4 +262,4 @@ hand.
 - [network-security.md](/trust/network-security/) — localhost-only binding policy
 - [runtime-adapters.md](/reference/runtime-adapters/) — ChatRuntime interface and built-in adapters
 - [architecture.md](/reference/architecture/) — service topology and port assignments
-- [runtimes/llama_cpp/README.md](https://github.com/outrightmental/ConversationSimulator/blob/main/runtimes/llama_cpp/README.md) — llama.cpp setup
+- [runtimes/llama_cpp/README.md](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/runtimes/llama_cpp/README.md) — llama.cpp setup

@@ -1,28 +1,8 @@
 // SPDX-License-Identifier: Apache-2.0
 import { defineConfig } from 'astro/config'
 import starlight from '@astrojs/starlight'
-import { SIGNAL, signalOn } from './src/signal.mjs'
 
 const site = 'https://docs.conversationsimulator.com'
-
-// Signal's web client (src/signal.mjs): journeys after a yes, on top of the
-// depth ladder. This site has no consent form of its own, so the script asks
-// in its own small banner. Only in the deploy workflow's production build.
-const signalHead = signalOn(site)
-  ? [
-      {
-        tag: 'script',
-        attrs: {
-          defer: true,
-          src: SIGNAL.script,
-          'data-key': SIGNAL.key,
-          'data-ingest': SIGNAL.ingest,
-          'data-studio': SIGNAL.studio.join(' '),
-          'data-privacy': SIGNAL.privacy,
-        },
-      },
-    ]
-  : []
 
 // Remark plugin: honor explicit heading IDs written as `## Title {#custom-id}`.
 // Astro/Starlight's default Markdown pipeline does NOT support this syntax — it
@@ -49,8 +29,9 @@ function remarkExplicitHeadingIds() {
   }
 }
 
-// Public documentation for Conversation Simulator, deployed to
-// https://docs.conversationsimulator.com by .github/workflows/deploy-website.yml.
+// Public documentation for Conversation Simulator, published at
+// https://docs.conversationsimulator.com. This repository only holds the
+// site's source: the studio builds it from each release tag and deploys it.
 // Content lives in src/content/docs/ — adapted for players, creators, and
 // contributors from the engineering docs in /docs.
 export default defineConfig({
@@ -76,18 +57,13 @@ export default defineConfig({
         {
           icon: 'github',
           label: 'GitHub',
-          href: 'https://github.com/outrightmental/ConversationSimulator',
+          href: 'https://github.com/ConversationSimulator/ConversationSimulator',
         },
       ],
       editLink: {
-        baseUrl: 'https://github.com/outrightmental/ConversationSimulator/edit/main/docs-site/',
+        baseUrl: 'https://github.com/ConversationSimulator/ConversationSimulator/edit/main/docs-site/',
       },
       customCss: ['./src/styles/custom.css'],
-      // SkipLink is the first thing in <body>: the override puts Signal's depth
-      // ladder ahead of it (src/components/SkipLink.astro).
-      components: {
-        SkipLink: './src/components/SkipLink.astro',
-      },
       lastUpdated: true,
       sidebar: [
         { label: 'Getting Started', autogenerate: { directory: 'start' } },
@@ -106,14 +82,13 @@ export default defineConfig({
         // favicon.svg is Starlight's own `favicon` above; these two are for
         // what does not read SVG favicons: anything that asks for
         // /favicon.ico without reading the page, and iOS's home screen.
-        // All three come from publishing/assets/source/gen_icons.py.
+        // All three are generated from docs/assets/brand/.
         { tag: 'link', attrs: { rel: 'icon', href: '/favicon.ico', sizes: '32x32' } },
         { tag: 'link', attrs: { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' } },
         {
           tag: 'meta',
           attrs: { property: 'og:image', content: 'https://www.conversationsimulator.com/images/og-card.png' },
         },
-        ...signalHead,
       ],
     }),
   ],

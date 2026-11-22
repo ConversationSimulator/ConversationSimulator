@@ -157,7 +157,7 @@ After the file transfer completes, the model manager must:
 4. If the checksums do not match: delete the partial file, display an error, and
    offer to retry. Never leave a failed download in place.
 
-The model registry file ([`model-registry/`](https://github.com/outrightmental/ConversationSimulator/tree/main/model-registry/)) is the authoritative source of
+The model registry file ([`model-registry/`](https://github.com/ConversationSimulator/ConversationSimulator/tree/main/model-registry/)) is the authoritative source of
 checksums. A new model entry must not be merged into the registry without a
 verified checksum from the original source.
 
@@ -219,9 +219,9 @@ on a dependent PR.
 The "Milestone 1–5" scheme this section once described was never created on the
 tracker; the roadmap stages above are the narrative, and the GitHub milestones
 are release trains with real dates. They are declared in
-[`.github/project-structure.yml`](https://github.com/outrightmental/ConversationSimulator/blob/main/.github/project-structure.yml)
+[`.github/project-structure.yml`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/.github/project-structure.yml)
 and documented in
-[CONTRIBUTING.md → Labels, fields, and milestones](https://github.com/outrightmental/ConversationSimulator/blob/main/CONTRIBUTING.md#labels-fields-and-milestones).
+[CONTRIBUTING.md → Labels, fields, and milestones](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/CONTRIBUTING.md#labels-fields-and-milestones).
 
 Assign every Steam-roadmap issue to one of those milestones. An issue without a
 milestone is unscoped and will be left in triage —
@@ -236,17 +236,17 @@ issue must not be started until the upstream issue is merged and closed.
 
 | Title | Document delivered | Stage dependency |
 |-------|-------------------|-----------------|
-| [[Steam Roadmap] Add Steam edition roadmap addendum and release principles](https://github.com/outrightmental/ConversationSimulator/issues?q=is%3Aissue+steam-roadmap-addendum+in%3Atitle) | [docs/STEAM_ROADMAP.md](/dev/steam-roadmap/) | Stage 1 prerequisite |
-| [[Steam Roadmap] Create Steam compliance and risk register for local-AI distribution](https://github.com/outrightmental/ConversationSimulator/issues?q=is%3Aissue+steam-compliance-risk-register+in%3Atitle) | [publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md](https://github.com/outrightmental/ConversationSimulator/blob/main/publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md) | Stage 3 prerequisite |
-| [[Steam Roadmap] Define Steam MVP scope and release gates](https://github.com/outrightmental/ConversationSimulator/issues?q=is%3Aissue+steam-mvp-scope+in%3Atitle) | [docs/steam-mvp-scope.md](/dev/steam-mvp-scope/) | Stage 2 prerequisite |
-| [[Steam Roadmap] Add issue templates for Steam QA, platform bugs, and content-pack bugs](https://github.com/outrightmental/ConversationSimulator/issues/185) | [docs/steam-triage.md](/dev/steam-triage/) | Stage 3 prerequisite |
-| [[Steamworks] Register Steam app, depots, packages, and $9.99 paid + DLC configuration](https://github.com/outrightmental/ConversationSimulator/issues/226) | [publishing/STEAM_APP_REGISTRATION.md](https://github.com/outrightmental/ConversationSimulator/blob/main/publishing/STEAM_APP_REGISTRATION.md), [`steam/`](https://github.com/outrightmental/ConversationSimulator/tree/main/steam/), [`.github/workflows/steam-deploy.yml`](https://github.com/outrightmental/ConversationSimulator/blob/main/.github/workflows/steam-deploy.yml) | Stage 3 prerequisite (must be complete before first depot submission) |
-| [[Publishing] Write Steam publishing docs matching the FeverTilt pattern](https://github.com/outrightmental/ConversationSimulator/issues/232) | [publishing/STEAM_STORE_AND_OPERATIONS.md](https://github.com/outrightmental/ConversationSimulator/blob/main/publishing/STEAM_STORE_AND_OPERATIONS.md), [publishing/STEAM_PUBLISHING_AND_DEPLOYMENT.md](https://github.com/outrightmental/ConversationSimulator/blob/main/publishing/STEAM_PUBLISHING_AND_DEPLOYMENT.md), [docs/STEAM_INTEGRATION.md](/dev/steam-integration/), [publishing/MACOS_SIGNING_AND_NOTARIZATION.md](https://github.com/outrightmental/ConversationSimulator/blob/main/publishing/MACOS_SIGNING_AND_NOTARIZATION.md), [publishing/WINDOWS_CODE_SIGNING.md](https://github.com/outrightmental/ConversationSimulator/blob/main/publishing/WINDOWS_CODE_SIGNING.md) | Stage 3 prerequisite (operational clarity before private beta) |
-| [[Marketplace] Design future in-game content marketplace architecture](https://github.com/outrightmental/ConversationSimulator/issues/233) | [docs/marketplace-architecture.md](/dev/marketplace-architecture/) | Stage 5 design baseline (post-launch, not launch-blocking) |
-| [[Marketplace] Post-launch spike: validate creator marketplace demand and constraints](https://github.com/outrightmental/ConversationSimulator/issues/244) | [docs/marketplace-demand-spike.md](/dev/marketplace-demand-spike/) | Stage 5 decision gate (complete at 90-day mark; required before any implementation issue is opened) |
+| [[Steam Roadmap] Add Steam edition roadmap addendum and release principles](https://github.com/ConversationSimulator/ConversationSimulator/issues?q=is%3Aissue+steam-roadmap-addendum+in%3Atitle) | [docs/STEAM_ROADMAP.md](/dev/steam-roadmap/) | Stage 1 prerequisite |
+| [[Steam Roadmap] Create Steam compliance and risk register for local-AI distribution](https://github.com/ConversationSimulator/ConversationSimulator/issues?q=is%3Aissue+steam-compliance-risk-register+in%3Atitle) | the studio's Steam compliance and risk register (kept outside this repository) | Stage 3 prerequisite |
+| [[Steam Roadmap] Define Steam MVP scope and release gates](https://github.com/ConversationSimulator/ConversationSimulator/issues?q=is%3Aissue+steam-mvp-scope+in%3Atitle) | [docs/steam-mvp-scope.md](/dev/steam-mvp-scope/) | Stage 2 prerequisite |
+| [[Steam Roadmap] Add issue templates for Steam QA, platform bugs, and content-pack bugs](https://github.com/ConversationSimulator/ConversationSimulator/issues/185) | [docs/steam-triage.md](/dev/steam-triage/) | Stage 3 prerequisite |
+| [[Steamworks] Register Steam app, depots, packages, and $9.99 paid + DLC configuration](https://github.com/ConversationSimulator/ConversationSimulator/issues/226) | the studio's Steam app registration notes, depot files and deploy workflow (kept outside this repository) | Stage 3 prerequisite (must be complete before first depot submission) |
+| [[Publishing] Write Steam publishing docs matching the FeverTilt pattern](https://github.com/ConversationSimulator/ConversationSimulator/issues/232) | the studio's store operations and Steam publishing runbooks (kept outside this repository), [docs/STEAM_INTEGRATION.md](/dev/steam-integration/), the studio's macOS and Windows signing runbooks (kept outside this repository) | Stage 3 prerequisite (operational clarity before private beta) |
+| [[Marketplace] Design future in-game content marketplace architecture](https://github.com/ConversationSimulator/ConversationSimulator/issues/233) | [docs/marketplace-architecture.md](/dev/marketplace-architecture/) | Stage 5 design baseline (post-launch, not launch-blocking) |
+| [[Marketplace] Post-launch spike: validate creator marketplace demand and constraints](https://github.com/ConversationSimulator/ConversationSimulator/issues/244) | [docs/marketplace-demand-spike.md](/dev/marketplace-demand-spike/) | Stage 5 decision gate (complete at 90-day mark; required before any implementation issue is opened) |
 
 All open and closed issues in this work stream:
-[GitHub — issues with `[Steam Roadmap]` prefix](https://github.com/outrightmental/ConversationSimulator/issues?q=is%3Aissue+%5BSteam+Roadmap%5D+in%3Atitle)
+[GitHub — issues with `[Steam Roadmap]` prefix](https://github.com/ConversationSimulator/ConversationSimulator/issues?q=is%3Aissue+%5BSteam+Roadmap%5D+in%3Atitle)
 
 ---
 
@@ -260,11 +260,7 @@ All open and closed issues in this work stream:
 - [privacy.md](/trust/privacy/) — local-first promise and data handling details
 - [network-security.md](/trust/network-security/) — runtime network enforcement
 - [release-checklist.md](/dev/release-checklist/) — platform smoke matrix
-- [model-registry/](https://github.com/outrightmental/ConversationSimulator/tree/main/model-registry/) — authoritative model checksums and license metadata
+- [model-registry/](https://github.com/ConversationSimulator/ConversationSimulator/tree/main/model-registry/) — authoritative model checksums and license metadata
 - [marketplace-architecture.md](/dev/marketplace-architecture/) — post-launch marketplace design baseline; entry gate criteria, distribution path comparison, and schema/signing/moderation/payment scope
 - [marketplace-demand-spike.md](/dev/marketplace-demand-spike/) — Stage 5 research spike: signal collection, creator survey, constraint revisit, and go/no-go recommendation
-- [publishing/STEAM_STORE_AND_OPERATIONS.md](https://github.com/outrightmental/ConversationSimulator/blob/main/publishing/STEAM_STORE_AND_OPERATIONS.md) — store operations, launch runbook, support triage
-- [publishing/STEAM_PUBLISHING_AND_DEPLOYMENT.md](https://github.com/outrightmental/ConversationSimulator/blob/main/publishing/STEAM_PUBLISHING_AND_DEPLOYMENT.md) — SteamPipe, CI deploy, manual upload, branch promotion, troubleshooting
-- [publishing/MACOS_SIGNING_AND_NOTARIZATION.md](https://github.com/outrightmental/ConversationSimulator/blob/main/publishing/MACOS_SIGNING_AND_NOTARIZATION.md) — macOS signing and notarisation runbook
-- [publishing/WINDOWS_CODE_SIGNING.md](https://github.com/outrightmental/ConversationSimulator/blob/main/publishing/WINDOWS_CODE_SIGNING.md) — Windows Authenticode signing runbook
-- [GitHub Milestones](https://github.com/outrightmental/ConversationSimulator/milestones) — issue tracking
+- [GitHub Milestones](https://github.com/ConversationSimulator/ConversationSimulator/milestones) — issue tracking

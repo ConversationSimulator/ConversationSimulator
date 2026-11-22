@@ -42,7 +42,6 @@ never relocked as paid DLC. DLC is only ever *additional* content.
 |----------|:---:|:---:|
 | Engine, app, official free packs, docs | ✅ | — |
 | DLC ownership check (Steamworks integration) | ✅ | — |
-| DLC depot VDF template (`steam/depot_dlc_scenariopacks.vdf.tpl`) | ✅ | — |
 | Premium pack content (scenarios, NPCs, rubrics, art, audio) | ❌ **never** | ✅ |
 | Premium pack build/packaging + Steam upload workflow | — | ✅ |
 | DLC App IDs / depot IDs | ✅ (as CI variables, non-secret) | ✅ |
@@ -94,8 +93,7 @@ with its own **depot** for content. For each premium expansion pack:
    with the base app. Set its price.
 2. **Author + validate** the pack in the private repo.
 3. **Build + upload** the DLC depot from the private repo's deploy workflow, using
-   the depot VDF template shape defined in the public repo
-   (`steam/depot_dlc_scenariopacks.vdf.tpl`), pointed at the DLC depot ID and the
+   the studio's DLC depot template, pointed at the DLC depot ID and the
    private pack content.
 4. **Install location.** When a player owns and installs the DLC, Steam places its
    content under the DLC depot's install path inside the base app's install

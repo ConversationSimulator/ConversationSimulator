@@ -162,9 +162,9 @@ Off the demo's path, deliberately: auto-update (#461), the accessibility audit (
 
 ### Remaining polish — before Milestone 1 tag
 
-- [x] Real UI screenshots and demo recording, captured from a local-model playthrough — [#455](https://github.com/outrightmental/ConversationSimulator/issues/455)
-- [x] Desktop app with bundled backend (Tauri sidecar for `convsim-core`) — [#456](https://github.com/outrightmental/ConversationSimulator/issues/456)
-- [ ] Automated real-model CI smoke test — [#457](https://github.com/outrightmental/ConversationSimulator/issues/457)
+- [x] Real UI screenshots and demo recording, captured from a local-model playthrough — [#455](https://github.com/ConversationSimulator/ConversationSimulator/issues/455)
+- [x] Desktop app with bundled backend (Tauri sidecar for `convsim-core`) — [#456](https://github.com/ConversationSimulator/ConversationSimulator/issues/456)
+- [ ] Automated real-model CI smoke test — [#457](https://github.com/ConversationSimulator/ConversationSimulator/issues/457)
 
 ### Post-alpha — Milestone 2+
 
@@ -196,9 +196,9 @@ work in these areas needs its own proposal, design, and acceptance criteria.
 
 ### UGC ecosystem
 
-- In-app pack browser / discovery feed — [#465](https://github.com/outrightmental/ConversationSimulator/issues/465)
+- In-app pack browser / discovery feed — [#465](https://github.com/ConversationSimulator/ConversationSimulator/issues/465)
 - Community ratings and reviews
-- Pack signing and trust tiers — [#466](https://github.com/outrightmental/ConversationSimulator/issues/466)
+- Pack signing and trust tiers — [#466](https://github.com/ConversationSimulator/ConversationSimulator/issues/466)
 - Hosted pack registry (CDN or P2P distribution)
 
 See [`docs/marketplace-architecture.md`](docs/marketplace-architecture.md) for the post-launch community marketplace design baseline — entry gate criteria, distribution path comparison, and scope of schema, signing, moderation, payment, and reporting changes required before any community-authored paid content ships. First-party premium scenario-pack DLC does not wait on this marketplace: it ships separately via Steam's DLC storefront (see [`docs/DLC_MODEL.md`](docs/DLC_MODEL.md)), while the open core stays free.
@@ -242,5 +242,5 @@ must not compromise offline-first, local-model, or open-source principles.
 - [Privacy and data policy](docs/privacy.md) — what stays local and how to verify it
 - [Steam edition roadmap](docs/STEAM_ROADMAP.md) — release principles, release train, and platform targets for the paid ($9.99) Steam edition
 - [Steam MVP scope and release gates](docs/steam-mvp-scope.md) — minimum playable release features, optional targeted features, pass/fail gates, and post-launch deferrals
-- [GitHub Milestones](https://github.com/outrightmental/ConversationSimulator/milestones) — issue tracking
+- [GitHub Milestones](https://github.com/ConversationSimulator/ConversationSimulator/milestones) — issue tracking
 - [Full specification](docs/SPEC.md) — technical requirements per milestone

@@ -101,7 +101,7 @@ with a `not: { required: ["scripts"] }` constraint.
 ## JSON Schema validation for pack files
 
 The full schema suite is in the repository's
-[`schemas/`](https://github.com/outrightmental/ConversationSimulator/tree/main/schemas)
+[`schemas/`](https://github.com/ConversationSimulator/ConversationSimulator/tree/main/schemas)
 directory. Schema files use JSON Schema draft
 2020-12 and are versioned via `$id` URIs:
 
@@ -116,7 +116,7 @@ https://schemas.convsim.dev/v0.1/pack-test.schema.json
 ```
 
 For worked examples, see
-[`schemas/examples/`](https://github.com/outrightmental/ConversationSimulator/tree/main/schemas/examples).
+[`schemas/examples/`](https://github.com/ConversationSimulator/ConversationSimulator/tree/main/schemas/examples).
 
 Schema versioning policy: see [`schemas/VERSIONING.md`](/reference/schema-versioning/).
 
@@ -326,7 +326,7 @@ The `everyday-negotiation` pack's golden test for `used_car_negotiation`
 scripts four turns representing an ideal negotiation strategy and uses
 `static_assertions` to verify all event conditions and ending condition wiring.
 See
-[`packs/official/everyday-negotiation/tests/golden_used_car_negotiation.yaml`](https://github.com/outrightmental/ConversationSimulator/blob/main/packs/official/everyday-negotiation/tests/golden_used_car_negotiation.yaml)
+[`packs/official/everyday-negotiation/tests/golden_used_car_negotiation.yaml`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/packs/official/everyday-negotiation/tests/golden_used_car_negotiation.yaml)
 for a reference implementation.
 
 ---

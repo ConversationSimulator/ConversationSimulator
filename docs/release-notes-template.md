@@ -8,7 +8,7 @@
 
 > **Alpha release** — This build is an early preview. Expect rough edges and
 > breaking changes between alpha versions. File bugs at
-> <https://github.com/outrightmental/ConversationSimulator/issues>.
+> <https://github.com/ConversationSimulator/ConversationSimulator/issues>.
 
 ---
 
@@ -151,7 +151,7 @@ installer small.
 To build from source on a clean checkout:
 
 ```bash
-git clone https://github.com/outrightmental/ConversationSimulator
+git clone https://github.com/ConversationSimulator/ConversationSimulator
 cd ConversationSimulator
 ./scripts/setup.sh            # install deps, create Python venv
 pnpm --filter @convsim/web build
@@ -166,7 +166,7 @@ for full prerequisites and platform-specific notes.
 
 ## Reporting bugs
 
-Open an issue at <https://github.com/outrightmental/ConversationSimulator/issues>.
+Open an issue at <https://github.com/ConversationSimulator/ConversationSimulator/issues>.
 Include:
 
 - OS and version

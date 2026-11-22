@@ -29,7 +29,7 @@ Steam store page and the Stage 3/4 release gates.
 
 Notes:
 - macOS 12 Monterey may work but is **not tested** and is excluded from QA coverage.
-- The Steam build is Apple Silicon only (issue #563): `release.yml` builds
+- The Steam build is Apple Silicon only (issue #563): the release is built for
   macOS on one leg, `macos-latest` (arm64), because the GitHub-hosted `macos-13`
   Intel runner is gone. An Intel build would need a second leg or
   cross-compilation (`--target x86_64-apple-darwin`), its own frozen
@@ -83,7 +83,8 @@ unsigned build:
 
 For distributable (Stage 3+) builds, sign and notarise with an Apple Developer
 ID certificate. Set the following environment variables before running
-`tauri build` (or let the CI release workflow set them from secrets):
+`tauri build` (the studio's release build sets them from its own credentials,
+none of which are held in this repository):
 
 ```bash
 # Base64-encoded Developer ID Application .p12 certificate
@@ -98,7 +99,7 @@ export APPLE_TEAM_ID="TEAMID"
 ```
 
 Tauri's bundler reads these variables automatically, applies
-[`apps/desktop/src-tauri/entitlements.plist`](https://github.com/outrightmental/ConversationSimulator/blob/main/apps/desktop/src-tauri/entitlements.plist) (Hardened Runtime entitlements
+[`apps/desktop/src-tauri/entitlements.plist`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/apps/desktop/src-tauri/entitlements.plist) (Hardened Runtime entitlements
 required for Steamworks and sidecar compatibility — see the file for details),
 signs the `.app` bundle with `codesign --options runtime`, and submits it to
 Apple's notarisation service via `notarytool`.
@@ -228,17 +229,11 @@ To run an unsigned build:
 For distributable and Steam release builds, sign with an Extended Validation
 (EV) or standard OV code-signing certificate using Authenticode.
 
-#### Authenticode signing in CI (Release workflow)
+#### Authenticode signing in the release build
 
-The release workflow (`release.yml`) signs Windows installers automatically
-when two repository secrets are present:
-
-| Secret | Contents |
-|--------|----------|
-| `WINDOWS_SIGN_CERT_PFX` | Base64-encoded PFX certificate file (cert + private key) |
-| `WINDOWS_SIGN_CERT_PASSWORD` | Password for the PFX file |
-
-When the secrets are absent the build continues and produces an unsigned
+The studio's release build signs the Windows binaries and installers with its
+own credentials, none of which are held in the code repository. A build made
+from source without credentials continues and produces an unsigned
 installer.  Unsigned installers are blocked by SmartScreen on end-user
 machines; signing is **required** before the Stage 3 private beta gate
 (G3-01 in the [Steam MVP scope](/dev/steam-mvp-scope/)).
@@ -248,10 +243,7 @@ machines; signing is **required** before the Stage 3 private beta gate
 1. Purchase an EV or OV code-signing certificate from DigiCert, Sectigo,
    GlobalSign, or another trusted CA.
 2. Export the private key and certificate chain as a `.pfx` file.
-3. Base64-encode it: `certutil -encode cert.pfx cert.b64`
-4. Add the contents of `cert.b64` as the `WINDOWS_SIGN_CERT_PFX` repository
-   secret (Settings → Secrets and variables → Actions → Secrets).
-5. Add the PFX password as `WINDOWS_SIGN_CERT_PASSWORD`.
+3. Keep the `.pfx` and its password out of the repository.
 
 **Local signing:**
 
@@ -464,8 +456,8 @@ The `.deb` package declares them as `Depends:` and installs them via apt.
 Linux builds are **not code-signed**. There is no Linux equivalent of macOS
 Gatekeeper or Windows SmartScreen; no signature is required for distribution.
 The release build prints the SHA-256 checksum of each AppImage and `.deb` in
-its log (step "Verify Linux artifact permissions" in `release.yml`). GitHub
-releases carry no binaries; the Linux build reaches players through Steam.
+its log. GitHub releases carry no binaries; the Linux build reaches players
+through Steam.
 
 ### Microphone (PipeWire / PulseAudio)
 
@@ -530,109 +522,16 @@ and verification checklist required for the Steam Deck Verified tier.
 
 ---
 
-## CI secrets and rotation procedures
+## Signing credentials
 
-All secrets live in **GitHub → Settings → Secrets and variables → Actions → Secrets**.
-Variables (non-secret, visible in logs) live under **→ Variables**.
+This repository holds no signing or store credential. Release builds are
+signed in the studio's publishing pipeline, which keeps the Apple and Windows
+credentials, and the procedures for rotating them, with its own runbooks.
 
-### Apple secrets (macOS signing and notarisation)
-
-| Secret | Contents | Expiry |
-|--------|----------|--------|
-| `APPLE_CERTIFICATE` | Base64-encoded Developer ID Application `.p12` certificate | Certificates expire after 5 years |
-| `APPLE_CERTIFICATE_PASSWORD` | Passphrase for the `.p12` file | No expiry |
-| `APPLE_SIGNING_IDENTITY` | Full identity string, e.g. `Developer ID Application: Outright Mental (TEAMID)` | Changes only if the team name changes |
-| `APPLE_ID` | Apple ID email of the dedicated notarisation account | No expiry |
-| `APPLE_PASSWORD` | App-specific password for the Apple ID | Apple revokes app-specific passwords periodically; rotate when prompted |
-| `APPLE_TEAM_ID` | 10-character Apple Developer Team ID | Permanent (tied to the developer account) |
-
-**Obtaining a certificate:**
-
-1. Log in to [developer.apple.com](https://developer.apple.com) as the team admin.
-2. Navigate to **Certificates, Identifiers & Profiles → Certificates**.
-3. Click **+** and choose **Developer ID Application**.
-4. Generate a CSR with Keychain Access, upload it, and download the resulting `.cer` file.
-5. Double-click the `.cer` to import it into Keychain Access.
-6. In Keychain Access, find the imported certificate, right-click → **Export** → save as a `.p12` file with a strong passphrase.
-7. Base64-encode it: `base64 -i certificate.p12 | pbcopy`
-8. Paste the result as `APPLE_CERTIFICATE` in repository secrets.
-9. Store the passphrase as `APPLE_CERTIFICATE_PASSWORD`.
-
-**Obtaining an app-specific password:**
-
-1. Sign in to [appleid.apple.com](https://appleid.apple.com).
-2. Navigate to **Sign-In and Security → App-Specific Passwords**.
-3. Click **+**, name it `convsim-notarise-ci`, and copy the generated password.
-4. Store it as `APPLE_PASSWORD` in repository secrets.
-
-**Rotation procedure (certificate expiry):**
-
-1. Generate a new Developer ID Application certificate on developer.apple.com (step above).
-2. Update `APPLE_CERTIFICATE` and `APPLE_CERTIFICATE_PASSWORD` in repository secrets.
-3. The signing identity string (`APPLE_SIGNING_IDENTITY`) usually stays the same — update it only if it changed.
-4. Trigger a manual `desktop-distro` dispatch build to confirm signing and notarisation succeed.
-5. Document the rotation date in the compliance register ([`publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md`](https://github.com/outrightmental/ConversationSimulator/blob/main/publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md)).
-
-**Rotation procedure (app-specific password revoked by Apple):**
-
-1. Generate a new app-specific password on appleid.apple.com.
-2. Update `APPLE_PASSWORD` in repository secrets.
-3. Verify that a notarisation run in CI completes without `APPLE_PASSWORD` errors.
-
----
-
-### Windows secrets (Authenticode signing)
-
-| Secret | Contents | Expiry |
-|--------|----------|--------|
-| `WINDOWS_SIGN_CERT_PFX` | Base64-encoded PFX file (certificate + private key chain) | OV certificates: 1–3 years. EV certificates: 1–2 years |
-| `WINDOWS_SIGN_CERT_PASSWORD` | Password for the PFX file | No expiry |
-
-**Obtaining a certificate:**
-
-1. Purchase an Extended Validation (EV) or Organisation Validation (OV)
-   code-signing certificate from DigiCert, Sectigo, GlobalSign, or similar CA.
-   EV certificates suppress SmartScreen warnings immediately; OV certificates
-   build trust over time (required before Stage 3 gate G3-01).
-2. Export the private key and certificate chain as a `.pfx` file from your
-   certificate management portal or HSM.
-3. Base64-encode it: `certutil -encode cert.pfx cert.b64` (Windows) or
-   `base64 -i cert.pfx` (macOS / Linux).
-4. Add the `.b64` contents as `WINDOWS_SIGN_CERT_PFX` in repository secrets.
-5. Add the PFX password as `WINDOWS_SIGN_CERT_PASSWORD`.
-
-**Rotation procedure (certificate expiry):**
-
-1. Renew the certificate with your CA (typically 30–60 days before expiry; most CAs send email reminders).
-2. Export the renewed certificate as a new `.pfx` file.
-3. Base64-encode and update `WINDOWS_SIGN_CERT_PFX` in repository secrets.
-4. Update `WINDOWS_SIGN_CERT_PASSWORD` if the passphrase changed.
-5. Trigger a `desktop-distro` dispatch build; confirm the "Verify Windows Authenticode signature" step passes.
-6. Document the rotation date in the compliance register.
-
----
-
-### Optional secrets
-
-| Secret | Contents | Used by |
-|--------|----------|---------|
-| `VIRUSTOTAL_API_KEY` | VirusTotal Public API v3 key | Malware scan step in `release.yml` and `desktop-distro.yml` |
-
-**VirusTotal setup:**
-
-1. Create a free account at [virustotal.com](https://www.virustotal.com).
-2. Navigate to your profile → **API Key**.
-3. Copy the key and add it as `VIRUSTOTAL_API_KEY` in repository secrets.
-4. Free tier: 4 file uploads/minute, 500/day.  The malware scan step is
-   non-blocking — VirusTotal detections on freshly compiled Rust/Tauri
-   binaries are often heuristic false positives.  Review results manually
-   and submit false-positive reports through the VirusTotal partner portal
-   or your AV vendor if detections appear on signed release builds.
-
-**Rotation procedure:**
-
-1. Go to your VirusTotal profile → **API Key** → **Regenerate**.
-2. Update `VIRUSTOTAL_API_KEY` in repository secrets.
+A build made from source without credentials is unsigned: the macOS bundle
+carries no Developer ID signature unless the `APPLE_*` variables above are set,
+and `scripts/jsign-sign.ps1` skips Windows signing when it finds no
+credentials.
 
 ---
 
@@ -675,5 +574,5 @@ For contributor builds on Windows, run the PowerShell equivalent:
 .\runtimes\llama_cpp\download-runtime.ps1
 ```
 
-See [`runtimes/llama_cpp/README.md`](https://github.com/outrightmental/ConversationSimulator/blob/main/runtimes/llama_cpp/README.md) for more
+See [`runtimes/llama_cpp/README.md`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/runtimes/llama_cpp/README.md) for more
 details.

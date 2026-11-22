@@ -19,7 +19,7 @@ after the product name, which contains a space, so quote the name in a shell:
 
 The Steam depot ships only the AppImage, renamed to the version-stable
 `ConversationSimulator.AppImage` so the Steamworks launch option keeps working
-across releases (`.github/workflows/steam-deploy.yml`). The `.deb` is not
+across releases. The `.deb` is not
 staged, because a depot must not contain installer packages, and GitHub
 releases carry no binaries. To get the `.deb`, build it yourself with
 `scripts/build-linux.sh`.
@@ -266,6 +266,4 @@ with glibc 2.31 base image).
 - [platform-notes.md](platform-notes.md) — Linux build prerequisites and dev environment
 - [QA_STEAM_PLATFORM_MATRIX.md](QA_STEAM_PLATFORM_MATRIX.md) — full manual and automated QA test matrix
 - [release-checklist.md](release-checklist.md) — release smoke steps and CI gate list
-- [publishing/STEAM_DEPOT_CONTENTS.md](../publishing/STEAM_DEPOT_CONTENTS.md) — depot content policy
 - `scripts/build-linux.sh` — local Linux build command
-- `scripts/depot-audit.sh` — pre-upload depot content audit

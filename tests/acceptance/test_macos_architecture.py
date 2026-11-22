@@ -1,18 +1,18 @@
 # SPDX-License-Identifier: Apache-2.0
-"""Acceptance tests — what the docs say a Mac needs is what the depot contains.
+"""Acceptance tests — what the docs say a Mac needs is what the build contains.
 
-The release workflow builds macOS on one leg, ``macOS-aarch64`` on
-``macos-latest``, so the Steam macOS depot carries an Apple Silicon bundle and
-nothing else. The store page's system requirements, the QA matrix, the depot
-template and the publishing docs used to promise Intel Macs as well (issue
-#563), and an Intel Mac owner who installed from Steam got a binary that would
-not run — the demo gate (D-09) forbids store copy that claims what the build
+The shipped macOS build is one architecture, ``macOS-aarch64``: an Apple
+Silicon bundle and nothing else. The docs used to promise Intel Macs as well
+(issue #563), and an Intel Mac owner who installed from Steam got a binary that
+would not run — the demo gate (D-09) forbids copy that claims what the build
 does not do.
 
-These tests read the architectures the build matrix produces and fail when a
-document claims a Mac architecture the matrix does not build. Adding an Intel
-or universal leg to ``release.yml`` turns the check off by itself; the docs can
-then say Intel again.
+The binaries are built in the studio's publishing pipeline, outside this
+repository, so the architectures it builds are restated here in
+``_MACOS_BUILD_LEGS``. These tests fail when a document claims a Mac
+architecture that list does not hold. When the pipeline gains an Intel or
+universal leg, add it to the list; the check then turns itself off and the docs
+can say Intel again.
 """
 from __future__ import annotations
 
@@ -20,21 +20,15 @@ import re
 from pathlib import Path
 
 import pytest
-import yaml
 
 _REPO_ROOT = Path(__file__).resolve().parents[2]
-_RELEASE_YML = _REPO_ROOT / ".github" / "workflows" / "release.yml"
 
-# Every document that states which Macs the Steam build runs on. The docs-site
-# pages are hand-kept copies of the docs/ pages, so both are listed.
+# The macOS legs of the studio's build matrix.
+_MACOS_BUILD_LEGS = ("macOS-aarch64",)
+
+# Every document here that states which Macs the Steam build runs on. The
+# docs-site pages are hand-kept copies of the docs/ pages, so both are listed.
 _CLAIM_FILES = (
-    "steam/depot_macos.vdf.tpl",
-    "publishing/STEAM_STORE_PAGE.md",
-    "publishing/STEAM_APP_REGISTRATION.md",
-    "publishing/STEAM_PUBLISHING_AND_DEPLOYMENT.md",
-    "publishing/STEAM_DEPOT_CONTENTS.md",
-    "publishing/STEAM_REVIEW_SUBMISSION.md",
-    "publishing/LAUNCH_ANNOUNCEMENT.md",
     "docs/QA_STEAM_PLATFORM_MATRIX.md",
     "docs/STEAM_BETA_VERIFICATION_REPORT.md",
     "docs-site/src/content/docs/dev/qa-steam-platform-matrix.md",
@@ -67,31 +61,18 @@ _INTEL_CLAIMS = (
 
 
 def _macos_build_legs() -> list[str]:
-    workflow = yaml.safe_load(_RELEASE_YML.read_text(encoding="utf-8"))
-    legs: list[str] = []
-    for job in workflow["jobs"].values():
-        include = (job.get("strategy") or {}).get("matrix", {}).get("include") or []
-        legs += [entry["name"] for entry in include if str(entry.get("name", "")).startswith("macOS-")]
-    return legs
+    return list(_MACOS_BUILD_LEGS)
 
 
 def _builds_intel(legs: list[str]) -> bool:
     return any(re.search(r"x86_64|x64|intel|universal", leg, re.I) for leg in legs)
 
 
-def test_release_builds_macos() -> None:
-    legs = _macos_build_legs()
-    assert legs, (
-        "release.yml has no matrix leg named macOS-<arch>; update this test to "
-        "read the macOS build architectures from wherever they moved."
-    )
-
-
 @pytest.mark.parametrize("relpath", _CLAIM_FILES)
 def test_docs_claim_only_the_macs_the_build_supports(relpath: str) -> None:
     legs = _macos_build_legs()
     if _builds_intel(legs):
-        pytest.skip(f"release.yml builds {legs}: Intel claims are true")
+        pytest.skip(f"the release builds {legs}: Intel claims are true")
     text = (_REPO_ROOT / relpath).read_text(encoding="utf-8")
     hits = [
         f"line {text.count(chr(10), 0, m.start()) + 1}: {m.group(0)!r}"
@@ -99,18 +80,6 @@ def test_docs_claim_only_the_macs_the_build_supports(relpath: str) -> None:
         for m in pattern.finditer(text)
     ]
     assert not hits, (
-        f"{relpath} says the Steam build runs on Intel Macs, but release.yml builds "
-        f"macOS only as {legs} (issue #563): " + "; ".join(hits)
-    )
-
-
-def test_store_page_says_apple_silicon_only() -> None:
-    """The macOS requirements table names the limit, not just omits Intel."""
-    text = (_REPO_ROOT / "publishing" / "STEAM_STORE_PAGE.md").read_text(encoding="utf-8")
-    section = text.split("### macOS", 1)[1].split("\n### ", 1)[0]
-    if _builds_intel(_macos_build_legs()):
-        pytest.skip("release.yml builds an Intel leg")
-    assert re.search(r"Apple Silicon only", section), (
-        "STEAM_STORE_PAGE.md's macOS system requirements must say the build is "
-        "Apple Silicon only while release.yml builds no Intel leg (issue #563)."
+        f"{relpath} says the Steam build runs on Intel Macs, but the release is built "
+        f"for macOS only as {legs} (issue #563): " + "; ".join(hits)
     )

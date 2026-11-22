@@ -27,7 +27,7 @@ import pytest
 _REPO_ROOT = Path(__file__).resolve().parents[2]
 _SRC_TAURI = _REPO_ROOT / "apps" / "desktop" / "src-tauri"
 _BASE_CONF = _SRC_TAURI / "tauri.conf.json"
-# The overlays release.yml passes to `tauri build --config`.
+# The overlays the release build passes to `tauri build --config`.
 _OVERLAYS = (_SRC_TAURI / "tauri.steam.conf.json", _SRC_TAURI / "tauri.demo.conf.json")
 _DOWNLOAD_RUNTIME = _REPO_ROOT / "runtimes" / "llama_cpp" / "download-runtime.sh"
 

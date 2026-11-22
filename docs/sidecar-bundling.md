@@ -137,7 +137,7 @@ so the two builds live in separate directories and the sidecar is always
 started with its own directory as the working directory. The CPU build
 therefore never loads the Vulkan backend or touches the graphics driver: a
 machine with a broken Vulkan driver starts the CPU engine exactly as it did
-before the Vulkan build shipped. The release workflow asserts that the CPU
+before the Vulkan build shipped. The release build asserts that the CPU
 directory contains no Vulkan backend library and that the CPU build's
 `llama-server --list-devices` exits 0.
 
@@ -224,7 +224,7 @@ instant it launches on any older macOS — in the Steam depot this surfaced as
   (`CONVSIM_SKIP_MINOS_CHECK=1` bypasses it in an emergency).
 - The `llama-minos-gate` job in `.github/workflows/binary-health-check.yml`
   verifies both macOS assets (arm64 and x64) of the pinned version on every
-  change under `runtimes/llama_cpp/**`. The release workflow bundles via
+  change under `runtimes/llama_cpp/**`. The release build bundles via
   `download-runtime.sh`, so it inherits the same gate.
 
 The floor is 14.0 because upstream prebuilts have targeted macOS 14 for a

@@ -22,7 +22,7 @@ jobs:
           echo "Local: bash scripts/smoke-check.sh"
           bash scripts/smoke-check.sh
       # `tauri build` refuses a Tauri crate and npm package on different
-      # major.minor releases, and only the release workflow runs it, so the
+      # major.minor releases, and only a release build runs it, so the
       # desktop jobs' `cargo check` cannot catch a lockfile that moves one side.
       # v0.4.0's first release run failed on every platform that way.
       - name: Tauri crate and npm package versions match
@@ -49,15 +49,14 @@ jobs:
           shellcheck scripts/*.sh
 
   # ── Workflow linting ────────────────────────────────────────────────────────
-  # The release workflow is the least-tested code in the repo: most of it runs
-  # only on a v* tag, so a typo'd expression, a bad `needs:`, or a shell error in
-  # a run: block is discovered during a release. actionlint type-checks every
+  # The release workflow is the least-tested code in the repo: it runs only on
+  # a v* tag, so a typo'd expression, a bad `needs:`, or a shell error in a
+  # run: block is discovered during a release. actionlint type-checks every
   # workflow expression and shellchecks every run: block without executing them.
   #
   # It does NOT catch everything — an invalid CLI flag in an otherwise valid
-  # command (`gh release download --skip-errors`, which broke the Steam publish)
-  # still requires actually running the step. It does catch the whole class of
-  # errors that are statically visible.
+  # command still requires actually running the step. It does catch the whole
+  # class of errors that are statically visible.
   #
   # SC2016 is excluded: the workflows intentionally single-quote strings
   # containing `$` that must reach a downstream shell or Python heredoc unexpanded.
@@ -113,9 +112,9 @@ jobs:
       - name: Run PowerShell unit tests
         shell: pwsh
         run: |
-          Write-Host "Local: Invoke-Pester -Path tests/signing,tests/msix -Output Detailed"
+          Write-Host "Local: Invoke-Pester -Path tests/signing -Output Detailed"
           $cfg = New-PesterConfiguration
-          $cfg.Run.Path      = @('tests/signing', 'tests/msix')
+          $cfg.Run.Path      = @('tests/signing')
           $cfg.Run.Exit      = $true
           $cfg.Output.Verbosity = 'Detailed'
           Invoke-Pester -Configuration $cfg
@@ -237,9 +236,6 @@ jobs:
         run: pip install -e "packages/prompt-composer[dev]"
       - name: Install convsim-core
         run: pip install -e "services/convsim-core[dev]"
-      # For the App Icon pixel tests in tests/acceptance/test_demo_branding.py, which fail under CI without ImageMagick; the runner image does not ship it.
-      - name: Install ImageMagick
-        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends imagemagick
       - name: Run acceptance tests
         run: |
           echo "Local: python -m pytest tests/acceptance/ -v"
@@ -262,7 +258,7 @@ jobs:
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v5
-      # Plain apt, the same way release.yml installs these. The cache-apt-pkgs
+      # Plain apt. The cache-apt-pkgs
       # action used here before installed against a stale package index (no
       # `apt-get update` first), so a mirror rotation turned every fetch into a
       # 404 — and the action swallowed that failure with a green step, then
@@ -294,7 +290,7 @@ jobs:
           bash scripts/desktop-smoke.sh
 
   # ── Desktop Rust on Windows: the configuration that actually ships to Steam ─
-  # release.yml builds the Windows Steam depot with `--features steam`, which
+  # The Windows Steam depot is built with `--features steam`, which
   # compiles the Steamworks SDK bridge AND the Windows-only overlay compositing
   # surface (vendor/tauri-plugin-steam-overlay-surface, cfg(windows)).  The
   # Linux job above cannot see that code, so without this job the first

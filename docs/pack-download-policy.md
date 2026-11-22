@@ -8,8 +8,8 @@
 > **Scope:** Conversation Simulator Steam edition and open-source desktop build.
 >
 > **Compliance cross-references:** CP-01 (executable code in packs), CP-02
-> (external URLs), CP-03 (NSFW content), CP-04 (prompt injection) in
-> [`publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md`](../publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md).
+> (external URLs), CP-03 (NSFW content), CP-04 (prompt injection) in the
+> studio's Steam compliance and risk register, kept outside this repository.
 
 ---
 
@@ -29,8 +29,7 @@
 
 Every pack under `packs/official/` ships inside the app bundle in every Steam
 depot (Windows, macOS, Linux). No download is required after installation.
-See [`publishing/STEAM_DEPOT_CONTENTS.md`](../publishing/STEAM_DEPOT_CONTENTS.md)
-for the exact path (`resources/packs/` inside the Tauri bundle).
+They sit at `resources/packs/` inside the Tauri bundle.
 
 | Directory | Title |
 |-----------|-------|
@@ -228,7 +227,7 @@ deleted.
 
 ## 7. Compliance checklist items for packs
 
-From `publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md` SR-05:
+From SR-05 in the studio's Steam compliance and risk register:
 
 - [ ] Pack validator rejects any pack declaring a `scripts` field.
 - [ ] Pack validator rejects any pack setting `allow_external_urls: true`.
@@ -246,6 +245,4 @@ From `publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md` SR-05:
 - [`docs/official-pack-quality-bar.md`](official-pack-quality-bar.md) — quality criteria for official packs
 - [`docs/pack-validation.md`](pack-validation.md) — validator CLI reference
 - [`docs/safety-policy.md`](safety-policy.md) — content policy, pack sandboxing, and prohibited categories
-- [`publishing/STEAM_DEPOT_CONTENTS.md`](../publishing/STEAM_DEPOT_CONTENTS.md) — what ships in the depot
-- [`publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md`](../publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md) — risk register (CP-01–CP-04)
 - [`packs/official/`](../packs/official/) — official pack source

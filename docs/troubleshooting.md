@@ -1,7 +1,7 @@
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 # Troubleshooting
 
-Common problems and solutions. If your issue is not listed here, open a [GitHub issue](https://github.com/outrightmental/ConversationSimulator/issues).
+Common problems and solutions. If your issue is not listed here, open a [GitHub issue](https://github.com/ConversationSimulator/ConversationSimulator/issues).
 
 Two things help with almost every problem below. The [logs](#logs) say what went wrong, and every error card in the app has a **Copy diagnostics** button that puts the error and the relevant log lines on your clipboard, ready to paste into an issue (see [Copy diagnostics](#copy-diagnostics)).
 
@@ -22,7 +22,7 @@ The desktop app starts its background conversation engine (`convsim-core`) when 
 
 1. Close other applications that might be using port 7355.
 2. Restart Conversation Simulator from Steam or your installation.
-3. If the problem persists, click **Copy diagnostics** on the card and paste the report into a [GitHub issue](https://github.com/outrightmental/ConversationSimulator/issues), or attach `app.log` from the logs folder.
+3. If the problem persists, click **Copy diagnostics** on the card and paste the report into a [GitHub issue](https://github.com/ConversationSimulator/ConversationSimulator/issues), or attach `app.log` from the logs folder.
 
 If the Home screen says **The conversation engine is not responding**, the app cannot reach the engine at all. Click **Restart the app**; in a source build, check that `./scripts/dev.sh` is still running.
 
@@ -111,7 +111,7 @@ taskkill /IM convsim-core.exe /T /F
 
 Nothing is lost by doing this: conversations are written to SQLite as they happen, and an interrupted model download resumes from where it stopped.
 
-Then please [open an issue](https://github.com/outrightmental/ConversationSimulator/issues) and attach `app.log` and `runtime.log` from the [logs folder](#logs). A clean shutdown ends `app.log` with `Launcher closed our stdin pipe; shutting down.` followed by uvicorn's `Application shutdown complete.` Which of those two lines is missing says whether the engine never heard the request or heard it and got stuck, and `runtime.log` says the same for `llama-server`.
+Then please [open an issue](https://github.com/ConversationSimulator/ConversationSimulator/issues) and attach `app.log` and `runtime.log` from the [logs folder](#logs). A clean shutdown ends `app.log` with `Launcher closed our stdin pipe; shutting down.` followed by uvicorn's `Application shutdown complete.` Which of those two lines is missing says whether the engine never heard the request or heard it and got stuck, and `runtime.log` says the same for `llama-server`.
 
 ---
 
@@ -190,7 +190,7 @@ When the engine is missing, **Settings → System health → Run system check** 
 
 In a source build you can also fetch the binary by hand with `./runtimes/llama_cpp/download-runtime.sh` (macOS and Linux; it saves to `~/.convsim/bin/` by default, where the engine looks before `PATH`) or `runtimes/llama_cpp/download-runtime.ps1` on Windows.
 
-If the Steam build reports the engine missing, the installation is incomplete. Reinstall the app; if the error persists, open a [GitHub issue](https://github.com/outrightmental/ConversationSimulator/issues) with your platform and OS version.
+If the Steam build reports the engine missing, the installation is incomplete. Reinstall the app; if the error persists, open a [GitHub issue](https://github.com/ConversationSimulator/ConversationSimulator/issues) with your platform and OS version.
 
 ---
 
@@ -437,7 +437,7 @@ The conversation screen includes a collapsible debug drawer for diagnosing model
 
 ## Where to get help
 
-- Open a [GitHub issue](https://github.com/outrightmental/ConversationSimulator/issues) for bugs or missing documentation.
+- Open a [GitHub issue](https://github.com/ConversationSimulator/ConversationSimulator/issues) for bugs or missing documentation.
 - See [install.md](install.md) for installation steps.
 - See [quickstart.md](quickstart.md) for first-run instructions.
 - See [local-models.md](local-models.md) for model selection and hardware guidance.

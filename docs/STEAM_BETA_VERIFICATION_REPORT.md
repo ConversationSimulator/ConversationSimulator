@@ -23,7 +23,7 @@
 Build version         : vX.Y.Z  (or Steam build ID)
 Steam branch verified : beta
 Build date            : YYYY-MM-DD
-Release issue         : https://github.com/outrightmental/ConversationSimulator/issues/NNN
+Release issue         : https://github.com/ConversationSimulator/ConversationSimulator/issues/NNN
 Verification period   : YYYY-MM-DD to YYYY-MM-DD
 Publishing owner      :
 Report date           : YYYY-MM-DD
@@ -249,7 +249,7 @@ filed.
 | Release smoke — Windows | `release-smoke.yml` | [ ] PASS / [ ] FAIL |
 | Release smoke — macOS | `release-smoke.yml` | [ ] PASS / [ ] FAIL |
 | Release smoke — Linux | `release-smoke.yml` | [ ] PASS / [ ] FAIL |
-| Artifact inspection (all platforms) | `steam-deploy.yml` | [ ] PASS / [ ] FAIL |
+| Artifact inspection (all platforms) | The studio's publishing pipeline | [ ] PASS / [ ] FAIL |
 
 CI run link: _______________________________________________
 
@@ -308,7 +308,6 @@ Additional notes:
   test case matrix (TC-01 through TC-11) and per-platform hardware tiers
 - [`docs/steam-mvp-scope.md`](steam-mvp-scope.md) — gate definitions G3-06 and
   G4-02
-- [`publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md`](../publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md)
   — compliance checklists SR-01 through SR-08 and risk register
 - [`docs/linux-steamos-requirements.md`](linux-steamos-requirements.md) —
   glibc requirements, SteamOS hardware profile, and performance targets

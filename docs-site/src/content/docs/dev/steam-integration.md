@@ -45,8 +45,8 @@ tauri-plugin-steam-overlay-surface = { path = "vendor/tauri-plugin-steam-overlay
 (`steam_api64.dll`, `libsteam_api.dylib`, `libsteam_api.so`) and links against
 it, so building with the feature needs **no SDK download and no secret**; set
 `STEAM_SDK_LOCATION` only to build against a different SDK. At runtime the
-matching shared library must sit next to the executable — the Windows depot
-packaging step in `release.yml` copies `steam_api64.dll` out of the
+matching shared library must sit next to the executable — the release build's
+Windows depot packaging step copies `steam_api64.dll` out of the
 `steamworks-sys` build output for exactly that reason.
 
 ### Build variants
@@ -82,7 +82,7 @@ without registering the production App ID.
 SteamAppId=480 cargo tauri dev --features steam
 ```
 
-The real App ID is embedded in the depot build by the release workflow via
+The real App ID is embedded in the depot build by the release build via
 `STEAM_APPID` in `tauri.conf.json`. Do not hardcode the production App ID in
 source files — use the variable substitution in the VDF templates and the
 workflow environment.
@@ -144,8 +144,9 @@ missing — the runtime stores a `None` client and all subsequent commands retur
 ## Steam Cloud exclusions
 
 Steam Cloud is configured in the Steamworks partner portal to sync only the
-non-sensitive settings file. The integration is documented in detail in
-[`publishing/STEAM_APP_REGISTRATION.md` — Steam Cloud configuration](https://github.com/outrightmental/ConversationSimulator/blob/main/publishing/STEAM_APP_REGISTRATION.md#steam-cloud-configuration).
+non-sensitive settings file. The portal configuration is recorded in the
+studio's Steam app registration notes, kept with the store files outside this
+repository.
 
 ### How exclusions are enforced (two layers)
 
@@ -171,7 +172,7 @@ semantics are documented in `services/convsim-core/convsim_core/steam_cloud.py`.
 This is the only file allowed to reach Steam Cloud. It carries a small set of
 non-sensitive preferences so a second machine can pick up where the last one
 left off. The schema is the `CloudSettings` model in
-[`services/convsim-core/convsim_core/steam_cloud.py`](https://github.com/outrightmental/ConversationSimulator/blob/main/services/convsim-core/convsim_core/steam_cloud.py);
+[`services/convsim-core/convsim_core/steam_cloud.py`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/services/convsim-core/convsim_core/steam_cloud.py);
 today it holds a single field:
 
 ```json
@@ -202,8 +203,8 @@ the **Steam Cloud sync for non-sensitive settings** row in
 [the Steam MVP scope](/dev/steam-mvp-scope/) (display preferences,
 last-used model ID, UI layout state only — transcripts, model weights, audio
 files, and session history must never sync), and the privacy risks PR-01
-through PR-03 in
-[`publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md`](https://github.com/outrightmental/ConversationSimulator/blob/main/publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md).
+through PR-03 in the studio's Steam compliance and risk register, kept outside
+this repository.
 
 ### Verifying the Steam Cloud configuration
 
@@ -358,7 +359,7 @@ problem that makes Electron games pass `--in-process-gpu`.
 There are three independent failures, and all three had to be fixed:
 
 0. **The Steamworks SDK was never in the shipped build.** Until v0.2.8 the
-   release workflow built every Steam depot without `--features steam`, so
+   release build made every Steam depot without `--features steam`, so
    `SteamAPI_Init` never ran and nothing below could work regardless of the
    code. The Windows Steam build now passes the feature and ships
    `steam_api64.dll` (see [Feature flag and build variants](#feature-flag-and-build-variants)).
@@ -548,10 +549,8 @@ Use this checklist at the Stage 4 gate:
 
 ## Links
 
-- [`apps/desktop/src-tauri/src/steam.rs`](https://github.com/outrightmental/ConversationSimulator/blob/main/apps/desktop/src-tauri/src/steam.rs) — Rust Steam bridge implementation
+- [`apps/desktop/src-tauri/src/steam.rs`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/apps/desktop/src-tauri/src/steam.rs) — Rust Steam bridge implementation
 - [Steam achievements, stats, and rich presence](/dev/steam-achievements/) — Steamworks portal configuration: achievements, stats, rich presence
-- [`publishing/STEAM_APP_REGISTRATION.md`](https://github.com/outrightmental/ConversationSimulator/blob/main/publishing/STEAM_APP_REGISTRATION.md) — Steam Cloud quota, root paths, and exclusion patterns
 - [Privacy](/trust/privacy/) — local-first data handling; base privacy policy
 - [Steam MVP scope](/dev/steam-mvp-scope/) — release gates and the authoritative Steam Cloud sync scope (non-sensitive settings only)
 - [Release checklist](/dev/release-checklist/) — B.11 Steam Cloud sync verification
-- [`publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md`](https://github.com/outrightmental/ConversationSimulator/blob/main/publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md) — privacy risks PR-01 through PR-03

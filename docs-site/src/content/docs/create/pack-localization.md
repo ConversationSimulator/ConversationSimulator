@@ -50,7 +50,7 @@ When a multi-locale pack is loaded, the app selects the scenario directory whose
 
 ## UI locale independence
 
-The i18n framework ([`apps/web/src/i18n/`](https://github.com/outrightmental/ConversationSimulator/tree/main/apps/web/src/i18n)) controls only the shell UI strings: navigation labels, error messages, settings headings, debrief section titles, and similar chrome. It does not translate or modify pack content at runtime.
+The i18n framework ([`apps/web/src/i18n/`](https://github.com/ConversationSimulator/ConversationSimulator/tree/main/apps/web/src/i18n)) controls only the shell UI strings: navigation labels, error messages, settings headings, debrief section titles, and similar chrome. It does not translate or modify pack content at runtime.
 
 This design means:
 - Pack authors do not need to know which UI locale the user has selected.

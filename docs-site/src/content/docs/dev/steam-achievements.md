@@ -6,7 +6,7 @@ sidebar:
 ---
 
 > **Roadmap item 48.** This document is the Steamworks configuration companion
-> to the implementation in [`apps/desktop/src-tauri/src/steam.rs`](https://github.com/outrightmental/ConversationSimulator/blob/main/apps/desktop/src-tauri/src/steam.rs) and the
+> to the implementation in [`apps/desktop/src-tauri/src/steam.rs`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/apps/desktop/src-tauri/src/steam.rs) and the
 > `useSteamAchievements` / `useSteamRichPresence` React hooks.
 >
 > Privacy guarantee: **no conversation content, transcript text, or session
@@ -33,8 +33,8 @@ Configure these in the **Steamworks App Admin → Achievements** tab.
 - **Hidden:** set to `true` for `ACH_PRACTICE_STREAK` and `ACH_PACK_EXPLORER`
   (reveal on unlock so players discover them organically).
 - **Global unlock percentage:** visible; Valve computes this automatically.
-- **Icon:** 64×64 px and 32×32 px locked/unlocked pairs required. See
-  [`publishing/STEAM_ASSETS_SPEC.md`](https://github.com/outrightmental/ConversationSimulator/blob/main/publishing/STEAM_ASSETS_SPEC.md) for the art spec.
+- **Icon:** 64×64 px and 32×32 px locked/unlocked pairs required. The art
+  spec is kept with the studio's store artwork, outside this repository.
 
 ### Unlock call site
 

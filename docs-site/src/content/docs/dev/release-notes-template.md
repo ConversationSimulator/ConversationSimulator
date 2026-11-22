@@ -6,12 +6,12 @@ sidebar:
 ---
 
 :::note
-**Release notes template** — copy [`docs/release-notes-template.md`](https://github.com/outrightmental/ConversationSimulator/blob/main/docs/release-notes-template.md) from the repository, replace each `{{PLACEHOLDER}}`, and delete the template comments.
+**Release notes template** — copy [`docs/release-notes-template.md`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/docs/release-notes-template.md) from the repository, replace each `{{PLACEHOLDER}}`, and delete the template comments.
 :::
 
 > **Alpha release** — This build is an early preview. Expect rough edges and
 > breaking changes between alpha versions. File bugs at
-> <https://github.com/outrightmental/ConversationSimulator/issues>.
+> <https://github.com/ConversationSimulator/ConversationSimulator/issues>.
 
 ---
 
@@ -141,13 +141,13 @@ installer small.
 - **In-app update notice.** The app checks for a new beta on launch and shows
   a banner on the home screen.  Clicking **Install** opens this release page
   for manual download.  The check is skipped silently when offline.
-- **No code signing (until [#235](https://github.com/outrightmental/ConversationSimulator/issues/235)).** macOS and Windows will warn about
+- **No code signing (until [#235](https://github.com/ConversationSimulator/ConversationSimulator/issues/235)).** macOS and Windows will warn about
   unverified publishers (see installation instructions above).  Follow the
   Gatekeeper / SmartScreen bypass steps in [docs/install.md](/start/install/).
 - **Speech input / output** requires additional local runtimes. Speech-to-text
   uses whisper.cpp (`./runtimes/whisper_cpp/download-runtime.sh`); text-to-speech
   uses a local Kokoro server. See the runtime READMEs under
-  [`runtimes/`](https://github.com/outrightmental/ConversationSimulator/tree/main/runtimes) for setup.
+  [`runtimes/`](https://github.com/ConversationSimulator/ConversationSimulator/tree/main/runtimes) for setup.
 
 ---
 
@@ -156,7 +156,7 @@ installer small.
 To build from source on a clean checkout:
 
 ```bash
-git clone https://github.com/outrightmental/ConversationSimulator
+git clone https://github.com/ConversationSimulator/ConversationSimulator
 cd ConversationSimulator
 ./scripts/setup.sh            # install deps, create Python venv
 pnpm --filter @convsim/web build
@@ -171,7 +171,7 @@ for full prerequisites and platform-specific notes.
 
 ## Reporting bugs
 
-Open an issue at <https://github.com/outrightmental/ConversationSimulator/issues>.
+Open an issue at <https://github.com/ConversationSimulator/ConversationSimulator/issues>.
 Include:
 
 - OS and version

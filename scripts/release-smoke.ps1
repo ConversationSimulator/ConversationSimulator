@@ -122,7 +122,6 @@ function Invoke-SmokSetup {
         "scripts\smoke-check.sh", "scripts\smoke-check.ps1",
         "scripts\release-smoke.sh", "scripts\release-smoke.ps1",
         "scripts\build-core.sh", "scripts\build-core.ps1",
-        "scripts\depot-audit.sh", "scripts\depot-audit.ps1",
         ".github\workflows\ci.yml", ".github\workflows\release.yml",
         ".github\workflows\release-smoke.yml",
         "docs\release-checklist.md",
@@ -539,8 +538,6 @@ function Invoke-SmokePackagedStartup {
         "services\convsim-core\convsim-core.spec",
         "scripts\build-core.sh",
         "scripts\build-core.ps1",
-        "scripts\depot-audit.sh",
-        "scripts\depot-audit.ps1",
         "apps\desktop\src-tauri\resources\bin\.gitkeep"
     )
     foreach ($f in $requiredBuildFiles) {

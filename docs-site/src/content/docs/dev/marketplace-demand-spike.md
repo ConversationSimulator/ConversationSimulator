@@ -455,9 +455,7 @@ for the Stage 5 milestone.
 - [`docs/marketplace-architecture.md`](/dev/marketplace-architecture/) — design baseline: entry gate, distribution path comparison, and scope of schema/signing/moderation/payment changes
 - [`docs/STEAM_ROADMAP.md`](/dev/steam-roadmap/) — release train: Stage 5 is the marketplace exploration milestone
 - [`docs/steam-mvp-scope.md`](/dev/steam-mvp-scope/) — what shipped in Stage 4; the post-launch baseline
-- [`publishing/POST_LAUNCH_FEEDBACK_SUMMARY.md`](https://github.com/outrightmental/ConversationSimulator/blob/main/publishing/POST_LAUNCH_FEEDBACK_SUMMARY.md) — 72-hour and two-week launch feedback; primary source for section 1
-- [`publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md`](https://github.com/outrightmental/ConversationSimulator/blob/main/publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md) — risk SP-05 (first-party Steam DLC path for premium scenario packs)
 - [`docs/safety-policy.md`](/trust/safety-policy/) — content policy any marketplace pack must satisfy
 - [`docs/privacy.md`](/trust/privacy/) — local-first promise that marketplace infrastructure must not break
 - [`docs/scenario-authoring.md`](/create/scenario-authoring/) — creator documentation; starting point for section 2 recruits
-- [`schemas/pack.schema.json`](https://github.com/outrightmental/ConversationSimulator/blob/main/schemas/pack.schema.json) — current pack manifest schema
+- [`schemas/pack.schema.json`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/schemas/pack.schema.json) — current pack manifest schema

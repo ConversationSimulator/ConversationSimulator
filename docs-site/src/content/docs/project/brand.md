@@ -69,9 +69,9 @@ Conversation Simulator icon, and it is this one:
 
 | File | What it is |
 |------|------------|
-| [`docs/assets/brand/ConversationSimulatorIcon.svg`](https://github.com/outrightmental/ConversationSimulator/blob/main/docs/assets/brand/ConversationSimulatorIcon.svg) (and `.png`, 2048 px) | **The icon.** The bubbles on the dark radial-gradient square. |
-| [`docs/assets/brand/mark.svg`](https://github.com/outrightmental/ConversationSimulator/blob/main/docs/assets/brand/mark.svg) | The same bubbles with no square: the mark beside a wordmark. |
-| [`docs/assets/brand/ConversationSimulatorDemoIcon.svg`](https://github.com/outrightmental/ConversationSimulator/blob/main/docs/assets/brand/ConversationSimulatorDemoIcon.svg) (and `.png`) | **The demo icon.** The icon with an amber "DEMO" badge in its lower-right corner. Generated; do not edit. |
+| [`docs/assets/brand/ConversationSimulatorIcon.svg`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/docs/assets/brand/ConversationSimulatorIcon.svg) (and `.png`, 2048 px) | **The icon.** The bubbles on the dark radial-gradient square. |
+| [`docs/assets/brand/mark.svg`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/docs/assets/brand/mark.svg) | The same bubbles with no square: the mark beside a wordmark. |
+| [`docs/assets/brand/ConversationSimulatorDemoIcon.svg`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/docs/assets/brand/ConversationSimulatorDemoIcon.svg) (and `.png`) | **The demo icon.** The icon with an amber "DEMO" badge in its lower-right corner. Generated; do not edit. |
 
 The icon is the app icon on every platform (Windows, macOS, Linux), the Steam
 App Icon and Shortcut Icon, the Microsoft Store logos, the favicon of the app,
@@ -81,11 +81,11 @@ the mark on the Steam capsules and the share card. The demo icon is the same
 everywhere the demo appears (the Steam demo app, the Microsoft Store demo
 package); the demo's Steam capsules are the full game's with the same badge.
 
-Every one of those files is drawn from the two sources above by
-`publishing/assets/source/gen_icons.py` (and the capsules by
-`gen_capsules.py`). To change the icon, change the source SVG and re-run the
-generators — never edit or draw an output by hand, and never make a new mark
-for a new surface. The acceptance suite fails on any violet-and-emerald
+Every one of those files is drawn from the two sources above by the studio's
+icon and capsule generators, which are kept with the store artwork outside
+this repository. To change the icon, change the source SVG and have the
+generators re-run — never edit or draw an output by hand, and never make a new
+mark for a new surface. The acceptance suite fails on any violet-and-emerald
 drawing in the repository that is not the official one.
 
 Don't recolor it, don't separate the bubbles, don't add a third. The DEMO
@@ -97,7 +97,7 @@ either voice.
 
 The colour system is the product's own transcript colour coding, promoted to
 brand. Use the CSS custom properties in
-[`apps/web/src/index.css`](https://github.com/outrightmental/ConversationSimulator/blob/main/apps/web/src/index.css).
+[`apps/web/src/index.css`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/apps/web/src/index.css).
 
 | Token | Hex | Role |
 |-------|-----|------|
@@ -117,8 +117,8 @@ meaning could confuse.
 - **Display ("the playbill")**: [Fraunces](https://github.com/undercasetype/Fraunces)
   (SIL OFL 1.1) — headlines and the wordmark on the website and docs site.
   Warm, literary, a little theatrical; optical sizing on. The hero headline
-  may switch the WONK axis on. Self-hosted (`website/static/fonts/`,
-  `docs-site/public/fonts/`); never loaded from a third-party CDN.
+  may switch the WONK axis on. Self-hosted (`docs-site/public/fonts/` for the
+  docs site); never loaded from a third-party CDN.
 - **UI & body ("the instrument")**: the system stack
   (`system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif`) — everything
   in the app, and body text everywhere. Fast, native, offline-true.

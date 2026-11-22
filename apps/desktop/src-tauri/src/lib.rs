@@ -1029,7 +1029,7 @@ fn spawn_core(
         cmd.env("CONVSIM_EDITION", edition);
     }
 
-    // The release version the player is running (issue #490). release.yml
+    // The release version the player is running (issue #490). The release build
     // stamps tauri.conf.json's `version` from the release tag, but the
     // PyInstaller-built core only knows its own package version, so its
     // diagnostics reported `app: 0.1.0` for every build. Hand it the real

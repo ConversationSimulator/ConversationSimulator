@@ -11,7 +11,7 @@ during pre-release development.
 Please **do not** open a public GitHub Issue for security vulnerabilities.
 
 Instead, report security issues privately using
-[GitHub's private vulnerability reporting](https://github.com/outrightmental/ConversationSimulator/security/advisories/new)
+[GitHub's private vulnerability reporting](https://github.com/ConversationSimulator/ConversationSimulator/security/advisories/new)
 or by emailing the maintainers directly (address on file in the GitHub
 organization contact page).
 

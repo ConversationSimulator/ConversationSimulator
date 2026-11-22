@@ -125,7 +125,7 @@ successfully.
 
 ## Adding new language paths
 
-1. Choose a scenario from the `language-cafe` pack (see [`packs/official/language-cafe/scenarios/`](https://github.com/outrightmental/ConversationSimulator/tree/main/packs/official/language-cafe/scenarios/)).
+1. Choose a scenario from the `language-cafe` pack (see [`packs/official/language-cafe/scenarios/`](https://github.com/ConversationSimulator/ConversationSimulator/tree/main/packs/official/language-cafe/scenarios/)).
 2. Add a new test class in `test_voice_smoke.py` following the `TestSpanishVoiceSmoke` pattern:
    - Set `_SCENARIO` to the scenario ID.
    - Set `_LANGUAGE` to the BCP-47 language code.

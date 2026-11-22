@@ -18,8 +18,8 @@ verified_against: v0.4.0
 > and Kokoro models) is covered under [Voice models](#voice-models).
 >
 > **Compliance cross-references:** MD-01 (silent download), MD-02 (checksum),
-> MD-03 (licence disclosure), MD-04 (bundled weights) in
-> [`publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md`](https://github.com/outrightmental/ConversationSimulator/blob/main/publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md).
+> MD-03 (licence disclosure), MD-04 (bundled weights) in the studio's Steam
+> compliance and risk register, kept outside this repository.
 
 ---
 
@@ -127,7 +127,7 @@ Three things are fetched, into `models/voice/` under the app's data folder:
 the sherpa-onnx speech engine for this platform, the Whisper *base* listening
 model, and the Kokoro v1.0 voices with their pronunciation data. The pins
 live in `services/convsim-core/convsim_core/voice/catalog.py`, not in the
-model registry. [The voice setup reference](https://github.com/outrightmental/ConversationSimulator/blob/main/docs/voice-setup.md) lists each
+model registry. [The voice setup reference](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/docs/voice-setup.md) lists each
 file, its source and its licence, and where the rules differ from an LLM
 download (a voice install is not resumed automatically at the next launch;
 pressing **Install voice** again continues it).
@@ -272,7 +272,7 @@ app makes no claim about the file's licence, source or integrity.
 
 ## 5. Model registry schema enforcement
 
-The model registry schema at [`schemas/model-registry.schema.json`](https://github.com/outrightmental/ConversationSimulator/blob/main/schemas/model-registry.schema.json) enforces:
+The model registry schema at [`schemas/model-registry.schema.json`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/schemas/model-registry.schema.json) enforces:
 
 - `sha256` must be a 64-character hex string or the literal string `PENDING`.
 - `license` is required for all registry-managed models.
@@ -285,14 +285,14 @@ The model registry schema at [`schemas/model-registry.schema.json`](https://gith
 Validation runs in three places:
 
 - The **Backend tests** job in
-  [`.github/workflows/ci.yml`](https://github.com/outrightmental/ConversationSimulator/blob/main/.github/workflows/ci.yml)
+  [`.github/workflows/ci.yml`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/.github/workflows/ci.yml)
   runs `services/convsim-core/tests/test_model_registry.py` on every pull
   request and every push to `main`. It validates `registry.yaml` against the
   schema, rejects any `PENDING` value, and fails if a model weight file
   (`.gguf`, `.bin`, `.safetensors`, `.pt` or `.ckpt`) is found anywhere under
   `model-registry/`. It does not scan the rest of the repository.
 - The nightly
-  [`.github/workflows/registry-nightly.yml`](https://github.com/outrightmental/ConversationSimulator/blob/main/.github/workflows/registry-nightly.yml)
+  [`.github/workflows/registry-nightly.yml`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/.github/workflows/registry-nightly.yml)
   runs `scripts/validate-registry.py --url-check`, which also confirms every
   download URL still answers.
 - convsim-core validates the file against the same schema when it loads it
@@ -411,8 +411,8 @@ attempts (Section 3), the `.part` file is deleted and the player is offered
 
 ## 7. Model registry reference
 
-The authoritative source of model metadata is [`model-registry/registry.yaml`](https://github.com/outrightmental/ConversationSimulator/blob/main/model-registry/registry.yaml).
-See [`model-registry/README.md`](https://github.com/outrightmental/ConversationSimulator/blob/main/model-registry/README.md) for the policy on adding new entries and the
+The authoritative source of model metadata is [`model-registry/registry.yaml`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/model-registry/registry.yaml).
+See [`model-registry/README.md`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/model-registry/README.md) for the policy on adding new entries and the
 schema reference.
 
 Current registry entries:
@@ -430,7 +430,7 @@ verified SHA-256 checksum; no entry ships a `PENDING` value.
 
 The Steam Next Fest demo installs exactly one model: the `role: starter` entry
 (Qwen3 4B Instruct 2507 Q4_K_M), unless `CONVSIM_DEMO_MODEL_ID` names another
-registry id. See [`docs/steam-next-fest-demo.md`](https://github.com/outrightmental/ConversationSimulator/blob/main/docs/steam-next-fest-demo.md)
+registry id. See [`docs/steam-next-fest-demo.md`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/docs/steam-next-fest-demo.md)
 for the decision.
 
 ---
@@ -520,7 +520,7 @@ engine on first run. See [Sidecar bundling](/dev/sidecar-bundling/).
 
 A build from source asks GitHub once per visit to the Home screen whether a
 newer beta exists, by fetching
-`https://github.com/outrightmental/ConversationSimulator/releases/download/beta-channel/latest.json`.
+`https://github.com/ConversationSimulator/ConversationSimulator/releases/download/beta-channel/latest.json`.
 The request downloads no files: when a newer version is listed, the Home
 screen shows a banner whose **Install** button opens the release page in the
 player's browser. Failures are silent, so an offline machine sees nothing.
@@ -531,10 +531,8 @@ this request; Steam delivers updates itself.
 
 ## Links
 
-- [`model-registry/registry.yaml`](https://github.com/outrightmental/ConversationSimulator/blob/main/model-registry/registry.yaml) — model metadata
-- [`model-registry/README.md`](https://github.com/outrightmental/ConversationSimulator/blob/main/model-registry/README.md) — registry policy
-- [`schemas/model-registry.schema.json`](https://github.com/outrightmental/ConversationSimulator/blob/main/schemas/model-registry.schema.json) — JSON Schema
-- [`publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md`](https://github.com/outrightmental/ConversationSimulator/blob/main/publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md) — risk register (MD-01–MD-04)
-- [`publishing/STEAM_DEPOT_CONTENTS.md`](https://github.com/outrightmental/ConversationSimulator/blob/main/publishing/STEAM_DEPOT_CONTENTS.md) — what ships in the depot
+- [`model-registry/registry.yaml`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/model-registry/registry.yaml) — model metadata
+- [`model-registry/README.md`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/model-registry/README.md) — registry policy
+- [`schemas/model-registry.schema.json`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/schemas/model-registry.schema.json) — JSON Schema
 - [Choosing how to run the AI](/play/ai-engine/) — player-facing model installation guide
 - [Steam roadmap](/dev/steam-roadmap/) — model download transparency specification

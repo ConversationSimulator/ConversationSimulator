@@ -31,9 +31,9 @@ General (non-Steam) templates remain available for bugs that reproduce in the
 open-source build.
 
 The complete label set is declared in
-[`.github/project-structure.yml`](https://github.com/outrightmental/ConversationSimulator/blob/main/.github/project-structure.yml)
+[`.github/project-structure.yml`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/.github/project-structure.yml)
 and tabulated in
-[CONTRIBUTING.md → Labels, fields, and milestones](https://github.com/outrightmental/ConversationSimulator/blob/main/CONTRIBUTING.md#labels-fields-and-milestones).
+[CONTRIBUTING.md → Labels, fields, and milestones](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/CONTRIBUTING.md#labels-fields-and-milestones).
 There are no severity or priority labels: urgency is the board's **Priority**
 field, which is what the steps below set. Nothing below asks for a label
 outside that declared set either — triage records its decisions in Type,
@@ -73,7 +73,7 @@ volume is expected to be low and the signal-to-noise ratio high.
 3. **Route to the right milestone.** Every open issue belongs to exactly one
    release train, so a beta blocker goes on the train shipping next and the
    rest are deferred to a later one; the current trains and their dates are in
-   [`.github/project-structure.yml`](https://github.com/outrightmental/ConversationSimulator/blob/main/.github/project-structure.yml).
+   [`.github/project-structure.yml`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/.github/project-structure.yml).
    Issues that turn out to be pre-existing open-source bugs lose their
    `area:steam` label and move to whichever train fits.
 
@@ -173,7 +173,5 @@ See [privacy.md](/trust/privacy/) for the full local-first data handling policy 
 - [network-security.md](/trust/network-security/) — runtime network enforcement
 - [safety-policy.md](/trust/safety-policy/) — content safety policy
 - [SECURITY.md](/project/security/) — security vulnerability disclosure
-- [publishing/LAUNCH_DAY_RUNBOOK.md](https://github.com/outrightmental/ConversationSimulator/blob/main/publishing/LAUNCH_DAY_RUNBOOK.md) — launch day operations, rollback criteria, hotfix workflow
-- [publishing/POST_LAUNCH_FEEDBACK_SUMMARY.md](https://github.com/outrightmental/ConversationSimulator/blob/main/publishing/POST_LAUNCH_FEEDBACK_SUMMARY.md) — 72-hour feedback summary and next milestone plan
-- [.github/workflows/hotfix.yml](https://github.com/outrightmental/ConversationSimulator/blob/main/.github/workflows/hotfix.yml) — hotfix branch creation workflow
-- [GitHub issue templates](https://github.com/outrightmental/ConversationSimulator/tree/main/.github/ISSUE_TEMPLATE) — all available templates
+- [.github/workflows/hotfix.yml](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/.github/workflows/hotfix.yml) — hotfix branch creation workflow
+- [GitHub issue templates](https://github.com/ConversationSimulator/ConversationSimulator/tree/main/.github/ISSUE_TEMPLATE) — all available templates

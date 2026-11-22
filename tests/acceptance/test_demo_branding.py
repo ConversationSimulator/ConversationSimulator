@@ -20,34 +20,20 @@ icon with an amber "DEMO" badge in its lower-right corner. These tests pin it:
   * the hand-written ICO and ICNS containers carry every representation a
     desktop asks for, each one holds the size its directory entry or chunk
     type promises, the ICNS is on Apple's icon grid, and the run-length
-    encoded ARGB chunks decode to the frame they were built from;
-  * the two Steamworks icons exist at the sizes Valve's spec names — App Icon
-    184 x 184 JPG, Shortcut Icon 256 x 256 PNG — for both apps, and the
-    shortcut icon is the same image the app itself installs;
-  * the Microsoft Store logos are the same tile, at the sizes the manifest
-    names, for both packages;
-  * every generated SVG (favicons, the site logos, the demo master, the Steam
-    vectors) is byte-for-byte what the generator draws today;
-  * the Steam capsules: every asset at Valve's exact size, the demo's the
-    full game's art plus the same badge, clear of the composition, on every
-    asset allowed to carry the name — and none on the library hero.
+    encoded ARGB chunks decode to the frame they were built from.
 
-Nothing here needs a build, a renderer or a network, and only the JPEG's
-pixels need ImageMagick — the PNGs, the ICO and the ICNS are parsed directly,
-and the JPEG's dimensions come straight out of its SOF marker. The CI
-acceptance job installs ImageMagick for those pixel checks; without it they
-skip on a developer machine and fail under CI, so a runner image that stops
-shipping it cannot quietly drop the App Icon from the gate. Owner: platform
-team.
+These are the icons the app itself is built with. The store artwork drawn from
+the same icon (the Steamworks icons and capsules, the Microsoft Store logos)
+and the generator that draws all of it are kept with the store files, outside
+this repository, and are checked there.
+
+Nothing here needs a build, a renderer or a network: the PNGs, the ICO and the
+ICNS are parsed directly. Owner: platform team.
 """
 from __future__ import annotations
 
-import importlib.util
 import json
-import os
-import shutil
 import struct
-import subprocess
 import zlib
 from pathlib import Path
 
@@ -58,16 +44,6 @@ _SRC_TAURI = _REPO_ROOT / "apps" / "desktop" / "src-tauri"
 _BASE_CONF = _SRC_TAURI / "tauri.conf.json"
 _DEMO_CONF = _SRC_TAURI / "tauri.demo.conf.json"
 _BUNDLE_DIR = {"base": _SRC_TAURI / "icons", "demo": _SRC_TAURI / "icons-demo"}
-_ICON_DIR = _REPO_ROOT / "publishing" / "assets" / "icons"
-_MSSTORE_DIR = {
-    "base": _REPO_ROOT / "publishing" / "microsoft-store" / "Assets",
-    "demo": _REPO_ROOT / "publishing" / "microsoft-store" / "Assets-demo",
-}
-_ASSET_SOURCE = _REPO_ROOT / "publishing" / "assets" / "source"
-_GEN_ICONS = _ASSET_SOURCE / "gen_icons.py"
-_GEN_CAPSULES = _ASSET_SOURCE / "gen_capsules.py"
-_CAPSULE_DIR = _REPO_ROOT / "publishing" / "assets" / "capsules"
-_DEMO_CAPSULE_DIR = _CAPSULE_DIR / "demo"
 _EDITIONS = ("base", "demo")
 
 # The brand palette (docs/brand.md), restated so that a recoloured source or
@@ -87,49 +63,13 @@ _RETIRED = ((0x14, 0x7A, 0x84), (0x6D, 0x28, 0xD9), (0x15, 0x80, 0x3D))
 _YOU_AT = (0.25, 0.52)
 _THEM_AT = (0.72, 0.33)
 
-# The badge's rectangle, as fractions of the icon's side, restated from
-# gen_icons.py (an 88-unit cap height of a 4.1725-cap-wide word, 44 units of
+# The badge's rectangle, as fractions of the icon's side, restated from the
+# icon generator (an 88-unit cap height of a 4.1725-cap-wide word, 44 units of
 # padding either side, a 150-unit pill, 52 units off the right and bottom
 # edges, all of 864) so that moving the badge without meaning to is a failure.
 _BADGE_H = 150 / 864
 _BADGE_W = (88 * 4.1725 + 2 * 44) / 864
 _BADGE_MARGIN = 52 / 864
-
-# Steamworks, Store Presence -> Graphical Assets -> Community and Client Icons
-# (https://partner.steamgames.com/doc/store/assets/community).
-_APP_ICON_PX = 184       # App Icon: 184x184 JPG — the library-list row
-_SHORTCUT_ICON_PX = 256  # Shortcut Icon: 256x256 or 512x512, .ico or .png
-
-# AppxManifest.xml's three logos.
-_MSSTORE_LOGOS = {"Square150x150Logo.png": 150, "Square44x44Logo.png": 44,
-                  "StoreLogo.png": 50}
-
-# Steamworks capsule and library sizes
-# (https://partner.steamgames.com/doc/store/assets), restated so a drift in
-# gen_capsules.py fails here rather than in Valve's uploader.  The demo set is
-# all of these; the full game's adds page_background.
-_CAPSULE_SIZES = {
-    "header_capsule": (920, 430),
-    "small_capsule": (462, 174),
-    "main_capsule": (1232, 706),
-    "vertical_capsule": (748, 896),
-    "library_capsule": (600, 900),
-    "library_header": (920, 430),
-    "library_hero": (3840, 1240),
-    "library_logo": (1280, 720),     # transparent PNG
-}
-_BASE_ONLY_CAPSULES = {"page_background": (1438, 810)}
-# The assets that carry the game name, and so may carry "DEMO".  The hero must
-# stay textless (Steam lays the logo over it) and the logo has no corner.
-_BADGED_CAPSULES = ("header_capsule", "small_capsule", "main_capsule",
-                    "vertical_capsule", "library_capsule", "library_header")
-# The capsules' stage, lower and upper band (gen_capsules.py).
-_CAPSULE_STAGE = ((0x0D, 0x0D, 0x15), (0x12, 0x12, 0x1C))
-# The capsule badge sits as on a demo icon 0.6 x the capsule's geometric-mean
-# side, pinned to the capsule's lower-right corner; a quarter of the pill's
-# height around it must be plain stage.
-_CAPSULE_BADGE_ICON_SIDE = 0.6
-_CAPSULE_BADGE_CLEARANCE = 0.25
 
 
 # ---------------------------------------------------------------------------
@@ -206,173 +146,6 @@ def _png_dimensions(raw: bytes) -> tuple[int, int]:
     return struct.unpack(">II", raw[16:24])
 
 
-class _Raster:
-    """Pixel access to an 8-bit non-interlaced PNG: RGB, RGBA or palette.
-
-    For the capsules, which run to 3840 x 1240 — far past what ``_read_png``'s
-    tuple-per-pixel decode can do in a test's time.  Rows are kept as bytes
-    and only sampled pixels are looked at.  A row stored with filter type 0
-    costs nothing to read, and gen_capsules.py writes every row that way; any
-    other filter is still decoded correctly, just at pure-Python speed.
-    """
-
-    def __init__(self, path: Path):
-        raw = path.read_bytes()
-        assert raw[:8] == b"\x89PNG\r\n\x1a\n", f"{path} is not a PNG"
-        pos, idat, header, palette, trns = 8, b"", None, b"", b""
-        while pos < len(raw):
-            (length,) = struct.unpack(">I", raw[pos:pos + 4])
-            kind = raw[pos + 4:pos + 8]
-            payload = raw[pos + 8:pos + 8 + length]
-            if kind == b"IHDR":
-                header = struct.unpack(">IIBBBBB", payload)
-            elif kind == b"PLTE":
-                palette = payload
-            elif kind == b"tRNS":
-                trns = payload
-            elif kind == b"IDAT":
-                idat += payload
-            pos += length + 12
-        assert header is not None, f"{path} has no IHDR"
-        self.width, self.height, depth, self.colour, _, _, interlace = header
-        assert depth == 8 and interlace == 0 and self.colour in (2, 3, 6), (
-            f"{path}: unsupported PNG layout {header}"
-        )
-        self.alpha = self.colour == 6
-        self.palette = [tuple(palette[i:i + 3]) for i in range(0, len(palette), 3)]
-        self.trns = trns
-        bpp = {2: 3, 3: 1, 6: 4}[self.colour]
-        self.bpp = bpp
-        stride = self.width * bpp
-        data = zlib.decompress(idat)
-        rows: list[bytes] = []
-        prev = bytes(stride)
-        pos = 0
-        for _ in range(self.height):
-            filter_type = data[pos]
-            line = data[pos + 1:pos + 1 + stride]
-            pos += 1 + stride
-            if filter_type != 0:
-                line = self._unfilter(filter_type, bytearray(line), prev, bpp, path)
-            rows.append(line)
-            prev = line
-        self.rows = rows
-
-    @staticmethod
-    def _unfilter(kind: int, line: bytearray, prev: bytes, bpp: int, path: Path) -> bytes:
-        for i in range(len(line)):
-            left = line[i - bpp] if i >= bpp else 0
-            up = prev[i]
-            up_left = prev[i - bpp] if i >= bpp else 0
-            if kind == 1:
-                line[i] = (line[i] + left) & 0xFF
-            elif kind == 2:
-                line[i] = (line[i] + up) & 0xFF
-            elif kind == 3:
-                line[i] = (line[i] + (left + up) // 2) & 0xFF
-            elif kind == 4:
-                p = left + up - up_left
-                pa, pb, pc = abs(p - left), abs(p - up), abs(p - up_left)
-                best = left if (pa <= pb and pa <= pc) else (up if pb <= pc else up_left)
-                line[i] = (line[i] + best) & 0xFF
-            else:
-                raise AssertionError(f"{path}: unsupported PNG filter {kind}")
-        return bytes(line)
-
-    def rgba(self, x: int, y: int) -> tuple[int, int, int, int]:
-        row = self.rows[y]
-        if self.colour == 3:
-            index = row[x]
-            alpha = self.trns[index] if index < len(self.trns) else 255
-            return (*self.palette[index], alpha)
-        i = x * self.bpp
-        if self.colour == 2:
-            return row[i], row[i + 1], row[i + 2], 255
-        return row[i], row[i + 1], row[i + 2], row[i + 3]
-
-    def sample(self, step: int):
-        """Every ``step``-th pixel in both directions, as (x, y, rgba)."""
-        for y in range(0, self.height, step):
-            for x in range(0, self.width, step):
-                yield x, y, self.rgba(x, y)
-
-
-def _find_magick() -> str | None:
-    """ImageMagick's command-line entry point, or None when it is not installed.
-
-    ``magick`` is ImageMagick 7's binary and nothing else installs one under
-    that name, so it is taken at its word. ``convert`` is ImageMagick 6's, but
-    Windows ships a ``convert.exe`` of its own in System32 (the NTFS volume
-    converter), so that name is believed only when ``convert -version`` says
-    ImageMagick. Otherwise the tests that need it skip as documented instead
-    of erroring on the wrong program.
-    """
-    magick = shutil.which("magick")
-    if magick is not None:
-        return magick
-    convert = shutil.which("convert")
-    if convert is None:
-        return None
-    try:
-        probe = subprocess.run([convert, "-version"], capture_output=True, timeout=30)
-    except (OSError, subprocess.SubprocessError):
-        return None
-    return convert if b"ImageMagick" in probe.stdout else None
-
-
-_MAGICK = _find_magick()
-
-
-def _running_in_ci() -> bool:
-    """GitHub Actions sets ``CI=true``; other runners set it to something truthy too."""
-    return os.environ.get("CI", "").strip().lower() not in ("", "0", "false")
-
-
-def _require_magick() -> str:
-    """The ImageMagick binary, or the test's verdict on not having one.
-
-    On a developer machine without ImageMagick the App Icon's pixel checks
-    skip: the JPEG is the one asset here with no pure-Python reader, and a
-    baseline-JPEG decoder for one 184 px icon would be a worse trade. Under CI
-    they fail instead. The acceptance job installs the ``imagemagick`` package
-    for exactly these tests, so ImageMagick missing there means the install
-    step was dropped or the runner image changed underneath it, and a skip
-    would let a wrong App Icon through the gate while the job stayed green.
-    """
-    if _MAGICK is not None:
-        return _MAGICK
-    message = (
-        "reading the App Icon's pixels needs ImageMagick; its JPEG payload is "
-        "the one asset in this suite with no pure-Python reader"
-    )
-    if _running_in_ci():
-        pytest.fail(
-            f"{message}. CI is set and ImageMagick is not on PATH: the acceptance "
-            "job must install the imagemagick package (apt) before running this "
-            "suite, or the App Icon ships unchecked",
-            pytrace=False,
-        )
-    pytest.skip(message)
-
-
-def _magick_rgb(path: Path, size: int) -> list[tuple[int, int, int]]:
-    """``size * size`` RGB pixels, read through ImageMagick.
-
-    Only the App Icon needs this: everything else here is PNG, ICO or ICNS and
-    is parsed in-process. Without ImageMagick the calling test skips locally
-    and fails under CI; see ``_require_magick``.
-    """
-    magick = _require_magick()
-    raw = subprocess.run(
-        [magick, str(path), "-depth", "8", "RGB:-"],
-        check=True, capture_output=True,
-    ).stdout
-    assert len(raw) == size * size * 3, (
-        f"{path}: expected {size}x{size} RGB, got {len(raw)} bytes"
-    )
-    return [tuple(raw[i:i + 3]) for i in range(0, len(raw), 3)]
-
-
 def _distance(a: tuple[int, int, int], b: tuple[int, int, int]) -> float:
     return sum((x - y) ** 2 for x, y in zip(a, b)) ** 0.5
 
@@ -412,40 +185,10 @@ def _read_ico(path: Path) -> list[tuple[int, int, bytes]]:
 
 
 # ---------------------------------------------------------------------------
-# Minimal JPEG header reader — the App Icon is the one asset that is not PNG.
-# ---------------------------------------------------------------------------
-def _jpeg_frame(path: Path) -> tuple[int, int, int]:
-    """(width, height, component count) from the JPEG's start-of-frame marker.
-
-    Decoding the pixels would mean a Huffman and IDCT implementation for one
-    184 px icon; the SOF marker carries everything the spec can be checked
-    against, and the pixel check below borrows ImageMagick when it is on PATH.
-    """
-    raw = path.read_bytes()
-    assert raw[:2] == b"\xff\xd8", f"{path} is not a JPEG"
-    pos = 2
-    while pos < len(raw):
-        assert raw[pos] == 0xFF, f"{path}: lost marker alignment at {pos}"
-        marker = raw[pos + 1]
-        if marker in (0xD8, 0xD9) or 0xD0 <= marker <= 0xD7:
-            pos += 2
-            continue
-        (length,) = struct.unpack(">H", raw[pos + 2:pos + 4])
-        # SOF0/1/2 — baseline and progressive. DHT/DAC/SOF4 etc. are not frames.
-        if marker in (0xC0, 0xC1, 0xC2):
-            _, height, width, components = struct.unpack(
-                ">BHHB", raw[pos + 4:pos + 10]
-            )
-            return width, height, components
-        pos += 2 + length
-    raise AssertionError(f"{path} has no start-of-frame marker")
-
-
-# ---------------------------------------------------------------------------
 # Minimal ICNS reader.
 # ---------------------------------------------------------------------------
 # The pixel size each PNG-payload chunk type promises, per the ICNS format.
-# ``write_icns`` in gen_icons.py picks the frame for each type off its own copy
+# The icon generator's ``write_icns`` picks the frame for each type off its own copy
 # of this table; stating it independently here is what makes a transposed pair
 # (ic07 handed the 256 px frame, say) a test failure rather than a shipped icon
 # that macOS quietly rescales.
@@ -841,263 +584,3 @@ class TestIconContainers:
             f"{edition} icon.icns {kind!r}: the blue channel ends on a run"
         )
 
-
-# ---------------------------------------------------------------------------
-# D-10d  The Steamworks icons, for both apps
-# ---------------------------------------------------------------------------
-class TestSteamworksIcons:
-    """Community and Client Icons: App Icon (184 JPG) and Shortcut Icon (256 PNG).
-
-    The Mac Icon field takes the bundle's ``icon.icns`` unchanged.  The App
-    Icon is what the Steam client draws in the library list, chat favourites
-    and notifications — the row where the demo and the full game must not
-    look alike.
-    """
-
-    @pytest.mark.parametrize("edition", _EDITIONS)
-    def test_app_icon_is_a_184px_jpeg(self, edition):
-        assert _jpeg_frame(_ICON_DIR / f"{edition}_app_icon.jpg") == (_APP_ICON_PX, _APP_ICON_PX, 3)
-
-    @pytest.mark.parametrize("edition", _EDITIONS)
-    def test_app_icon_is_the_full_bleed_icon(self, edition):
-        """Square and opaque to the edge: the source exactly, no plate, no matte."""
-        pixels = _magick_rgb(_ICON_DIR / f"{edition}_app_icon.jpg", _APP_ICON_PX)
-        n = _APP_ICON_PX
-
-        def at(fx, fy):
-            return pixels[int(fy * n) * n + int(fx * n)]
-
-        for corner in (pixels[0], pixels[n - 1], pixels[(n - 1) * n]):
-            assert _near(corner, _STAGE_DARK, 14), f"{edition}: corner {corner} is not the stage"
-        assert _near(at(*_YOU_AT), _YOU, 28)
-        assert _near(at(*_THEM_AT), _THEM, 28)
-
-    @pytest.mark.parametrize("edition", _EDITIONS)
-    def test_app_icon_badge_only_on_the_demo(self, edition):
-        pixels = _magick_rgb(_ICON_DIR / f"{edition}_app_icon.jpg", _APP_ICON_PX)
-        n = _APP_ICON_PX
-        box = _badge_box(n)
-        inside = [pixels[y * n + x] for y in range(n) for x in range(n) if _in_box(x, y, box)]
-        amber = sum(1 for rgb in inside if _near(rgb, _BADGE, 48))
-        if edition == "demo":
-            assert amber >= 0.4 * len(inside), f"demo App Icon: {amber}/{len(inside)} amber"
-        else:
-            assert amber == 0, f"full game's App Icon carries {amber} amber pixels"
-
-    @pytest.mark.parametrize("edition", _EDITIONS)
-    def test_shortcut_icon_is_the_frame_the_app_installs(self, edition):
-        shortcut = _ICON_DIR / f"{edition}_shortcut_icon.png"
-        assert _png_dimensions(shortcut.read_bytes()) == (_SHORTCUT_ICON_PX, _SHORTCUT_ICON_PX)
-        assert shortcut.read_bytes() == _bundle_png(edition, "128x128@2x.png").read_bytes()
-
-    def test_no_stale_client_icon_remains(self):
-        """Valve generates the .ico from the Shortcut Icon PNG; a hand-built one
-        in the tree would invite someone to upload it."""
-        assert not list(_ICON_DIR.glob("*_client_icon.ico"))
-
-
-# ---------------------------------------------------------------------------
-# D-10e  The Microsoft Store package logos, for both packages
-# ---------------------------------------------------------------------------
-class TestMicrosoftStoreLogos:
-    @pytest.mark.parametrize("edition", _EDITIONS)
-    @pytest.mark.parametrize("name", sorted(_MSSTORE_LOGOS))
-    def test_logo_is_the_tile_at_the_manifest_size(self, edition, name):
-        frame = _Frame(_MSSTORE_DIR[edition] / name)
-        size = _MSSTORE_LOGOS[name]
-        assert (frame.width, frame.height) == (size, size)
-        assert frame.pixels[0][3] == 0, f"{edition}/{name}: the corner is not rounded"
-        assert _near(frame.at(*_THEM_AT), _THEM, 28), f"{edition}/{name}: no emerald bubble"
-        assert _near(frame.at(*_YOU_AT), _YOU, 28), f"{edition}/{name}: no violet bubble"
-
-    @pytest.mark.parametrize("name", sorted(_MSSTORE_LOGOS))
-    def test_badge_only_on_the_demo(self, name):
-        for edition in _EDITIONS:
-            frame = _Frame(_MSSTORE_DIR[edition] / name)
-            box = _badge_box(frame.width)
-            inside = [rgba for x, y, rgba in frame if _in_box(x, y, box)]
-            amber = sum(1 for rgba in inside if _near(rgba, _BADGE, 40))
-            if edition == "demo":
-                assert amber >= 0.4 * len(inside), f"demo {name}: {amber}/{len(inside)} amber"
-            else:
-                assert amber == 0, f"base {name} carries {amber} amber pixels"
-
-
-# ---------------------------------------------------------------------------
-# D-10f  The committed vector output still matches the generator
-# ---------------------------------------------------------------------------
-def _load(path: Path, name: str):
-    """Import a generator script by path — they are scripts, not package modules.
-
-    Importing costs nothing and needs no renderer: rsvg-convert and ImageMagick
-    are only looked up inside the render functions.
-    """
-    spec = importlib.util.spec_from_file_location(name, path)
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
-
-
-class TestGeneratedArtworkIsCurrent:
-    """The SVG outputs are plain text, so they are checked against the generator
-    byte for byte: a hand-edited favicon, a stale demo master or a logo copied
-    in from somewhere else fails here instead of becoming a second mark.
-
-    The rasters cannot be checked this way without a renderer; everything
-    above pins what they look like instead.
-    """
-
-    def test_every_vector_output_is_current(self):
-        gen = _load(_GEN_ICONS, "convsim_gen_icons")
-        stale = [
-            str(rel) for rel, text in gen.text_outputs().items()
-            if (_REPO_ROOT / rel).read_text() != text
-        ]
-        assert not stale, (
-            f"{stale} are out of date — they are generated output: re-run "
-            "publishing/assets/source/gen_icons.py (which also rewrites the "
-            "rasters; name your librsvg build in the commit message, see the "
-            "script's docstring)"
-        )
-
-    def test_the_demo_vectors_carry_the_badge(self):
-        gen = _load(_GEN_ICONS, "convsim_gen_icons")
-        for rel in (gen.DEMO_MASTER_SVG, gen.STEAM_ICON_DIR / "demo_icon.svg"):
-            assert gen.BADGE_FILL in (_REPO_ROOT / rel).read_text(), f"{rel} has no badge"
-        for rel in (gen.STEAM_ICON_DIR / "base_icon.svg", *gen.FAVICON_SVG):
-            assert gen.BADGE_FILL not in (_REPO_ROOT / rel).read_text(), f"{rel} has a badge"
-
-
-# ---------------------------------------------------------------------------
-# D-10g  The capsule and library art (issue #551)
-# ---------------------------------------------------------------------------
-@pytest.fixture(scope="module")
-def capsule():
-    """``capsule(edition, name)`` -> a decoded ``_Raster``, each file read once."""
-    cache: dict[tuple[str, str], _Raster] = {}
-
-    def load(edition: str, name: str) -> _Raster:
-        if (edition, name) not in cache:
-            folder = _DEMO_CAPSULE_DIR if edition == "demo" else _CAPSULE_DIR
-            cache[(edition, name)] = _Raster(folder / f"{name}.png")
-        return cache[(edition, name)]
-
-    return load
-
-
-def _capsule_badge_box(width: int, height: int) -> tuple[float, float, float, float]:
-    """The DEMO pill on a capsule: an icon's badge, that icon pinned to the
-    capsule's lower-right corner at 0.6 x the geometric-mean side."""
-    side = _CAPSULE_BADGE_ICON_SIDE * (width * height) ** 0.5
-    x0, y0, x1, y1 = _badge_box(side)
-    dx, dy = width - side, height - side
-    return x0 + dx, y0 + dy, x1 + dx, y1 + dy
-
-
-def _pixels_in(raster: _Raster, box, pad: float = 0.0):
-    x0, y0, x1, y1 = box
-    for y in range(max(0, int(y0 - pad)), min(raster.height, int(y1 + pad) + 1)):
-        for x in range(max(0, int(x0 - pad)), min(raster.width, int(x1 + pad) + 1)):
-            if _in_box(x, y, box, pad):
-                yield x, y, raster.rgba(x, y)
-
-
-class TestCapsules:
-    """Each app's own store and library art, drawing the official mark.
-
-    The demo's set is the full game's plus the icon's badge, pinned to the
-    lower-right corner of every asset that may carry the game name.
-    """
-
-    def test_the_demo_set_is_exactly_the_upload_set(self):
-        """Eight assets, and nothing that invites a wrong upload: no page
-        background (optional, and the full game's is the file if ever needed)
-        and no community icon (gen_icons.py's, in publishing/assets/icons/)."""
-        found = sorted(p.name for p in _DEMO_CAPSULE_DIR.iterdir())
-        assert found == sorted(f"{n}.png" for n in _CAPSULE_SIZES), (
-            f"publishing/assets/capsules/demo/ holds {found}; re-run "
-            "gen_capsules.py --edition demo"
-        )
-
-    @pytest.mark.parametrize("name", sorted(_CAPSULE_SIZES))
-    def test_demo_asset_is_valves_exact_size(self, name):
-        path = _DEMO_CAPSULE_DIR / f"{name}.png"
-        assert path.is_file(), f"{path.name} is missing: run gen_capsules.py --edition demo"
-        assert _png_dimensions(path.read_bytes()) == _CAPSULE_SIZES[name]
-
-    @pytest.mark.parametrize("name", sorted({**_CAPSULE_SIZES, **_BASE_ONLY_CAPSULES}))
-    def test_full_game_asset_is_valves_exact_size(self, name):
-        sizes = {**_CAPSULE_SIZES, **_BASE_ONLY_CAPSULES}
-        path = _CAPSULE_DIR / f"{name}.png"
-        assert path.is_file(), f"{path.name} is missing: run gen_capsules.py"
-        assert _png_dimensions(path.read_bytes()) == sizes[name]
-
-    def test_badged_demo_assets_are_not_copies(self):
-        for name in _BADGED_CAPSULES:
-            demo = (_DEMO_CAPSULE_DIR / f"{name}.png").read_bytes()
-            assert demo != (_CAPSULE_DIR / f"{name}.png").read_bytes(), name
-
-    def test_hero_and_logo_are_the_full_games(self):
-        """No text on the hero, no corner on the logo: the demo's are the full game's."""
-        for name in ("library_hero", "library_logo"):
-            assert ((_DEMO_CAPSULE_DIR / f"{name}.png").read_bytes()
-                    == (_CAPSULE_DIR / f"{name}.png").read_bytes()), name
-
-    @pytest.mark.parametrize("name", _BADGED_CAPSULES)
-    def test_demo_is_the_full_art_outside_the_badge(self, name, capsule):
-        full, demo = capsule("full", name), capsule("demo", name)
-        box = _capsule_badge_box(full.width, full.height)
-        moved = [
-            (x, y) for y in range(0, full.height, 3) for x in range(0, full.width, 3)
-            if not _in_box(x, y, box, pad=2.0)
-            and max(abs(a - b) for a, b in zip(full.rgba(x, y), demo.rgba(x, y))) > 2
-        ]
-        assert not moved, f"{name}: the demo differs from the full game outside the badge at {moved[:5]}"
-
-    @pytest.mark.parametrize("name", _BADGED_CAPSULES)
-    def test_badge_spells_demo_in_the_lower_right(self, name, capsule):
-        raster = capsule("demo", name)
-        box = _capsule_badge_box(raster.width, raster.height)
-        amber = sum(1 for _, _, rgba in _pixels_in(raster, box) if _near(rgba, _BADGE, 40))
-        inside = sum(1 for _ in _pixels_in(raster, box))
-        assert inside and amber >= 0.4 * inside, f"{name}: {amber}/{inside} of the pill is amber"
-        unit = _CAPSULE_BADGE_ICON_SIDE * (raster.width * raster.height) ** 0.5 / 864
-        columns: dict[int, int] = {}
-        for x, _, rgba in _pixels_in(raster, _text_window(box, unit)):
-            if _is_ink(rgba):
-                columns[x] = columns.get(x, 0) + 1
-        runs = _letterforms(columns)
-        assert len(runs) == 4, f"{name}: {len(runs)} letterform(s), not four: {runs}"
-
-    @pytest.mark.parametrize("name", _BADGED_CAPSULES)
-    def test_nothing_crowds_the_badge(self, name, capsule):
-        """Only the stage where the badge goes, and a clearance round it.
-
-        Checked on the full game's art, which has no badge: anything there is
-        composition the demo's badge would cover or crowd.
-        """
-        raster = capsule("full", name)
-        box = _capsule_badge_box(raster.width, raster.height)
-        pad = _CAPSULE_BADGE_CLEARANCE * (box[3] - box[1])
-        strays = [(x, y) for x, y, rgba in _pixels_in(raster, box, pad)
-                  if min(_distance(rgba[:3], c) for c in _CAPSULE_STAGE) > 16]
-        assert not strays, f"{name}: artwork under or beside the badge at {strays[:5]}"
-
-    @pytest.mark.parametrize("edition", ("full", "demo"))
-    @pytest.mark.parametrize("name", sorted(_CAPSULE_SIZES))
-    def test_the_mark_is_the_two_voices(self, edition, name, capsule):
-        """Both bubble colours, and none of the retired capsule-only drawing's."""
-        raster = capsule(edition, name)
-        seen = [rgba for _, _, rgba in raster.sample(3) if rgba[3] == 255]
-        assert any(_near(rgba, _YOU, 6) for rgba in seen), f"{edition}/{name}: no violet bubble"
-        assert any(_near(rgba, _THEM, 6) for rgba in seen), f"{edition}/{name}: no emerald bubble"
-        assert not any(_near(rgba, c, 20) for rgba in seen for c in _RETIRED), (
-            f"{edition}/{name}: carries a retired brand colour"
-        )
-
-    def test_logo_is_transparent(self, capsule):
-        raster = capsule("full", "library_logo")
-        assert raster.alpha, "the library logo must be a transparent PNG"
-        w, h = raster.width, raster.height
-        for x, y in ((0, 0), (w - 1, 0), (0, h - 1), (w - 1, h - 1)):
-            assert raster.rgba(x, y)[3] == 0, f"logo corner ({x}, {y}) is not transparent"

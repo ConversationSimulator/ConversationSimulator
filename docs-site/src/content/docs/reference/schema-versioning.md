@@ -129,6 +129,6 @@ Schema files must not define fields that accept executable code. Specifically:
 - No `scripts` object at any nesting level in pack manifests.
 - No `eval`, `exec`, or `code` fields.
 - No URLs that are loaded at runtime without user action.
-- If a pack manifest's `assets` block includes an `allow_external_urls` field, the value must be `false` (enforced via `const: false` in [`pack.schema.json`](https://github.com/outrightmental/ConversationSimulator/blob/main/schemas/pack.schema.json)). Packs that omit `allow_external_urls` or the entire `assets` block are not constrained at the schema level; URL policy for those packs is enforced by the pack-loader at runtime.
+- If a pack manifest's `assets` block includes an `allow_external_urls` field, the value must be `false` (enforced via `const: false` in [`pack.schema.json`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/schemas/pack.schema.json)). Packs that omit `allow_external_urls` or the entire `assets` block are not constrained at the schema level; URL policy for those packs is enforced by the pack-loader at runtime.
 
 Violations are treated as security issues. Report them via the [security policy](/project/security/).

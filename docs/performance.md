@@ -40,7 +40,7 @@ Measured with the **starter model** (Qwen3 4B Q4\_K\_M, 2.5 GB, context 8192) us
 
 Budget column for reference: TTFT < 2.5 s, TTS < 1.5 s, STT < 2 s, cold start < 10 s. Comfortable and Slow tiers operate within budget on the starter model; high-quality models (14 B+) push into Slow or Unsupported territory on those tiers.
 
-> These results are for the Steam system-requirements reference platform described in [#283](https://github.com/outrightmental/ConversationSimulator/issues/283)'s docs. For players whose hardware matches a tier, the table sets honest download and runtime expectations.
+> These results are for the Steam system-requirements reference platform described in [#283](https://github.com/ConversationSimulator/ConversationSimulator/issues/283)'s docs. For players whose hardware matches a tier, the table sets honest download and runtime expectations.
 
 ## What the app measures
 

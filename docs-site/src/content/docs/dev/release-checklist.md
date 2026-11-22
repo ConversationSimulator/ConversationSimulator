@@ -6,7 +6,7 @@ sidebar:
 ---
 
 This checklist covers every step a maintainer must complete before tagging a
-release.  It is split into three parts:
+release, and what tagging sets off.  The gates are split into three parts:
 
 - **Part A — CI gates** (automated, no model downloads): must be green before
   any manual step begins.
@@ -18,8 +18,33 @@ release.  It is split into three parts:
 Read Part A results in GitHub Actions before you touch Part B or Part C.
 
 > **MVP release gate:** The release **cannot** be tagged as MVP unless every
-> acceptance checklist under [`docs/acceptance/`](https://github.com/outrightmental/ConversationSimulator/tree/main/docs/acceptance) shows PASS (or a documented,
+> acceptance checklist under [`docs/acceptance/`](https://github.com/ConversationSimulator/ConversationSimulator/tree/main/docs/acceptance) shows PASS (or a documented,
 > maintainer-approved exception) in addition to Parts A and B below.
+
+---
+
+## Releasing
+
+What happens in this repository is short:
+
+1. **Notes and versions.** Add the new version's section to `RELEASE_NOTES.md`
+   under the heading `# Conversation Simulator vX.Y.Z — Release Notes`. On a
+   minor bump, re-verify the docs pages and re-stamp their `verified_against`
+   version (`bash scripts/check-docs-freshness.sh vX.Y.Z` says which).
+2. **Gates.** Get Parts A to C below green on the commit to be released.
+3. **Tag.** Push the tag `vX.Y.Z` on that commit.
+4. **The Release workflow publishes the release.** On the pushed tag,
+   `.github/workflows/release.yml` runs the smoke check, the Tauri version
+   check and the docs freshness check, then publishes the GitHub release with
+   that version's notes. A tag with a pre-release suffix (`vX.Y.Z-rc.1`) is
+   published as a pre-release. No binaries are attached.
+
+Everything after that happens in the studio's publishing pipeline, which
+starts from the published release: it builds the installers from the tag,
+signs and notarises them, stages them in the stores and promotes a build to
+players. None of that pipeline, and no store or signing credential, is held in
+this repository. Parts E to J below are run against the build that pipeline
+stages.
 
 ---
 
@@ -51,8 +76,8 @@ intend to tag.
 - [ ] `[web]` — Web frontend typecheck passes
 
 > **Note:** `[artifact-inspect]` skips in CI (no build artifact available).  It
-> runs automatically as part of the Steam deploy workflow, and can be triggered
-> manually via `--full` mode — see Part F below.
+> runs in the studio's publishing pipeline against the built depots, and can be
+> triggered manually via `--full` mode — see Part F below.
 
 If any CI gate is red, **do not proceed to Part B** — fix the failure first.
 
@@ -443,13 +468,10 @@ Reinstall the app from Steam after the E.5 uninstall.
 
 ### E.7 Depot content audit (pre-submission)
 
-Before submitting the depot to Valve, run the audit locally:
+The studio's publishing pipeline audits each depot before it is uploaded.
+Confirm its result for this build:
 
-```powershell
-.\scripts\depot-audit.ps1 steam-content\windows
-```
-
-- [ ] Exits 0 (no violations)
+- [ ] The audit reported no violations
 - [ ] No `.gguf`, `.bin`, `.safetensors`, `.pt`, `.pth`, or `.ckpt` files in the depot
 - [ ] No `.env`, `__pycache__\`, or `.venv\` directories in the depot
 - [ ] Installer is Authenticode-signed (verify with `signtool.exe verify /pa /v <file>`)
@@ -528,7 +550,7 @@ Run this checklist against an **actual packaged desktop build** (`.app`,
 It supplements Part B by testing the packaged binary path rather than the
 source-install developer path.
 
-> **CI equivalent:** `[e2e-playthrough]` in [`release-smoke.yml`](https://github.com/outrightmental/ConversationSimulator/blob/main/.github/workflows/release-smoke.yml) covers the
+> **CI equivalent:** `[e2e-playthrough]` in [`release-smoke.yml`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/.github/workflows/release-smoke.yml) covers the
 > fake-runtime version of this flow.  Part F validates the same flow with a
 > real packaged binary and (optionally) a real model.
 
@@ -645,7 +667,7 @@ grep -r "player_turn\|npc_turn\|content.*:" "${TMPDIR:-/tmp}"/convsim-release-sm
 ```
 
 - [ ] No `player_turn` or `npc_turn` event content in any artifact file
-- [ ] `save_transcript: false` was set in all smoke session configs (see [`tests/e2e/test_scripted_playthrough.py`](https://github.com/outrightmental/ConversationSimulator/blob/main/tests/e2e/test_scripted_playthrough.py))
+- [ ] `save_transcript: false` was set in all smoke session configs (see [`tests/e2e/test_scripted_playthrough.py`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/tests/e2e/test_scripted_playthrough.py))
 
 ---
 
@@ -1009,7 +1031,7 @@ These items are required for Valve to grant the Verified tier (G4-02).
 - [ ] No required action hidden behind a mouse-only hover state
 - [ ] All text readable at 1280×800 from couch distance without zooming
 - [ ] Every interactive element had a visible focus ring during controller navigation
-- [ ] Default controller config ([`steam/controller_config.vdf`](https://github.com/outrightmental/ConversationSimulator/blob/main/steam/controller_config.vdf)) loaded automatically
+- [ ] Default controller config loaded automatically
   (confirm via Steam Input overlay)
 - [ ] Push-to-talk (R1) does not conflict with Steam overlay (Shift+Tab)
 - [ ] App exits cleanly and returns to the Steam library home
@@ -1045,7 +1067,7 @@ Type **Bug**, label `area:steam`, Priority **P0 — blocker**.
 Name the affected platform — Windows, macOS, Linux, or Steam Deck — in the
 issue title and in the template's build-and-environment field.  There are no
 `platform:*` labels; the declared label set is in
-[`.github/project-structure.yml`](https://github.com/outrightmental/ConversationSimulator/blob/main/.github/project-structure.yml) and adding
+[`.github/project-structure.yml`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/.github/project-structure.yml) and adding
 to it is a change to that file, not a launch-day improvisation.  Child issues
 should reference this issue as a blocker.
 
@@ -1066,121 +1088,14 @@ attached to the release issue before the Stage 3 gate is declared open.
 
 ---
 
-## Part K — Steam release dress rehearsal
+## After the tag — the studio's publishing pipeline
 
-Run this section for the **first `vX.Y.Z-rc.1`** (or next release candidate)
-tag that exercises the entire pipeline end-to-end: build → sign (Win
-Authenticode + Defender scan, macOS Developer ID + notarize + staple) → GitHub
-release → gated Steam upload → `beta` live on App 4963030.  This is the Stage 3
-gate rehearsal required by `docs/steam-mvp-scope.md`.
-
-Complete this section **once per rehearsal run**.  Any failure must be filed as
-a new GitHub issue (no blocking-by — it is by definition the new critical path)
-before the Stage 3 gate can be declared PASS.
-
-### K.1 Pipeline observation (GitHub Actions)
-
-Open the Actions run for the rehearsal tag and confirm each item.
-
-**Build chain:**
-- [ ] Tag push → `validate` → `build-desktop` (macOS-aarch64, Linux-x86_64, Windows-x86_64) — all three matrix jobs green
-- [ ] Signing enforcement step: no `ERROR:` lines on any platform (secrets present for `v*` tag)
-
-**Windows signing and scanning:**
-- [ ] Authenticode signing step log shows all `.exe` / `.msi` installers signed successfully
-- [ ] Authenticode verification step shows `signtool verify /pa` exits 0 for all installers
-- [ ] VirusTotal scan record artifact uploaded; analysis URLs recorded (non-blocking, informational)
-- [ ] Defender scan record artifact uploaded; **Defender verdict: clean** for all installers
-
-**macOS signing and notarization:**
-- [ ] `codesign --verify --deep --strict` exits 0 — no `ERROR:` lines
-- [ ] Hardened Runtime entitlement verification shows all five entitlements present — no `ERROR: expected entitlement … missing` lines
-- [ ] `spctl --assess` exits 0 and prints `accepted` — **no `SKIP` or `INFO` line** (notarisation secrets present)
-- [ ] `xcrun stapler validate` exits 0 — **no `SKIP` line** (stapled ticket present)
-- [ ] `Gate G3-01 macOS criterion met` confirmation line present in the step log
-
-**Updater manifest:**
-- [ ] Updater artifacts signed: `.sig` files present for macOS `.app.tar.gz`, Linux `.AppImage`, and Windows `.exe`
-- [ ] `latest.json` generated and uploaded to the versioned GitHub release
-- [ ] Beta-channel release updated with new `latest.json`
-
-**Steam deploy:**
-- [ ] Steam Deploy workflow triggered manually with `set_live_branch = beta`
-- [ ] Job pauses at `steam-release` environment approval gate — no credentials exposed before approval
-- [ ] **Refusal test** (decline once): workflow exits cleanly; no secret is printed; re-trigger works
-- [ ] Approval granted → `steamcmd +run_app_build` completes without error
-- [ ] `steam-build/output/` log files confirm successful upload
-
-### K.2 Steamworks verification
-
-After the Steam deploy workflow completes with `set_live_branch = beta`:
-
-- [ ] Steamworks → App Admin → Builds: new build visible on the `beta` branch
-- [ ] Build description matches the release tag (e.g. "Conversation Simulator v0.1.0-rc.1")
-- [ ] Depot file counts are **non-zero for all three platforms** (Windows, macOS, Linux) — **App 4963030**, three depots
-- [ ] Steamworks → Builds → [build row] → View Manifest: version field equals the tag (without `v` prefix)
-
-### K.3 Product key install matrix
-
-Request Steam product keys via Steamworks → Packages → [paid package] →
-Request Steam Product Keys.  Distribute only to named testers — never publicly.
-
-At minimum, one tester per platform must complete a full text session and reach
-the debrief screen (satisfies G3-06 beta session verification).
-
-| Platform | Tester | Session + debrief | Steam overlay Shift+Tab (G3-03) | No SmartScreen / Gatekeeper (G3-01) | No outbound TCP (PR-01–03) | Date | Sign-off |
-|----------|--------|-------------------|---------------------------------|--------------------------------------|---------------------------|------|---------|
-| Windows 10/11 clean VM | | ☐ | ☐ | ☐ no SmartScreen | ☐ | | |
-| macOS (Apple Silicon) | | ☐ | ☐ | ☐ Gatekeeper silent | ☐ | | |
-| Linux (Ubuntu 22.04 or Steam Deck Desktop) | | ☐ | ☐ | ☐ AppImage executable | ☐ | | |
-
-> **G3-03 caveat — the overlay must be *visibly drawn*, not just "not broken".**
-> On a Tauri app the UI renders in out-of-process WebView2, so Steam's overlay
-> compositing hook has nothing to draw into and the Shift+Tab chord never reaches
-> Steam's input hook. The result is a **silent no-op that reports success**:
-> the friends list shows "In-Game", `is_overlay_enabled()` returns true, and
-> `GameOverlayActivated` fires even though nothing appears. Tick the G3-03 box
-> **only** when the overlay is visibly composited over the app. If a Windows
-> tester sees "nothing happened", that is a **FAIL**. The fix is the Shift+Tab
-> forwarder (`useSteamOverlay`, shipped) plus a Windows decoy compositing surface
-> (see risk SP-06 and
-> [Steam integration § Steam overlay (Windows WebView2 caveat)](/dev/steam-integration/#steam-overlay-windows-webview2-caveat)).
-> Record GPU and Windows build in the Notes below.
-
-### K.4 Dress rehearsal sign-off
-
-Fill this in after K.1, K.2, and K.3 are all complete.
-
-```
-Rehearsal tag        : vX.Y.Z-rc.N
-Rehearsal date       : YYYY-MM-DD
-Release operator     :
-
-CI run URL           :
-Steam deploy run URL :
-
-Pipeline result      : PASS / FAIL
-Steamworks build ID  :
-Defender verdict     : clean / THREAT FOUND (see artifact: defender-scan-Windows-x86_64)
-Depot audit          : PASS / FAIL
-
-Windows tester       :
-macOS tester         :
-Linux tester         :
-
-G3-01 Signing + notarization    : PASS / FAIL  evidence: <CI run URL>
-G3-02 Depot content audit       : PASS / FAIL  evidence: <CI run URL> (Audit depot content step)
-G3-03 Steam overlay             : PASS / FAIL  testers: <names>
-G3-06 Beta session verification : PASS / FAIL  testers: <names>
-
-Notes:
-  -
-  -
-```
-
-> Any failure found during the rehearsal must be filed as a new GitHub issue
-> before the Stage 3 gate is declared PASS.  The issue must reference
-> the rehearsal tag in its body.
+Signing, notarisation, malware scanning, the store uploads and the promotion
+of a build to players are not steps of this checklist. They run in the
+studio's publishing pipeline, from the published release, and that pipeline
+keeps its own runbooks, rehearsal and sign-off. What this repository asks of a
+release ends when the Release workflow has published it; Parts E to J are how
+the staged build is then verified on each platform.
 
 ---
 

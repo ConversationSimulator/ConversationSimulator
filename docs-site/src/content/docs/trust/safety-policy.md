@@ -14,7 +14,7 @@ This document covers:
 5. [Writing a safety policy for your pack](#writing-a-safety-policy-for-your-pack) — creator guide.
 6. [Creator guide: understanding validation rejections](#creator-guide-understanding-validation-rejections)
 
-For the JSON schema definition, see [`schemas/safety.schema.json`](https://github.com/outrightmental/ConversationSimulator/blob/main/schemas/safety.schema.json).  
+For the JSON schema definition, see [`schemas/safety.schema.json`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/schemas/safety.schema.json).  
 For the privacy and data-handling policy, see [privacy](/trust/privacy/).  
 For the full technical specification, see the [spec](/reference/spec/) — section 13 covers content safety.
 
@@ -253,7 +253,7 @@ to the log — only the matched category and action are recorded.
 
 Every line an NPC says is checked before the player sees it, by
 `validate_npc_output` in
-[`output_validator.py`](https://github.com/outrightmental/ConversationSimulator/blob/main/packages/prompt-composer/src/convsim_prompt/output_validator.py).
+[`output_validator.py`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/packages/prompt-composer/src/convsim_prompt/output_validator.py).
 The parser runs it on the whole line; while a reply streams, the sentence gate
 runs the same check, with the same context, on each sentence before it is
 shown. It reports six categories:
@@ -297,7 +297,7 @@ conversations the packs play (issue #526):
 ### Output check corpora
 
 Two corpora in
-[`packages/prompt-composer/tests/corpora/`](https://github.com/outrightmental/ConversationSimulator/tree/main/packages/prompt-composer/tests/corpora/)
+[`packages/prompt-composer/tests/corpora/`](https://github.com/ConversationSimulator/ConversationSimulator/tree/main/packages/prompt-composer/tests/corpora/)
 pin these rules, and CI runs both on every change:
 
 - **`benign.json`**: at least 100 lines that must pass, grouped by official
@@ -346,7 +346,7 @@ repetition-retry or closing line that was discarded for failing the check.
 
 Each scenario pack ships a safety policy YAML file referenced from
 `manifest.yaml` under `safety.policy`. The file is validated against
-[`schemas/safety.schema.json`](https://github.com/outrightmental/ConversationSimulator/blob/main/schemas/safety.schema.json) at load time.
+[`schemas/safety.schema.json`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/schemas/safety.schema.json) at load time.
 
 ### Minimal example
 

@@ -191,7 +191,6 @@ if (-not $hasKms -and -not $hasPfx) {
     Write-Info "No signing credentials configured — skipping: $FilePath"
     Write-Info "For KMS signing : set GCP_SA_KEY_JSON + GCP_KMS_KEY + WINDOWS_CODESIGN_CERT"
     Write-Info "For PFX fallback: set CERT_PFX_BASE64 + CERT_PASSWORD"
-    Write-Info "See publishing/WINDOWS_CODE_SIGNING.md for setup."
     exit 0
 }
 

@@ -16,12 +16,12 @@ body:
         - If your report involves a **security vulnerability** (e.g. prompt
           injection that escapes the sandbox, privilege escalation, data
           exfiltration, or network traffic that should not occur), please use
-          [GitHub private vulnerability reporting](https://github.com/outrightmental/ConversationSimulator/security/advisories/new)
+          [GitHub private vulnerability reporting](https://github.com/ConversationSimulator/ConversationSimulator/security/advisories/new)
           or follow the process in
-          [SECURITY.md](https://github.com/outrightmental/ConversationSimulator/blob/main/SECURITY.md).
+          [SECURITY.md](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/SECURITY.md).
         - For concerns that require **confidential handling**, contact the
           maintainers directly as described in
-          [CODE_OF_CONDUCT.md](https://github.com/outrightmental/ConversationSimulator/blob/main/CODE_OF_CONDUCT.md).
+          [CODE_OF_CONDUCT.md](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/CODE_OF_CONDUCT.md).
 
         **Privacy note:** This is a public issue. Do not paste conversation
         transcripts, NPC session logs, or audio recordings here unless you

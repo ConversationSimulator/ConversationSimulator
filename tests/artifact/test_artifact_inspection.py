@@ -12,8 +12,9 @@ Or directly:
   CONVSIM_ARTIFACT_DIR=apps/desktop/src-tauri/target/release/bundle/appimage \
     pytest tests/artifact/ -v
 
-These checks complement the shell-based depot-audit.sh, which enforces the
-Steamworks compliance rules (MD-04 weight files, devfile exclusions).
+These checks complement the studio's shell-based depot audit, kept with the
+store files outside this repository, which enforces the Steamworks compliance
+rules (MD-04 weight files, devfile exclusions).
 Python tests here add: version stamping, icon presence, executable permissions,
 and Python-native assertion messages for post-mortem inspection.
 """
@@ -88,7 +89,7 @@ def _is_windows_portable_depot(artifact_dir: Path) -> bool:
     """Return True if artifact_dir looks like a Windows portable Steam depot.
 
     The portable depot ships ``ConversationSimulator.exe`` at its root (see
-    the "Package Windows portable depot layout" step in release.yml).  It also
+    the "Package Windows portable depot layout" step of the release build).  It also
     ships a whole tree of unversioned application binaries — the sidecar, the
     bundled llama.cpp runtime and *its* sibling tools (llama-cli.exe,
     llama-bench.exe, …) — none of which carry a semver in their filename.  The
@@ -455,7 +456,7 @@ class TestForbiddenPatterns:
     ) -> None:
         """No model weight files (.gguf, .safetensors, .pt, etc.) in artifact.
 
-        Mirrors compliance rule MD-04 enforced by depot-audit.sh.
+        Mirrors compliance rule MD-04 enforced by the depot audit.
         Model weights must be downloaded explicitly by the player, never bundled.
         """
         weight_files = [
@@ -472,7 +473,7 @@ class TestForbiddenPatterns:
         self, all_file_paths: list[Path], artifact_dir: Path
     ) -> None:
         """Large .bin files that are not ELF/PE executables may be weight files."""
-        WEIGHT_SIZE_THRESHOLD = 1_048_576  # 1 MiB — same as depot-audit.sh
+        WEIGHT_SIZE_THRESHOLD = 1_048_576  # 1 MiB — same as the depot audit
         suspicious = []
         for f in all_file_paths:
             if f.suffix != ".bin":
@@ -598,8 +599,6 @@ class TestWindowsPortableLayout:
     installer or MSI package) so the Steam client can install the files directly.
     These tests run only when the artifact directory looks like a Windows portable
     depot (ConversationSimulator.exe at the root).
-
-    See publishing/STEAM_DEPOT_CONTENTS.md — Windows depot section.
     """
 
     def _is_windows_portable_depot(self, artifact_dir: Path) -> bool:
@@ -622,7 +621,7 @@ class TestWindowsPortableLayout:
             "ConversationSimulator.exe not found at depot root. "
             "The Windows Steam depot must ship the application binary directly "
             "at the depot root, not wrapped in an installer. "
-            "Check the packaging step in release.yml."
+            "Check the packaging step of the release build."
         )
 
     def test_convsim_core_sidecar_present(
@@ -654,7 +653,7 @@ class TestWindowsPortableLayout:
             "installscript.vdf not found at depot root. "
             "The Windows Steam depot requires a Steam InstallScript to bootstrap "
             "the WebView2 Evergreen Runtime on first launch. "
-            "See steam/installscript.vdf and publishing/STEAM_DEPOT_CONTENTS.md."
+            "The script is installscript.vdf, kept with the Steam depot files."
         )
         content = vdf_path.read_text(encoding="utf-8", errors="replace")
         assert "InstallScript" in content, (
@@ -685,7 +684,7 @@ class TestWindowsPortableLayout:
             "MicrosoftEdgeWebView2Setup.exe not found at depot root. "
             "The WebView2 Evergreen Bootstrapper must be included in the Windows "
             "Steam depot so the Steam InstallScript can install the WebView2 Runtime "
-            "on first launch. See the packaging step in release.yml."
+            "on first launch. See the packaging step of the release build."
         )
 
     def test_no_installer_packages_in_depot(
@@ -731,7 +730,7 @@ class TestWindowsPortableLayout:
         version_file = artifact_dir / "version.txt"
         assert version_file.is_file(), (
             "version.txt not found at Windows depot root. "
-            "The packaging step in release.yml must write version.txt with the "
+            "The packaging step of the release build must write version.txt with the "
             "release tag version so artifact inspection can verify the version stamp."
         )
         version = version_file.read_text(encoding="utf-8").strip()

@@ -1,5 +1,5 @@
-[![CI](https://github.com/outrightmental/ConversationSimulator/actions/workflows/ci.yml/badge.svg)](https://github.com/outrightmental/ConversationSimulator/actions/workflows/ci.yml)
-[![Release](https://github.com/outrightmental/ConversationSimulator/actions/workflows/release.yml/badge.svg)](https://github.com/outrightmental/ConversationSimulator/actions/workflows/release.yml)
+[![CI](https://github.com/ConversationSimulator/ConversationSimulator/actions/workflows/ci.yml/badge.svg)](https://github.com/ConversationSimulator/ConversationSimulator/actions/workflows/ci.yml)
+[![Release](https://github.com/ConversationSimulator/ConversationSimulator/actions/workflows/release.yml/badge.svg)](https://github.com/ConversationSimulator/ConversationSimulator/actions/workflows/release.yml)
 
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 <img src="docs/assets/brand/ConversationSimulatorIcon.svg" alt="" width="96" height="96">
@@ -72,7 +72,7 @@ the authoring wall those earlier systems hit.
 ## Quickstart
 
 ```bash
-git clone https://github.com/outrightmental/ConversationSimulator
+git clone https://github.com/ConversationSimulator/ConversationSimulator
 cd ConversationSimulator
 ./scripts/setup.sh     # check env, install packages, create ~/.convsim/
 ./scripts/dev.sh       # start all services
@@ -304,7 +304,7 @@ Every session runs through a layered safety system before and after the model is
 | --------- | ---- | ------ |
 | 0 | Monorepo skeleton, dev setup, official scenario packs | Complete |
 | 1 | Text-only local simulator (browser UI + Python backend + local LLM) | Complete |
-| 2 | Scenario pack system (import, validate, browse community packs) | Import, export and validation complete; in-app community pack browser planned ([#465](https://github.com/outrightmental/ConversationSimulator/issues/465)) |
+| 2 | Scenario pack system (import, validate, browse community packs) | Import, export and validation complete; in-app community pack browser planned ([#465](https://github.com/ConversationSimulator/ConversationSimulator/issues/465)) |
 | 3 | Local voice input (Whisper speech-to-text) | Complete (opt-in) |
 | 4 | Local voice output (TTS with Kokoro / sherpa-onnx) | Complete (opt-in) |
 | 5 | Polished playable alpha | Complete (v0.1.0-alpha.1); v0.4.0 is the first public demo |
@@ -313,7 +313,7 @@ Every session runs through a layered safety system before and after the model is
 deliberately out of scope, and links to the acceptance criteria and docs.
 
 > [Delivery board](https://github.com/orgs/outrightmental/projects/12) — every issue ever shipped, in phases &nbsp;·&nbsp;
-> [GitHub Milestones](https://github.com/outrightmental/ConversationSimulator/milestones) &nbsp;·&nbsp;
+> [GitHub Milestones](https://github.com/ConversationSimulator/ConversationSimulator/milestones) &nbsp;·&nbsp;
 > [Full specification](docs/SPEC.md) &nbsp;·&nbsp;
 > [Post-alpha issues](docs/post-alpha-issues.md)
 
@@ -324,15 +324,15 @@ Conversation Simulator is **free and open source, and fairly priced**:
 - **GitHub — free.** Clone this repository, build it with the quickstart above,
   and run it at no cost. The engine and the First Words tutorial are Apache-2.0,
   and the official scenario packs are CC BY 4.0.
-- **Steam — $9.99.** The [Steam edition](publishing/STEAM_STORE_PAGE.md) is the
+- **Steam — $9.99.** The [Steam edition](https://store.steampowered.com/app/4963030/Conversation_Simulator/) is the
   same software, packaged: signed, notarized, auto-updating.
   The price funds continued development; it does not unlock anything the source
   build lacks. The Steam edition makes the same local-first guarantee as the
   open-source build.
 - **Microsoft Store — $9.99 (Windows).** The same full edition for Windows,
   installed and updated by the Microsoft Store, without Steam's features
-  (achievements, Workshop, DLC). See
-  [publishing/MICROSOFT_STORE.md](publishing/MICROSOFT_STORE.md).
+  (achievements, Workshop, DLC). It is
+  [on the Microsoft Store](https://apps.microsoft.com/detail/9NTNF4X3GQ95).
 - **Steam demo — free.** A [demo edition](docs/steam-next-fest-demo.md) of the
   Steam build — one model download, five curated conversations, nothing else —
   ships as a separate free Steam app for Steam Next Fest. Everything you practise
@@ -347,16 +347,31 @@ This free-on-GitHub, fairly-priced-on-Steam pattern has a strong track record �
 Fortress, Shattered Pixel Dungeon, Mindustry, Aseprite — and the reasoning behind it is
 laid out in [docs/landscape.md](docs/landscape.md#business-model-precedents).
 
-The Steam release documents:
+The Steam edition's documents in this repository:
 
 | Document | Purpose |
 |----------|---------|
 | [docs/STEAM_ROADMAP.md](docs/STEAM_ROADMAP.md) | Release principles and release train (Stages 1–5) |
-| [publishing/STEAM_STORE_AND_OPERATIONS.md](publishing/STEAM_STORE_AND_OPERATIONS.md) | Store page operations, launch runbook, support triage |
-| [publishing/STEAM_PUBLISHING_AND_DEPLOYMENT.md](publishing/STEAM_PUBLISHING_AND_DEPLOYMENT.md) | SteamPipe concepts, CI deploy, manual upload, branch promotion, troubleshooting |
 | [docs/STEAM_INTEGRATION.md](docs/STEAM_INTEGRATION.md) | Steam API bridge, Steam Cloud exclusions, achievements, stats, rich presence |
-| [publishing/MACOS_SIGNING_AND_NOTARIZATION.md](publishing/MACOS_SIGNING_AND_NOTARIZATION.md) | macOS Apple Developer ID signing and notarisation |
-| [publishing/WINDOWS_CODE_SIGNING.md](publishing/WINDOWS_CODE_SIGNING.md) | Windows Authenticode signing |
+
+### What this repository is, and how it is released
+
+This repository is the software, and only the software: the app, its engine,
+the official packs and the documentation. The website, the store listings and
+everything that builds, signs and ships the store editions are kept elsewhere.
+
+- **It sends no metrics of any kind.** No telemetry, no analytics, no crash
+  reports, no usage pings — not from the app, and not from anything built out
+  of this repository. See the [local-first promise](#local-first-promise).
+- **A release here is a tag and its notes.** When a `v*` tag is pushed, the
+  [Release workflow](.github/workflows/release.yml) checks the code at the tag
+  and publishes a GitHub release carrying that version's section of
+  [RELEASE\_NOTES.md](RELEASE_NOTES.md). It attaches no binaries, and this
+  repository holds no store or signing credential.
+- **The studio builds and ships from there.** Outright Mental's separate,
+  private pipeline picks up each published release, builds it from the tag,
+  signs it and takes it to the stores. The steps on this side are in
+  [docs/release-checklist.md](docs/release-checklist.md).
 
 ---
 
@@ -378,8 +393,8 @@ improvements, or new runtime adapters. Scenario packs are the friendliest entry 
 you can ship one without touching engine code.
 
 **Start here:**
-[`good first issue`](https://github.com/outrightmental/ConversationSimulator/issues?q=is%3Aissue+state%3Aopen+label%3A%22good+first+issue%22) &nbsp;·&nbsp;
-[`help wanted`](https://github.com/outrightmental/ConversationSimulator/issues?q=is%3Aissue+state%3Aopen+label%3A%22help+wanted%22) &nbsp;·&nbsp;
+[`good first issue`](https://github.com/ConversationSimulator/ConversationSimulator/issues?q=is%3Aissue+state%3Aopen+label%3A%22good+first+issue%22) &nbsp;·&nbsp;
+[`help wanted`](https://github.com/ConversationSimulator/ConversationSimulator/issues?q=is%3Aissue+state%3Aopen+label%3A%22help+wanted%22) &nbsp;·&nbsp;
 [Delivery board](https://github.com/orgs/outrightmental/projects/12) &nbsp;·&nbsp;
 [How the project is run](docs/governance.md)
 

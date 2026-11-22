@@ -169,7 +169,5 @@ See [privacy.md](privacy.md) for the full local-first data handling policy and
 - [network-security.md](network-security.md) — runtime network enforcement
 - [safety-policy.md](safety-policy.md) — content safety policy
 - [SECURITY.md](../SECURITY.md) — security vulnerability disclosure
-- [publishing/LAUNCH_DAY_RUNBOOK.md](../publishing/LAUNCH_DAY_RUNBOOK.md) — launch day operations, rollback criteria, hotfix workflow
-- [publishing/POST_LAUNCH_FEEDBACK_SUMMARY.md](../publishing/POST_LAUNCH_FEEDBACK_SUMMARY.md) — 72-hour feedback summary and next milestone plan
 - [.github/workflows/hotfix.yml](../.github/workflows/hotfix.yml) — hotfix branch creation workflow
-- [GitHub issue templates](https://github.com/outrightmental/ConversationSimulator/tree/main/.github/ISSUE_TEMPLATE) — all available templates
+- [GitHub issue templates](https://github.com/ConversationSimulator/ConversationSimulator/tree/main/.github/ISSUE_TEMPLATE) — all available templates

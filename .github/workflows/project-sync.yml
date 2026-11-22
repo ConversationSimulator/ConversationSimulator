@@ -13,8 +13,7 @@
 # Token: PROJECT_SYNC_TOKEN, a fine-grained token on the outrightmental
 # organization with Projects: read and write, plus Issues: read and write and
 # Metadata: read on this repository (or a classic token with `repo` and
-# `project`). Without it every run says so and exits green — the same shape as
-# the Steam job without its credentials.
+# `project`). Without it every run says so and exits green.
 #
 #   Scheduled run   audit only: reports drift in the job summary, changes nothing,
 #                   and fails the run when there is drift or the audit could not run.

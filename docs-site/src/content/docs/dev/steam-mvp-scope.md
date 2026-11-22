@@ -9,8 +9,8 @@ sidebar:
 > feature lists and pass/fail gates for each release stage. This is the
 > "definition of done" companion to
 > [STEAM_ROADMAP.md](/dev/steam-roadmap/) (principles and release train) and
-> [publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md](https://github.com/outrightmental/ConversationSimulator/blob/main/publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md)
-> (risks and mitigations).
+> the studio's Steam compliance and risk register (risks and mitigations; kept
+> outside this repository).
 
 ---
 
@@ -97,7 +97,7 @@ approved by Valve for private access.
 | G3-01 | Signing and notarization | Manual | macOS DMG is notarised with an Apple Developer ID certificate; Gatekeeper passes on a clean macOS install without any security bypass. Windows installer is code-signed with an EV certificate; SmartScreen does not block installation on a clean Windows install. |
 | G3-02 | Steam depot content audit | Manual | Steam depot manifest contains no `.gguf`, `.bin`, or `.safetensors` model-weight files. No model download is triggered during Steam depot installation. Matches checklist item SR-08 in the compliance register. |
 | G3-03 | Steam overlay compatibility | Manual (beta testers) | Steam overlay (Shift+Tab) **visibly opens over the running app** and closes without breaking the app or the current session. Push-to-talk key (if voice is enabled) does not conflict with Steam overlay defaults (F12 screenshot, Shift+Tab overlay). **Windows caveat:** because the UI renders in WebView2, the overlay is a silent no-op unless the app both forwards the Shift+Tab chord and provides a decoy compositing surface — and Steam reports success (friends list "In-Game", `is_overlay_enabled()` true, `GameOverlayActivated` fires) even when nothing is drawn, so "no crash" is **not** a pass. A tester who sees only "nothing happened" must record FAIL, not PASS. See [Steam integration § Steam overlay (Windows WebView2 caveat)](/dev/steam-integration/#steam-overlay-windows-webview2-caveat). |
-| G3-04 | Release-blocking risks resolved | Manual | All risks marked `Release-blocking: YES` in [STEAM_COMPLIANCE_AND_RISK_REGISTER.md](https://github.com/outrightmental/ConversationSimulator/blob/main/publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md) show status `MITIGATED`, `ACCEPTED`, or `DEFERRED`. No release-blocking risk remains `OPEN` or `IN PROGRESS`. |
+| G3-04 | Release-blocking risks resolved | Manual | All risks marked `Release-blocking: YES` in the studio's Steam compliance and risk register (kept outside this repository) show status `MITIGATED`, `ACCEPTED`, or `DEFERRED`. No release-blocking risk remains `OPEN` or `IN PROGRESS`. |
 | G3-05 | Compliance checklists signed off | Manual | All compliance checklist items `SR-01` through `SR-08` in the compliance register are signed off by their named owners with a date. |
 | G3-06 | Beta session verification | Manual (beta testers) | A minimum of five testers (at least one on each of Windows, macOS, and Linux) complete a full text session and view the debrief screen. No session-ending bugs, data-loss bugs, or privacy regressions remain open at the time the beta gate is declared. |
 
@@ -148,22 +148,21 @@ Each issue corresponds to one document or gate in the release preparation.
 
 | Title | Document delivered | Stage dependency |
 |-------|-------------------|-----------------|
-| [[Steam Roadmap] Add Steam edition roadmap addendum and release principles](https://github.com/outrightmental/ConversationSimulator/issues?q=is%3Aissue+steam-roadmap-addendum+in%3Atitle) | [docs/STEAM_ROADMAP.md](/dev/steam-roadmap/) | Stage 1 prerequisite |
-| [[Steam Roadmap] Create Steam compliance and risk register for local-AI distribution](https://github.com/outrightmental/ConversationSimulator/issues?q=is%3Aissue+steam-compliance-risk-register+in%3Atitle) | [publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md](https://github.com/outrightmental/ConversationSimulator/blob/main/publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md) | Stage 3 prerequisite |
-| [[Steam Roadmap] Define Steam MVP scope and release gates](https://github.com/outrightmental/ConversationSimulator/issues?q=is%3Aissue+steam-mvp-scope+in%3Atitle) | [docs/steam-mvp-scope.md](/dev/steam-mvp-scope/) | Stage 2 prerequisite |
+| [[Steam Roadmap] Add Steam edition roadmap addendum and release principles](https://github.com/ConversationSimulator/ConversationSimulator/issues?q=is%3Aissue+steam-roadmap-addendum+in%3Atitle) | [docs/STEAM_ROADMAP.md](/dev/steam-roadmap/) | Stage 1 prerequisite |
+| [[Steam Roadmap] Create Steam compliance and risk register for local-AI distribution](https://github.com/ConversationSimulator/ConversationSimulator/issues?q=is%3Aissue+steam-compliance-risk-register+in%3Atitle) | the studio's Steam compliance and risk register (kept outside this repository) | Stage 3 prerequisite |
+| [[Steam Roadmap] Define Steam MVP scope and release gates](https://github.com/ConversationSimulator/ConversationSimulator/issues?q=is%3Aissue+steam-mvp-scope+in%3Atitle) | [docs/steam-mvp-scope.md](/dev/steam-mvp-scope/) | Stage 2 prerequisite |
 
 All open and closed issues in the Steam release work stream:
-[GitHub — issues with `[Steam Roadmap]` prefix](https://github.com/outrightmental/ConversationSimulator/issues?q=is%3Aissue+%5BSteam+Roadmap%5D+in%3Atitle)
+[GitHub — issues with `[Steam Roadmap]` prefix](https://github.com/ConversationSimulator/ConversationSimulator/issues?q=is%3Aissue+%5BSteam+Roadmap%5D+in%3Atitle)
 
 ---
 
 ## Links
 
 - [STEAM_ROADMAP.md](/dev/steam-roadmap/) — release principles, release train, target platforms, and model download transparency spec
-- [publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md](https://github.com/outrightmental/ConversationSimulator/blob/main/publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md) — risk register and compliance checklists (SR-01 through SR-09)
 - [ROADMAP.md](/project/roadmap/) — base project roadmap and MVP acceptance criteria
 - [release-checklist.md](/dev/release-checklist/) — Parts A–D platform smoke matrix
 - [acceptance/player-checklist.md](/dev/acceptance/player-checklist/) — player acceptance gate
 - [acceptance/creator-checklist.md](/dev/acceptance/creator-checklist/) — creator acceptance gate
 - [acceptance/developer-checklist.md](/dev/acceptance/developer-checklist/) — developer acceptance gate
-- [GitHub Milestones](https://github.com/outrightmental/ConversationSimulator/milestones) — issue tracking
+- [GitHub Milestones](https://github.com/ConversationSimulator/ConversationSimulator/milestones) — issue tracking

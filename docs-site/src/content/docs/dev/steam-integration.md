@@ -172,7 +172,7 @@ semantics are documented in `services/convsim-core/convsim_core/steam_cloud.py`.
 This is the only file allowed to reach Steam Cloud. It carries a small set of
 non-sensitive preferences so a second machine can pick up where the last one
 left off. The schema is the `CloudSettings` model in
-[`services/convsim-core/convsim_core/steam_cloud.py`](https://github.com/outrightmental/ConversationSimulator/blob/main/services/convsim-core/convsim_core/steam_cloud.py);
+[`services/convsim-core/convsim_core/steam_cloud.py`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/services/convsim-core/convsim_core/steam_cloud.py);
 today it holds a single field:
 
 ```json
@@ -549,7 +549,7 @@ Use this checklist at the Stage 4 gate:
 
 ## Links
 
-- [`apps/desktop/src-tauri/src/steam.rs`](https://github.com/outrightmental/ConversationSimulator/blob/main/apps/desktop/src-tauri/src/steam.rs) — Rust Steam bridge implementation
+- [`apps/desktop/src-tauri/src/steam.rs`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/apps/desktop/src-tauri/src/steam.rs) — Rust Steam bridge implementation
 - [Steam achievements, stats, and rich presence](/dev/steam-achievements/) — Steamworks portal configuration: achievements, stats, rich presence
 - [Privacy](/trust/privacy/) — local-first data handling; base privacy policy
 - [Steam MVP scope](/dev/steam-mvp-scope/) — release gates and the authoritative Steam Cloud sync scope (non-sensitive settings only)

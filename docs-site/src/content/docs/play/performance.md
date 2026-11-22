@@ -18,7 +18,7 @@ These are the official latency budgets for the **mid-spec reference machine** (A
 | TTS first-audio chunk | < 1.5 s | Kokoro sidecar, sentence-level streaming |
 | STT round-trip | < 2 s | 10-word utterance, whisper.cpp small model |
 
-All values in the `LATENCY_BUDGETS` constant in [`packages/shared/src/types/metrics.ts`](https://github.com/outrightmental/ConversationSimulator/blob/main/packages/shared/src/types/metrics.ts). They are reference figures only: since issue #539 nothing a player sees warns when one is exceeded. In developer mode the debug drawer still marks a figure over its budget in amber with a warning sign.
+All values in the `LATENCY_BUDGETS` constant in [`packages/shared/src/types/metrics.ts`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/packages/shared/src/types/metrics.ts). They are reference figures only: since issue #539 nothing a player sees warns when one is exceeded. In developer mode the debug drawer still marks a figure over its budget in amber with a warning sign.
 
 ## Hardware tiers
 
@@ -45,7 +45,7 @@ Measured with the **starter model** (Qwen3 4B Q4\_K\_M, 2.5 GB, context 8192) us
 
 Budget column for reference: TTFT < 2.5 s, TTS < 1.5 s, STT < 2 s, cold start < 10 s. Comfortable and Slow tiers operate within budget on the starter model; high-quality models (14 B+) push into Slow or Unsupported territory on those tiers.
 
-> These results are for the Steam system-requirements reference platform described in [#283](https://github.com/outrightmental/ConversationSimulator/issues/283)'s docs. For players whose hardware matches a tier, the table sets honest download and runtime expectations.
+> These results are for the Steam system-requirements reference platform described in [#283](https://github.com/ConversationSimulator/ConversationSimulator/issues/283)'s docs. For players whose hardware matches a tier, the table sets honest download and runtime expectations.
 
 ## What the app measures
 

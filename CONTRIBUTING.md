@@ -209,7 +209,7 @@ neither network nor credentials and runs in CI on every pull request.
 ## Development setup
 
 ```sh
-git clone https://github.com/outrightmental/ConversationSimulator
+git clone https://github.com/ConversationSimulator/ConversationSimulator
 cd ConversationSimulator
 ./scripts/setup.sh      # macOS / Linux
 # scripts\setup.ps1    # Windows PowerShell

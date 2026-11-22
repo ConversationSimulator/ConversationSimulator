@@ -29,7 +29,7 @@ used for manual zip import:
    by magic-byte inspection (ELF, Mach-O, PE, WASM, shebang).
 
 2. **Schema validation** — validates all YAML files against the official
-   ConversationSimulator schemas ([`schemas/*.schema.json`](https://github.com/outrightmental/ConversationSimulator/tree/main/schemas)) using the `pack-loader`
+   ConversationSimulator schemas ([`schemas/*.schema.json`](https://github.com/ConversationSimulator/ConversationSimulator/tree/main/schemas)) using the `pack-loader`
    library.
 
 Packs that fail either phase are **quarantined**: they are never imported into the
@@ -39,7 +39,7 @@ Invalid packs **never crash the application**.
 
 ## Runtime safety layer
 
-The global safety system ([issue #203](https://github.com/outrightmental/ConversationSimulator/issues/203)) applies to **all** Workshop content identically
+The global safety system ([issue #203](https://github.com/ConversationSimulator/ConversationSimulator/issues/203)) applies to **all** Workshop content identically
 to official packs. Safety rules encoded in a pack's `safety/policy.yaml` are
 enforced at runtime by the AI layer; they can strengthen the default safety policy
 but **cannot override or weaken it**. The safety ceiling set by the application is
@@ -89,6 +89,6 @@ builds and follows the identical validation pipeline.
 | No executable content in packs | Forbidden-content scan at import (extensions + magic bytes) |
 | Schema-valid YAML only | AJV 2020 schema validation at import |
 | Invalid packs never crash the library | Quarantine system; errors are stored, never thrown to the UI |
-| Global safety rules apply to Workshop content | Runtime safety layer ([#203](https://github.com/outrightmental/ConversationSimulator/issues/203)) is non-bypassable |
+| Global safety rules apply to Workshop content | Runtime safety layer ([#203](https://github.com/ConversationSimulator/ConversationSimulator/issues/203)) is non-bypassable |
 | Report path for harmful content | Steam's built-in Workshop reporting UI |
 | Non-Steam builds unaffected | Workshop UI gated on `is_steam_enabled` |

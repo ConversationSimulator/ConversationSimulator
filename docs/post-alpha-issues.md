@@ -14,9 +14,9 @@ by design. If you want to work on one, open or claim the linked issue.
 
 > **Status (2026-08-21):** every open item below now has a tracking issue on the
 > [delivery board](https://github.com/orgs/outrightmental/projects/12). The near-term
-> items ([#455](https://github.com/outrightmental/ConversationSimulator/issues/455),
-> [#456](https://github.com/outrightmental/ConversationSimulator/issues/456),
-> [#457](https://github.com/outrightmental/ConversationSimulator/issues/457)) sit in the
+> items ([#455](https://github.com/ConversationSimulator/ConversationSimulator/issues/455),
+> [#456](https://github.com/ConversationSimulator/ConversationSimulator/issues/456),
+> [#457](https://github.com/ConversationSimulator/ConversationSimulator/issues/457)) sit in the
 > *06 · Release polish* phase and are open to the implementation factory; the rest sit in
 > *07 · Future* with the `manual` label until deliberately released — see
 > [governance.md](governance.md) for how that throttle works.
@@ -40,7 +40,7 @@ local-model playthrough on an Apple M1 Pro, with
 remake them. Capture environment and alt text: [screenshots.md](screenshots.md).
 
 **Milestone:** 1 (polish)  
-**Tracking:** [#455](https://github.com/outrightmental/ConversationSimulator/issues/455) · see [screenshots.md](screenshots.md) for the capture checklist.
+**Tracking:** [#455](https://github.com/ConversationSimulator/ConversationSimulator/issues/455) · see [screenshots.md](screenshots.md) for the capture checklist.
 
 ---
 
@@ -56,7 +56,7 @@ keep the initial surface area small. The source install path is fully
 functional.
 
 **Milestone:** 1 (desktop packaging)  
-**Status:** ✅ **Shipped** ([#456](https://github.com/outrightmental/ConversationSimulator/issues/456)). `convsim-core` is built by
+**Status:** ✅ **Shipped** ([#456](https://github.com/ConversationSimulator/ConversationSimulator/issues/456)). `convsim-core` is built by
 `scripts/build-core.sh` into a single PyInstaller executable and packaged into
 the installer as a Tauri bundle resource; the shell starts it, waits for
 `GET /api/health` on 127.0.0.1:7355 before showing the app, restarts it if it
@@ -85,7 +85,7 @@ and a Windows EV certificate. Both have a cost and setup process that is
 not worth completing before the alpha has proven its audience.
 
 **Milestone:** 2 (distribution)  
-**Status:** ✅ **Shipped** during the Hardening phase — Windows Authenticode ([#404](https://github.com/outrightmental/ConversationSimulator/issues/404)) and Apple Developer ID signing + notarization ([#406](https://github.com/outrightmental/ConversationSimulator/issues/406)); the runbooks are kept with the studio's store files, outside this repository. Auto-update (item 4) is now unblocked.
+**Status:** ✅ **Shipped** during the Hardening phase — Windows Authenticode ([#404](https://github.com/ConversationSimulator/ConversationSimulator/issues/404)) and Apple Developer ID signing + notarization ([#406](https://github.com/ConversationSimulator/ConversationSimulator/issues/406)); the runbooks are kept with the studio's store files, outside this repository. Auto-update (item 4) is now unblocked.
 
 ---
 
@@ -99,7 +99,7 @@ a signed update manifest hosted at a stable URL. Blocked on code signing
 (item 3 above) and a hosting decision.
 
 **Milestone:** 2 (distribution)  
-**Tracking:** [#461](https://github.com/outrightmental/ConversationSimulator/issues/461) — unblocked now that code signing (item 3) has shipped.
+**Tracking:** [#461](https://github.com/ConversationSimulator/ConversationSimulator/issues/461) — unblocked now that code signing (item 3) has shipped.
 
 ---
 
@@ -115,7 +115,7 @@ moderation tooling, which are significant infrastructure additions that
 would compromise the MVP's "no server" principle.
 
 **Milestone:** 3 (community)  
-**Tracking:** [#465](https://github.com/outrightmental/ConversationSimulator/issues/465) · design baseline: `docs/marketplace-architecture.md`
+**Tracking:** [#465](https://github.com/ConversationSimulator/ConversationSimulator/issues/465) · design baseline: `docs/marketplace-architecture.md`
 
 ---
 
@@ -130,7 +130,7 @@ cache-unfriendly in most CI environments. The fake runtime provides full
 structural coverage; real-model CI is a quality-of-life improvement.
 
 **Milestone:** 2 (CI hardening)  
-**Tracking:** [#457](https://github.com/outrightmental/ConversationSimulator/issues/457)
+**Tracking:** [#457](https://github.com/ConversationSimulator/ConversationSimulator/issues/457)
 
 ---
 
@@ -145,7 +145,7 @@ accessibility specialist. The automated `accessibility.test.tsx` covers
 obvious violations; manual audit is needed for full compliance.
 
 **Milestone:** 1 (polish) / 2 (hardening)  
-**Tracking:** [#462](https://github.com/outrightmental/ConversationSimulator/issues/462) · `apps/web/src/__tests__/accessibility.test.tsx`
+**Tracking:** [#462](https://github.com/ConversationSimulator/ConversationSimulator/issues/462) · `apps/web/src/__tests__/accessibility.test.tsx`
 
 ---
 
@@ -160,7 +160,7 @@ infrastructure. The fake runtime cannot measure inference latency. See
 `docs/performance.md` for guidance in the meantime.
 
 **Milestone:** 2 (hardening)  
-**Tracking:** [#463](https://github.com/outrightmental/ConversationSimulator/issues/463) — sequenced after #457 provides real-model infrastructure in CI.
+**Tracking:** [#463](https://github.com/ConversationSimulator/ConversationSimulator/issues/463) — sequenced after #457 provides real-model infrastructure in CI.
 
 ---
 
@@ -175,7 +175,7 @@ first-run download and configuration flow requires UX work. The text-only
 path is the recommended alpha experience.
 
 **Milestone:** 2 (voice polish)  
-**Tracking:** [#464](https://github.com/outrightmental/ConversationSimulator/issues/464) · `runtimes/whisper_cpp/`, `runtimes/kokoro/`
+**Tracking:** [#464](https://github.com/ConversationSimulator/ConversationSimulator/issues/464) · `runtimes/whisper_cpp/`, `runtimes/kokoro/`
 
 ---
 
@@ -189,7 +189,7 @@ from unverified community submissions and enforce appropriate trust levels.
 community pack distribution path (item 5) exists.
 
 **Milestone:** 3 (community)  
-**Tracking:** [#466](https://github.com/outrightmental/ConversationSimulator/issues/466) — sequenced after the community pack browser (item 5).
+**Tracking:** [#466](https://github.com/ConversationSimulator/ConversationSimulator/issues/466) — sequenced after the community pack browser (item 5).
 
 ---
 

@@ -11,7 +11,7 @@ This review is **manual and subjective**. It requires a reviewer who has not see
 
 ## What to test
 
-The reviewer opens `https://github.com/outrightmental/ConversationSimulator` (or the README rendered locally) and reads for **60 seconds** — no deeper navigation allowed.
+The reviewer opens `https://github.com/ConversationSimulator/ConversationSimulator` (or the README rendered locally) and reads for **60 seconds** — no deeper navigation allowed.
 
 After 60 seconds the reviewer answers the following questions **without looking further**.
 

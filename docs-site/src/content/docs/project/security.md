@@ -15,7 +15,7 @@ during pre-release development.
 Please **do not** open a public GitHub Issue for security vulnerabilities.
 
 Instead, report security issues privately using
-[GitHub's private vulnerability reporting](https://github.com/outrightmental/ConversationSimulator/security/advisories/new)
+[GitHub's private vulnerability reporting](https://github.com/ConversationSimulator/ConversationSimulator/security/advisories/new)
 or by emailing the maintainers directly (address on file in the GitHub
 organization contact page).
 
@@ -52,7 +52,7 @@ Use private reporting for technical vulnerabilities:
 
 Content-only safety concerns (e.g., a pack that contains poor content but does
 not bypass a technical control) are **appropriate for public issues**. Use the
-[Safety Issue](https://github.com/outrightmental/ConversationSimulator/blob/main/.github/ISSUE_TEMPLATE/safety_issue.yml) template for those.
+[Safety Issue](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/.github/ISSUE_TEMPLATE/safety_issue.yml) template for those.
 
 ## Scope
 
@@ -116,7 +116,7 @@ The project integrates three native binaries:
 | Kokoro / sherpa-onnx | Text-to-speech | Same |
 
 Verify checksums before installing or upgrading any runtime binary. The
-[`model-registry/registry.yaml`](https://github.com/outrightmental/ConversationSimulator/blob/main/model-registry/registry.yaml)
+[`model-registry/registry.yaml`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/model-registry/registry.yaml)
 file lists expected checksums for all supported model files.
 
 When evaluating a PR that changes the pinned version of a runtime binary,
@@ -168,7 +168,7 @@ Changes to the following areas require an explicit security review before merge.
 The PR author should tick the relevant items; a maintainer must verify them
 independently.
 
-**Safety policy and input routing ([`services/convsim-core/`](https://github.com/outrightmental/ConversationSimulator/tree/main/services/convsim-core))**
+**Safety policy and input routing ([`services/convsim-core/`](https://github.com/ConversationSimulator/ConversationSimulator/tree/main/services/convsim-core))**
 
 - [ ] Global non-overridable rules (`minors_romantic_or_sexual`,
   `self_harm_crisis`) remain unconditionally enforced.
@@ -177,7 +177,7 @@ independently.
   construction pipeline.
 - [ ] Safety events are logged at WARNING level without writing raw player text.
 
-**Pack loading and validation ([`packages/scenario-schema/`](https://github.com/outrightmental/ConversationSimulator/tree/main/packages/scenario-schema), pack validator)**
+**Pack loading and validation ([`packages/scenario-schema/`](https://github.com/ConversationSimulator/ConversationSimulator/tree/main/packages/scenario-schema), pack validator)**
 
 - [ ] Schema still rejects packs with a `scripts` field.
 - [ ] Asset path traversal is blocked (no `../` escape outside the pack
@@ -185,7 +185,7 @@ independently.
 - [ ] `allow_external_urls: true` is still rejected by the validator.
 - [ ] Symlinks within pack archives are rejected at import time.
 
-**Runtime binary management ([`runtimes/`](https://github.com/outrightmental/ConversationSimulator/tree/main/runtimes))**
+**Runtime binary management ([`runtimes/`](https://github.com/ConversationSimulator/ConversationSimulator/tree/main/runtimes))**
 
 - [ ] New or upgraded binary versions are pinned to a specific release tag or
   commit.

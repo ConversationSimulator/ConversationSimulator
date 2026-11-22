@@ -1,5 +1,5 @@
-[![CI](https://github.com/outrightmental/ConversationSimulator/actions/workflows/ci.yml/badge.svg)](https://github.com/outrightmental/ConversationSimulator/actions/workflows/ci.yml)
-[![Release](https://github.com/outrightmental/ConversationSimulator/actions/workflows/release.yml/badge.svg)](https://github.com/outrightmental/ConversationSimulator/actions/workflows/release.yml)
+[![CI](https://github.com/ConversationSimulator/ConversationSimulator/actions/workflows/ci.yml/badge.svg)](https://github.com/ConversationSimulator/ConversationSimulator/actions/workflows/ci.yml)
+[![Release](https://github.com/ConversationSimulator/ConversationSimulator/actions/workflows/release.yml/badge.svg)](https://github.com/ConversationSimulator/ConversationSimulator/actions/workflows/release.yml)
 
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 <img src="docs/assets/brand/ConversationSimulatorIcon.svg" alt="" width="96" height="96">
@@ -72,7 +72,7 @@ the authoring wall those earlier systems hit.
 ## Quickstart
 
 ```bash
-git clone https://github.com/outrightmental/ConversationSimulator
+git clone https://github.com/ConversationSimulator/ConversationSimulator
 cd ConversationSimulator
 ./scripts/setup.sh     # check env, install packages, create ~/.convsim/
 ./scripts/dev.sh       # start all services
@@ -304,7 +304,7 @@ Every session runs through a layered safety system before and after the model is
 | --------- | ---- | ------ |
 | 0 | Monorepo skeleton, dev setup, official scenario packs | Complete |
 | 1 | Text-only local simulator (browser UI + Python backend + local LLM) | Complete |
-| 2 | Scenario pack system (import, validate, browse community packs) | Import, export and validation complete; in-app community pack browser planned ([#465](https://github.com/outrightmental/ConversationSimulator/issues/465)) |
+| 2 | Scenario pack system (import, validate, browse community packs) | Import, export and validation complete; in-app community pack browser planned ([#465](https://github.com/ConversationSimulator/ConversationSimulator/issues/465)) |
 | 3 | Local voice input (Whisper speech-to-text) | Complete (opt-in) |
 | 4 | Local voice output (TTS with Kokoro / sherpa-onnx) | Complete (opt-in) |
 | 5 | Polished playable alpha | Complete (v0.1.0-alpha.1); v0.4.0 is the first public demo |
@@ -313,7 +313,7 @@ Every session runs through a layered safety system before and after the model is
 deliberately out of scope, and links to the acceptance criteria and docs.
 
 > [Delivery board](https://github.com/orgs/outrightmental/projects/12) — every issue ever shipped, in phases &nbsp;·&nbsp;
-> [GitHub Milestones](https://github.com/outrightmental/ConversationSimulator/milestones) &nbsp;·&nbsp;
+> [GitHub Milestones](https://github.com/ConversationSimulator/ConversationSimulator/milestones) &nbsp;·&nbsp;
 > [Full specification](docs/SPEC.md) &nbsp;·&nbsp;
 > [Post-alpha issues](docs/post-alpha-issues.md)
 
@@ -393,8 +393,8 @@ improvements, or new runtime adapters. Scenario packs are the friendliest entry 
 you can ship one without touching engine code.
 
 **Start here:**
-[`good first issue`](https://github.com/outrightmental/ConversationSimulator/issues?q=is%3Aissue+state%3Aopen+label%3A%22good+first+issue%22) &nbsp;·&nbsp;
-[`help wanted`](https://github.com/outrightmental/ConversationSimulator/issues?q=is%3Aissue+state%3Aopen+label%3A%22help+wanted%22) &nbsp;·&nbsp;
+[`good first issue`](https://github.com/ConversationSimulator/ConversationSimulator/issues?q=is%3Aissue+state%3Aopen+label%3A%22good+first+issue%22) &nbsp;·&nbsp;
+[`help wanted`](https://github.com/ConversationSimulator/ConversationSimulator/issues?q=is%3Aissue+state%3Aopen+label%3A%22help+wanted%22) &nbsp;·&nbsp;
 [Delivery board](https://github.com/orgs/outrightmental/projects/12) &nbsp;·&nbsp;
 [How the project is run](docs/governance.md)
 

@@ -18,7 +18,7 @@ release, and what tagging sets off.  The gates are split into three parts:
 Read Part A results in GitHub Actions before you touch Part B or Part C.
 
 > **MVP release gate:** The release **cannot** be tagged as MVP unless every
-> acceptance checklist under [`docs/acceptance/`](https://github.com/outrightmental/ConversationSimulator/tree/main/docs/acceptance) shows PASS (or a documented,
+> acceptance checklist under [`docs/acceptance/`](https://github.com/ConversationSimulator/ConversationSimulator/tree/main/docs/acceptance) shows PASS (or a documented,
 > maintainer-approved exception) in addition to Parts A and B below.
 
 ---
@@ -550,7 +550,7 @@ Run this checklist against an **actual packaged desktop build** (`.app`,
 It supplements Part B by testing the packaged binary path rather than the
 source-install developer path.
 
-> **CI equivalent:** `[e2e-playthrough]` in [`release-smoke.yml`](https://github.com/outrightmental/ConversationSimulator/blob/main/.github/workflows/release-smoke.yml) covers the
+> **CI equivalent:** `[e2e-playthrough]` in [`release-smoke.yml`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/.github/workflows/release-smoke.yml) covers the
 > fake-runtime version of this flow.  Part F validates the same flow with a
 > real packaged binary and (optionally) a real model.
 
@@ -667,7 +667,7 @@ grep -r "player_turn\|npc_turn\|content.*:" "${TMPDIR:-/tmp}"/convsim-release-sm
 ```
 
 - [ ] No `player_turn` or `npc_turn` event content in any artifact file
-- [ ] `save_transcript: false` was set in all smoke session configs (see [`tests/e2e/test_scripted_playthrough.py`](https://github.com/outrightmental/ConversationSimulator/blob/main/tests/e2e/test_scripted_playthrough.py))
+- [ ] `save_transcript: false` was set in all smoke session configs (see [`tests/e2e/test_scripted_playthrough.py`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/tests/e2e/test_scripted_playthrough.py))
 
 ---
 
@@ -1067,7 +1067,7 @@ Type **Bug**, label `area:steam`, Priority **P0 — blocker**.
 Name the affected platform — Windows, macOS, Linux, or Steam Deck — in the
 issue title and in the template's build-and-environment field.  There are no
 `platform:*` labels; the declared label set is in
-[`.github/project-structure.yml`](https://github.com/outrightmental/ConversationSimulator/blob/main/.github/project-structure.yml) and adding
+[`.github/project-structure.yml`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/.github/project-structure.yml) and adding
 to it is a change to that file, not a launch-day improvisation.  Child issues
 should reference this issue as a blocker.
 

@@ -6,7 +6,7 @@ sidebar:
 ---
 
 > **Roadmap item 48.** This document is the Steamworks configuration companion
-> to the implementation in [`apps/desktop/src-tauri/src/steam.rs`](https://github.com/outrightmental/ConversationSimulator/blob/main/apps/desktop/src-tauri/src/steam.rs) and the
+> to the implementation in [`apps/desktop/src-tauri/src/steam.rs`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/apps/desktop/src-tauri/src/steam.rs) and the
 > `useSteamAchievements` / `useSteamRichPresence` React hooks.
 >
 > Privacy guarantee: **no conversation content, transcript text, or session

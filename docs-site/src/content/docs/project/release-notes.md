@@ -46,7 +46,7 @@ any future recurrence of this class of frozen-importer regression.
 
 > **Alpha release** — This build is an early preview. Expect rough edges and
 > breaking changes between alpha versions. File bugs at
-> <https://github.com/outrightmental/ConversationSimulator/issues>.
+> <https://github.com/ConversationSimulator/ConversationSimulator/issues>.
 
 ---
 
@@ -129,7 +129,7 @@ Run the pre-flight check before first launch:
 ## Installation (source)
 
 ```bash
-git clone https://github.com/outrightmental/ConversationSimulator
+git clone https://github.com/ConversationSimulator/ConversationSimulator
 cd ConversationSimulator
 ./scripts/setup.sh     # check env, install packages, create ~/.convsim/
 ./scripts/dev.sh       # start all services
@@ -202,9 +202,9 @@ node packages/convsim-cli/dist/index.js offline-smoke-test packs/official/job-in
   unverified publishers when a packaged build is eventually available.
 - **Voice input and output** are implemented but require separate manual runtime
   setup: whisper.cpp for STT
-  ([`runtimes/whisper_cpp/`](https://github.com/outrightmental/ConversationSimulator/tree/main/runtimes/whisper_cpp))
+  ([`runtimes/whisper_cpp/`](https://github.com/ConversationSimulator/ConversationSimulator/tree/main/runtimes/whisper_cpp))
   and a local Kokoro server for TTS
-  ([`runtimes/kokoro/`](https://github.com/outrightmental/ConversationSimulator/tree/main/runtimes/kokoro)).
+  ([`runtimes/kokoro/`](https://github.com/ConversationSimulator/ConversationSimulator/tree/main/runtimes/kokoro)).
   See the runtime READMEs for setup steps.
   The app runs fully in text-only mode without these runtimes.
 - **Screenshots in the README are SVG placeholders**, not real UI recordings.
@@ -230,7 +230,7 @@ For a full list of post-alpha work items, see
 To build from source on a clean checkout:
 
 ```bash
-git clone https://github.com/outrightmental/ConversationSimulator
+git clone https://github.com/ConversationSimulator/ConversationSimulator
 cd ConversationSimulator
 ./scripts/setup.sh            # install deps, create Python venv
 pnpm --filter @convsim/web build
@@ -246,7 +246,7 @@ platform-specific notes.
 
 ## Reporting bugs
 
-Open an issue at <https://github.com/outrightmental/ConversationSimulator/issues>.
+Open an issue at <https://github.com/ConversationSimulator/ConversationSimulator/issues>.
 Include:
 
 - OS and version

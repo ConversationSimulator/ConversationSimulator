@@ -98,7 +98,7 @@ npm install -g pnpm
 ### 2. Clone the repository
 
 ```bash
-git clone https://github.com/outrightmental/ConversationSimulator
+git clone https://github.com/ConversationSimulator/ConversationSimulator
 cd ConversationSimulator
 ```
 

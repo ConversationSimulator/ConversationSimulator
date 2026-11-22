@@ -458,4 +458,4 @@ for the Stage 5 milestone.
 - [`docs/safety-policy.md`](/trust/safety-policy/) — content policy any marketplace pack must satisfy
 - [`docs/privacy.md`](/trust/privacy/) — local-first promise that marketplace infrastructure must not break
 - [`docs/scenario-authoring.md`](/create/scenario-authoring/) — creator documentation; starting point for section 2 recruits
-- [`schemas/pack.schema.json`](https://github.com/outrightmental/ConversationSimulator/blob/main/schemas/pack.schema.json) — current pack manifest schema
+- [`schemas/pack.schema.json`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/schemas/pack.schema.json) — current pack manifest schema

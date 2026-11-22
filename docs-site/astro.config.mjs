@@ -57,11 +57,11 @@ export default defineConfig({
         {
           icon: 'github',
           label: 'GitHub',
-          href: 'https://github.com/outrightmental/ConversationSimulator',
+          href: 'https://github.com/ConversationSimulator/ConversationSimulator',
         },
       ],
       editLink: {
-        baseUrl: 'https://github.com/outrightmental/ConversationSimulator/edit/main/docs-site/',
+        baseUrl: 'https://github.com/ConversationSimulator/ConversationSimulator/edit/main/docs-site/',
       },
       customCss: ['./src/styles/custom.css'],
       lastUpdated: true,

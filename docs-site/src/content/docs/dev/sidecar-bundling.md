@@ -262,4 +262,4 @@ hand.
 - [network-security.md](/trust/network-security/) — localhost-only binding policy
 - [runtime-adapters.md](/reference/runtime-adapters/) — ChatRuntime interface and built-in adapters
 - [architecture.md](/reference/architecture/) — service topology and port assignments
-- [runtimes/llama_cpp/README.md](https://github.com/outrightmental/ConversationSimulator/blob/main/runtimes/llama_cpp/README.md) — llama.cpp setup
+- [runtimes/llama_cpp/README.md](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/runtimes/llama_cpp/README.md) — llama.cpp setup

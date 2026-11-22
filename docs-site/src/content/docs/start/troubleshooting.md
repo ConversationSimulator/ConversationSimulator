@@ -7,7 +7,7 @@ verified_against: v0.4.0
 ---
 <!-- SPDX-License-Identifier: CC-BY-4.0 -->
 
-Common problems and solutions. If your issue is not listed here, open a [GitHub issue](https://github.com/outrightmental/ConversationSimulator/issues).
+Common problems and solutions. If your issue is not listed here, open a [GitHub issue](https://github.com/ConversationSimulator/ConversationSimulator/issues).
 
 Two things help with almost every problem below. The [logs](#logs) say what
 went wrong, and every error card in the app has a **Copy diagnostics** button
@@ -54,7 +54,7 @@ a **Logs folder** line with the path on your machine, and **Restart the app**,
 2. Restart Conversation Simulator from Steam or your installation.
 3. If the problem persists, click **Copy diagnostics** on the card and paste
    the report into a
-   [GitHub issue](https://github.com/outrightmental/ConversationSimulator/issues),
+   [GitHub issue](https://github.com/ConversationSimulator/ConversationSimulator/issues),
    or attach `app.log` from the logs folder.
 
 If the Home screen says **The conversation engine is not responding**, the app
@@ -163,7 +163,7 @@ taskkill /IM convsim-core.exe /T /F
 Nothing is lost by doing this: conversations are saved as they happen, and an
 interrupted model download resumes from where it stopped.
 
-Then please [open an issue](https://github.com/outrightmental/ConversationSimulator/issues)
+Then please [open an issue](https://github.com/ConversationSimulator/ConversationSimulator/issues)
 and attach `app.log` and `runtime.log` from the [logs folder](#logs). The last
 lines of `app.log` say how far the shutdown got, which is the one thing we
 cannot work out from the outside.
@@ -249,7 +249,7 @@ manager, both run the **Getting the AI engine** stage.
 
 If the Steam build reports the engine missing, the installation is incomplete.
 Reinstall the app; if the error persists, open a
-[GitHub issue](https://github.com/outrightmental/ConversationSimulator/issues)
+[GitHub issue](https://github.com/ConversationSimulator/ConversationSimulator/issues)
 with your platform and OS version.
 
 ---
@@ -566,7 +566,7 @@ engine and its Whisper and Kokoro models (about 559 MB on Windows), shows
 progress, and switches voice on when it finishes, without a restart. In the
 full app the same card is in **Settings → Voice output**, which **Set up
 voice** on the debrief screen opens. The repository's
-[voice setup reference](https://github.com/outrightmental/ConversationSimulator/blob/main/docs/voice-setup.md)
+[voice setup reference](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/docs/voice-setup.md)
 lists what is downloaded and from where.
 
 Where the app shows that voice is not installed:
@@ -703,7 +703,7 @@ session.
 
 ## Where to get help
 
-- Open a [GitHub issue](https://github.com/outrightmental/ConversationSimulator/issues) for bugs or missing documentation.
+- Open a [GitHub issue](https://github.com/ConversationSimulator/ConversationSimulator/issues) for bugs or missing documentation.
 - See [Installation](/start/install/) for installation steps.
 - See [Quickstart](/start/quickstart/) for first-run instructions.
 - See [Choosing how to run the AI](/play/ai-engine/) for model selection and hardware guidance.

@@ -138,7 +138,7 @@ The current pack-loader has no signing support. Adding it requires:
 - A signing key pair managed by Outright Mental (or a delegated creator CA).
 - A `signatures/` directory or embedded signature block in the pack manifest.
 - A signature verification step in `loadPack()` in
-  [`packages/pack-loader/src/loader.ts`](https://github.com/outrightmental/ConversationSimulator/blob/main/packages/pack-loader/src/loader.ts).
+  [`packages/pack-loader/src/loader.ts`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/packages/pack-loader/src/loader.ts).
 - A UI affordance that shows the pack's trust tier and, for unsigned packs,
   a clear warning.
 
@@ -306,7 +306,7 @@ infrastructure. It is intended as a scope estimate, not a design specification.
 
 ### Schema changes
 
-The pack manifest schema ([`schemas/pack.schema.json`](https://github.com/outrightmental/ConversationSimulator/blob/main/schemas/pack.schema.json))
+The pack manifest schema ([`schemas/pack.schema.json`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/schemas/pack.schema.json))
 would need the following additions for marketplace-distributed packs:
 
 | Addition | Purpose |
@@ -454,6 +454,6 @@ first-party paid path (see [DLC model](/dev/dlc-model/)).
 - [`docs/DLC_MODEL.md`](/dev/dlc-model/) — the chosen first-party paid path: premium scenario-pack expansions shipped as Steam DLC from a private repo
 - [`docs/safety-policy.md`](/trust/safety-policy/) — content policy that any marketplace pack must satisfy
 - [`docs/privacy.md`](/trust/privacy/) — local-first promise that marketplace infrastructure must not break
-- [`schemas/pack.schema.json`](https://github.com/outrightmental/ConversationSimulator/blob/main/schemas/pack.schema.json) — current pack manifest schema; see [Schema changes](#schema-changes) above for what would be added
-- [`packages/pack-loader/src/loader.ts`](https://github.com/outrightmental/ConversationSimulator/blob/main/packages/pack-loader/src/loader.ts) — pack loading and security scanning; see [Pack signing](#pack-signing) above for additions
+- [`schemas/pack.schema.json`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/schemas/pack.schema.json) — current pack manifest schema; see [Schema changes](#schema-changes) above for what would be added
+- [`packages/pack-loader/src/loader.ts`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/packages/pack-loader/src/loader.ts) — pack loading and security scanning; see [Pack signing](#pack-signing) above for additions
 - [`ROADMAP.md`](/project/roadmap/) — UGC ecosystem section lists in-app pack browser and pack signing as future work outside MVP

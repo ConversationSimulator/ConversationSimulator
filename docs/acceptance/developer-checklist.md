@@ -35,7 +35,7 @@ All automated checks must pass before any manual step begins.
 ### D-M1 — Run locally from scratch
 
 ```bash
-git clone https://github.com/outrightmental/ConversationSimulator.git
+git clone https://github.com/ConversationSimulator/ConversationSimulator.git
 cd ConversationSimulator
 ./scripts/setup.sh
 ./scripts/dev.sh

@@ -46,8 +46,8 @@ Work is organized into **phases** — append-only eras of the project's life:
 | ----- | ---- | ----- | ------------- |
 | 01 · Alpha build | Jun 30 – Jul 8, 2026 | 85 | Empty repo → complete local MVP (engine, packs, voice, safety, workbench) — `v0.1.0-alpha.1` |
 | 02 · Steam release | Jul 9 – 11 | 62 | Store, depots, signing, platform QA (the closed *Steam Release Roadmap* milestone) |
-| 03 · Beta & signature | Jul 10 – 11 | 23 | Public-beta readiness ([#315](https://github.com/outrightmental/ConversationSimulator/issues/315)) and signature-experience ([#316](https://github.com/outrightmental/ConversationSimulator/issues/316)) programs |
-| 04 · Pivot & onboarding | Jul 11 – 13 | 24 | FOSS/$9.99 business-model pivot ([#366](https://github.com/outrightmental/ConversationSimulator/issues/366)) and the v0.3 onboarding overhaul ([#388](https://github.com/outrightmental/ConversationSimulator/issues/388)) |
+| 03 · Beta & signature | Jul 10 – 11 | 23 | Public-beta readiness ([#315](https://github.com/ConversationSimulator/ConversationSimulator/issues/315)) and signature-experience ([#316](https://github.com/ConversationSimulator/ConversationSimulator/issues/316)) programs |
+| 04 · Pivot & onboarding | Jul 11 – 13 | 24 | FOSS/$9.99 business-model pivot ([#366](https://github.com/ConversationSimulator/ConversationSimulator/issues/366)) and the v0.3 onboarding overhaul ([#388](https://github.com/ConversationSimulator/ConversationSimulator/issues/388)) |
 | 05 · Hardening | Jul 13 – Aug 5 | 13 | Signing chains, release dress rehearsals, post-v0.3 fixes |
 | 06 · Release polish | now | — | Post-v0.3 polish and fixes; what remains before the v0.4 release train |
 | 07 · Future | — | — | Groomed post-launch backlog (see [post-alpha-issues.md](post-alpha-issues.md)) |
@@ -152,7 +152,7 @@ same local-first guarantee — no account, no cloud, no telemetry.
 
 - **Release trains** follow [STEAM_ROADMAP.md](STEAM_ROADMAP.md) stages, with the
   [release checklist](release-checklist.md) and dress-rehearsal workflow.
-- **Nightly** real-model smoke ([#457](https://github.com/outrightmental/ConversationSimulator/issues/457))
+- **Nightly** real-model smoke ([#457](https://github.com/ConversationSimulator/ConversationSimulator/issues/457))
   guards inference quality once landed.
 - **Each release:** sweep this document, [landscape.md](landscape.md), and
   [post-alpha-issues.md](post-alpha-issues.md) for drift.

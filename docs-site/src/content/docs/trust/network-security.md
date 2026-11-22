@@ -26,7 +26,7 @@ implementation; `convsim-core` is the target architecture (see the
 [architecture documentation](/reference/architecture/)).
 
 All dev-server proxy targets point to `127.0.0.1` — see
-[`apps/web/vite.config.ts`](https://github.com/outrightmental/ConversationSimulator/blob/main/apps/web/vite.config.ts).
+[`apps/web/vite.config.ts`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/apps/web/vite.config.ts).
 
 ## WebSocket origins
 
@@ -129,5 +129,5 @@ policy.require_network(NetworkMode.PLAY)  # raises NetworkBlockedError
 ```
 
 The test suite in
-[`services/convsim-core/tests/test_network_policy.py`](https://github.com/outrightmental/ConversationSimulator/blob/main/services/convsim-core/tests/test_network_policy.py)
+[`services/convsim-core/tests/test_network_policy.py`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/services/convsim-core/tests/test_network_policy.py)
 covers this smoke test automatically on every CI run.

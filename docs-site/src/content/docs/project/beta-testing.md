@@ -16,7 +16,7 @@ The beta runs on the `main` branch.  There is no separate opt-in — if you can
 build from source or install a pre-release build, you are a beta tester.
 
 ```bash
-git clone https://github.com/outrightmental/ConversationSimulator
+git clone https://github.com/ConversationSimulator/ConversationSimulator
 cd ConversationSimulator
 ./scripts/setup.sh
 ./scripts/dev.sh
@@ -56,7 +56,7 @@ If the app will not start or the Support screen is unreachable, open a
 - A clear description of what happened and what you expected
 - Steps to reproduce
 
-[new-issue]: https://github.com/outrightmental/ConversationSimulator/issues/new?template=beta-report.yml
+[new-issue]: https://github.com/ConversationSimulator/ConversationSimulator/issues/new?template=beta-report.yml
 
 ---
 
@@ -134,4 +134,4 @@ During the beta we are particularly interested in feedback on:
 Feature requests are welcome but lower priority until core stability is
 established.  Use the [feature proposal template][feature] for those.
 
-[feature]: https://github.com/outrightmental/ConversationSimulator/issues/new?template=feature_proposal.yml
+[feature]: https://github.com/ConversationSimulator/ConversationSimulator/issues/new?template=feature_proposal.yml

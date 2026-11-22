@@ -26,7 +26,7 @@ traditions:
   *game mechanic* — exchanges you could win, lose, and get better at. Ritualized verbal
   duels are far older (flyting goes back to Norse and Scots tradition), but this was the
   proof that scored dialogue is genuinely fun. (See the flyting proposal in
-  [#454](https://github.com/outrightmental/ConversationSimulator/issues/454).)
+  [#454](https://github.com/ConversationSimulator/ConversationSimulator/issues/454).)
 - **2005 — Façade** (Michael Mateas & Andrew Stern). The first natural-language
   interactive drama: free-text input steering a live social situation with reactive
   characters and social state. It proved the experience could be compelling — and that
@@ -115,7 +115,7 @@ cloud dependency for core play.
 1. **The free build is the top of the funnel.** Every minute of friction between
    `git clone` and a first conversation is a revenue problem, not just a DX problem —
    which is why the v0.3 onboarding overhaul
-   ([#388](https://github.com/outrightmental/ConversationSimulator/issues/388)) was
+   ([#388](https://github.com/ConversationSimulator/ConversationSimulator/issues/388)) was
    treated as release-gating work.
 2. **The Steam page is the cash register.** Deck verification, achievements, store
    assets, and review-response hygiene are product work, not chores
@@ -123,8 +123,8 @@ cloud dependency for core play.
 3. **Packs are the content engine.** Creator tooling compounds: community packs grow the
    audience that buys first-party DLC, and the eventual marketplace
    ([marketplace-architecture.md](marketplace-architecture.md),
-   [#465](https://github.com/outrightmental/ConversationSimulator/issues/465),
-   [#466](https://github.com/outrightmental/ConversationSimulator/issues/466)) turns
+   [#465](https://github.com/ConversationSimulator/ConversationSimulator/issues/465),
+   [#466](https://github.com/ConversationSimulator/ConversationSimulator/issues/466)) turns
    creators into stakeholders.
 4. **Trust is the brand.** The local-first promise must remain *auditable* — offline
    smoke tests in CI, no-egress guarantees, reproducible builds where possible. One

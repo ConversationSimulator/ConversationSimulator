@@ -27,7 +27,7 @@ sidebar:
 Build version         : vX.Y.Z  (or Steam build ID)
 Steam branch verified : beta
 Build date            : YYYY-MM-DD
-Release issue         : https://github.com/outrightmental/ConversationSimulator/issues/NNN
+Release issue         : https://github.com/ConversationSimulator/ConversationSimulator/issues/NNN
 Verification period   : YYYY-MM-DD to YYYY-MM-DD
 Publishing owner      :
 Report date           : YYYY-MM-DD

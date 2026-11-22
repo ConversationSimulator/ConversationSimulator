@@ -32,7 +32,7 @@ functional blocker.
 
 **Outcome:** Landed — six PNGs and a GIF/MP4 hero captured from one local-model
 playthrough on an Apple M1 Pro, with
-[`scripts/capture-screenshots.mjs`](https://github.com/outrightmental/ConversationSimulator/blob/main/scripts/capture-screenshots.mjs)
+[`scripts/capture-screenshots.mjs`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/scripts/capture-screenshots.mjs)
 to remake them. Capture environment and alt text: [the screenshots page](/dev/screenshots/).
 
 **Milestone:** 1 (polish)  
@@ -53,14 +53,14 @@ functional.
 
 **Milestone:** 1 (desktop packaging)  
 **Status:** ✅ **Shipped.** `convsim-core` is built by
-[`scripts/build-core.sh`](https://github.com/outrightmental/ConversationSimulator/blob/main/scripts/build-core.sh)
+[`scripts/build-core.sh`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/scripts/build-core.sh)
 into a single PyInstaller executable and packaged into the installer as a Tauri
 bundle resource; the shell starts it, waits for `GET /api/health` on
 127.0.0.1:7355 before showing the app, restarts it if it crashes, and drains it
 rather than killing it on exit — see
-[`apps/desktop/README.md`](https://github.com/outrightmental/ConversationSimulator/blob/main/apps/desktop/README.md),
+[`apps/desktop/README.md`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/apps/desktop/README.md),
 "Core sidecar lifecycle".
-[`scripts/packaged-core-smoke.sh`](https://github.com/outrightmental/ConversationSimulator/blob/main/scripts/packaged-core-smoke.sh)
+[`scripts/packaged-core-smoke.sh`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/scripts/packaged-core-smoke.sh)
 runs the packaged engine in CI and asserts health readiness, loopback-only
 binding, official-pack seeding, an offline `convsim offline-smoke-test`, and a
 clean shutdown.
@@ -139,7 +139,7 @@ accessibility specialist. The automated `accessibility.test.tsx` covers
 obvious violations; manual audit is needed for full compliance.
 
 **Milestone:** 1 (polish) / 2 (hardening)  
-**Tracking:** [`apps/web/src/__tests__/accessibility.test.tsx`](https://github.com/outrightmental/ConversationSimulator/blob/main/apps/web/src/__tests__/accessibility.test.tsx)
+**Tracking:** [`apps/web/src/__tests__/accessibility.test.tsx`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/apps/web/src/__tests__/accessibility.test.tsx)
 
 ---
 
@@ -168,7 +168,7 @@ first-run download and configuration flow requires UX work. The text-only
 path is the recommended alpha experience.
 
 **Milestone:** 2 (voice polish)  
-**Tracking:** [`runtimes/whisper_cpp/`](https://github.com/outrightmental/ConversationSimulator/tree/main/runtimes/whisper_cpp), [`runtimes/kokoro/`](https://github.com/outrightmental/ConversationSimulator/tree/main/runtimes/kokoro)
+**Tracking:** [`runtimes/whisper_cpp/`](https://github.com/ConversationSimulator/ConversationSimulator/tree/main/runtimes/whisper_cpp), [`runtimes/kokoro/`](https://github.com/ConversationSimulator/ConversationSimulator/tree/main/runtimes/kokoro)
 
 ---
 

@@ -148,12 +148,12 @@ Each issue corresponds to one document or gate in the release preparation.
 
 | Title | Document delivered | Stage dependency |
 |-------|-------------------|-----------------|
-| [[Steam Roadmap] Add Steam edition roadmap addendum and release principles](https://github.com/outrightmental/ConversationSimulator/issues?q=is%3Aissue+steam-roadmap-addendum+in%3Atitle) | [docs/STEAM_ROADMAP.md](/dev/steam-roadmap/) | Stage 1 prerequisite |
-| [[Steam Roadmap] Create Steam compliance and risk register for local-AI distribution](https://github.com/outrightmental/ConversationSimulator/issues?q=is%3Aissue+steam-compliance-risk-register+in%3Atitle) | the studio's Steam compliance and risk register (kept outside this repository) | Stage 3 prerequisite |
-| [[Steam Roadmap] Define Steam MVP scope and release gates](https://github.com/outrightmental/ConversationSimulator/issues?q=is%3Aissue+steam-mvp-scope+in%3Atitle) | [docs/steam-mvp-scope.md](/dev/steam-mvp-scope/) | Stage 2 prerequisite |
+| [[Steam Roadmap] Add Steam edition roadmap addendum and release principles](https://github.com/ConversationSimulator/ConversationSimulator/issues?q=is%3Aissue+steam-roadmap-addendum+in%3Atitle) | [docs/STEAM_ROADMAP.md](/dev/steam-roadmap/) | Stage 1 prerequisite |
+| [[Steam Roadmap] Create Steam compliance and risk register for local-AI distribution](https://github.com/ConversationSimulator/ConversationSimulator/issues?q=is%3Aissue+steam-compliance-risk-register+in%3Atitle) | the studio's Steam compliance and risk register (kept outside this repository) | Stage 3 prerequisite |
+| [[Steam Roadmap] Define Steam MVP scope and release gates](https://github.com/ConversationSimulator/ConversationSimulator/issues?q=is%3Aissue+steam-mvp-scope+in%3Atitle) | [docs/steam-mvp-scope.md](/dev/steam-mvp-scope/) | Stage 2 prerequisite |
 
 All open and closed issues in the Steam release work stream:
-[GitHub — issues with `[Steam Roadmap]` prefix](https://github.com/outrightmental/ConversationSimulator/issues?q=is%3Aissue+%5BSteam+Roadmap%5D+in%3Atitle)
+[GitHub — issues with `[Steam Roadmap]` prefix](https://github.com/ConversationSimulator/ConversationSimulator/issues?q=is%3Aissue+%5BSteam+Roadmap%5D+in%3Atitle)
 
 ---
 
@@ -165,4 +165,4 @@ All open and closed issues in the Steam release work stream:
 - [acceptance/player-checklist.md](/dev/acceptance/player-checklist/) — player acceptance gate
 - [acceptance/creator-checklist.md](/dev/acceptance/creator-checklist/) — creator acceptance gate
 - [acceptance/developer-checklist.md](/dev/acceptance/developer-checklist/) — developer acceptance gate
-- [GitHub Milestones](https://github.com/outrightmental/ConversationSimulator/milestones) — issue tracking
+- [GitHub Milestones](https://github.com/ConversationSimulator/ConversationSimulator/milestones) — issue tracking

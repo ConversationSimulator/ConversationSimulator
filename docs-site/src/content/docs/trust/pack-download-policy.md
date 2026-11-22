@@ -55,7 +55,7 @@ delivers an app update. There is no separate pack auto-update mechanism in v1.
 All official packs must pass the full quality bar defined in
 [`docs/official-pack-quality-bar.md`](/create/quality-bar/) and the pack validation gate
 (`convsim validate-pack`) before a release build is tagged. The
-`pack-validation` CI job in [`.github/workflows/ci.yml`](https://github.com/outrightmental/ConversationSimulator/blob/main/.github/workflows/ci.yml) enforces this on every
+`pack-validation` CI job in [`.github/workflows/ci.yml`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/.github/workflows/ci.yml) enforces this on every
 push to `main`.
 
 ---
@@ -115,7 +115,7 @@ removed individually without affecting the official bundle.
 ### What counts as a local-dev pack
 
 Any directory that contains a valid `manifest.yaml` conforming to
-[`schemas/pack.schema.json`](https://github.com/outrightmental/ConversationSimulator/blob/main/schemas/pack.schema.json) may be loaded as a local-dev pack. The pack does
+[`schemas/pack.schema.json`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/schemas/pack.schema.json) may be loaded as a local-dev pack. The pack does
 not need to be installed — it can be loaded directly from its source tree.
 
 ### Loading a local-dev pack
@@ -244,9 +244,9 @@ From SR-05 in the studio's Steam compliance and risk register:
 
 ## Links
 
-- [`schemas/pack.schema.json`](https://github.com/outrightmental/ConversationSimulator/blob/main/schemas/pack.schema.json) — pack manifest schema
+- [`schemas/pack.schema.json`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/schemas/pack.schema.json) — pack manifest schema
 - [`docs/scenario-authoring.md`](/create/scenario-authoring/) — pack authoring guide
 - [`docs/official-pack-quality-bar.md`](/create/quality-bar/) — quality criteria for official packs
 - [`docs/pack-validation.md`](/create/pack-validation/) — validator CLI reference
 - [`docs/safety-policy.md`](/trust/safety-policy/) — content policy, pack sandboxing, and prohibited categories
-- [`packs/official/`](https://github.com/outrightmental/ConversationSimulator/tree/main/packs/official/) — official pack source
+- [`packs/official/`](https://github.com/ConversationSimulator/ConversationSimulator/tree/main/packs/official/) — official pack source

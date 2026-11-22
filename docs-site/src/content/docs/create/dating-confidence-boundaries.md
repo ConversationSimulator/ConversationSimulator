@@ -218,7 +218,7 @@ content_rating_cap: PG-13
 
 The Language Café pack is a **G-rated** language-practice pack and must not
 carry dating framing. The following constraints apply and are enforced by the
-test suite ([`test_pg_dating_confidence_boundary.py`](https://github.com/outrightmental/ConversationSimulator/blob/main/services/convsim-core/tests/test_pg_dating_confidence_boundary.py)):
+test suite ([`test_pg_dating_confidence_boundary.py`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/services/convsim-core/tests/test_pg_dating_confidence_boundary.py)):
 
 - `manifest.yaml` → `content_rating: G`
 - `manifest.yaml` → `tags` must not contain `dating`, `romance`, `romantic`,
@@ -230,7 +230,7 @@ test suite ([`test_pg_dating_confidence_boundary.py`](https://github.com/outrigh
 
 ## Fixture base for future dating-confidence packs
 
-The test file [`services/convsim-core/tests/test_pg_dating_confidence_boundary.py`](https://github.com/outrightmental/ConversationSimulator/blob/main/services/convsim-core/tests/test_pg_dating_confidence_boundary.py)
+The test file [`services/convsim-core/tests/test_pg_dating_confidence_boundary.py`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/services/convsim-core/tests/test_pg_dating_confidence_boundary.py)
 provides a reusable fixture base. Future dating-confidence pack authors can:
 
 1. Copy the `_pg13_dating_policy()` helper as their safety policy template.

@@ -9,7 +9,7 @@ A **minimal sample pack** for learning the Creator Workbench. It contains
 one scenario, one NPC, one rubric, one safety policy, and one smoke test —
 the smallest complete pack that demonstrates every required file type.
 
-The pack lives at [`packs/sample/hello-conversation/`](https://github.com/outrightmental/ConversationSimulator/tree/main/packs/sample/hello-conversation) in the GitHub repository.
+The pack lives at [`packs/sample/hello-conversation/`](https://github.com/ConversationSimulator/ConversationSimulator/tree/main/packs/sample/hello-conversation) in the GitHub repository.
 
 **Licence: CC0-1.0 (public domain).** No conditions. Fork it, strip it,
 rename everything, and use it as the skeleton for your own pack.

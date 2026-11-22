@@ -69,9 +69,9 @@ Conversation Simulator icon, and it is this one:
 
 | File | What it is |
 |------|------------|
-| [`docs/assets/brand/ConversationSimulatorIcon.svg`](https://github.com/outrightmental/ConversationSimulator/blob/main/docs/assets/brand/ConversationSimulatorIcon.svg) (and `.png`, 2048 px) | **The icon.** The bubbles on the dark radial-gradient square. |
-| [`docs/assets/brand/mark.svg`](https://github.com/outrightmental/ConversationSimulator/blob/main/docs/assets/brand/mark.svg) | The same bubbles with no square: the mark beside a wordmark. |
-| [`docs/assets/brand/ConversationSimulatorDemoIcon.svg`](https://github.com/outrightmental/ConversationSimulator/blob/main/docs/assets/brand/ConversationSimulatorDemoIcon.svg) (and `.png`) | **The demo icon.** The icon with an amber "DEMO" badge in its lower-right corner. Generated; do not edit. |
+| [`docs/assets/brand/ConversationSimulatorIcon.svg`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/docs/assets/brand/ConversationSimulatorIcon.svg) (and `.png`, 2048 px) | **The icon.** The bubbles on the dark radial-gradient square. |
+| [`docs/assets/brand/mark.svg`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/docs/assets/brand/mark.svg) | The same bubbles with no square: the mark beside a wordmark. |
+| [`docs/assets/brand/ConversationSimulatorDemoIcon.svg`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/docs/assets/brand/ConversationSimulatorDemoIcon.svg) (and `.png`) | **The demo icon.** The icon with an amber "DEMO" badge in its lower-right corner. Generated; do not edit. |
 
 The icon is the app icon on every platform (Windows, macOS, Linux), the Steam
 App Icon and Shortcut Icon, the Microsoft Store logos, the favicon of the app,
@@ -97,7 +97,7 @@ either voice.
 
 The colour system is the product's own transcript colour coding, promoted to
 brand. Use the CSS custom properties in
-[`apps/web/src/index.css`](https://github.com/outrightmental/ConversationSimulator/blob/main/apps/web/src/index.css).
+[`apps/web/src/index.css`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/apps/web/src/index.css).
 
 | Token | Hex | Role |
 |-------|-----|------|

@@ -327,4 +327,4 @@ used for offline smoke tests and CI.
 - [Quickstart](/start/quickstart/) — run your first conversation
 - [Troubleshooting](/start/troubleshooting/) — model load failures, slow inference, VRAM errors
 - [runtime-adapters.md](/reference/runtime-adapters/) — technical detail on the LLM runtime abstraction
-- [model-registry/registry.yaml](https://github.com/outrightmental/ConversationSimulator/blob/main/model-registry/registry.yaml) — full list of registry entries with checksums
+- [model-registry/registry.yaml](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/model-registry/registry.yaml) — full list of registry entries with checksums

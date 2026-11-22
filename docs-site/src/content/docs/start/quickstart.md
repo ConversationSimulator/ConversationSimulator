@@ -253,4 +253,4 @@ debrief says that turn details are not available.
 
 - [Choosing how to run the AI](/play/ai-engine/): built-in engine, Ollama, GGUF, hardware recommendations
 - [Troubleshooting](/start/troubleshooting/): if something does not work
-- [README](https://github.com/outrightmental/ConversationSimulator): project overview
+- [README](https://github.com/ConversationSimulator/ConversationSimulator): project overview

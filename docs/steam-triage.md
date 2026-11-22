@@ -170,4 +170,4 @@ See [privacy.md](privacy.md) for the full local-first data handling policy and
 - [safety-policy.md](safety-policy.md) — content safety policy
 - [SECURITY.md](../SECURITY.md) — security vulnerability disclosure
 - [.github/workflows/hotfix.yml](../.github/workflows/hotfix.yml) — hotfix branch creation workflow
-- [GitHub issue templates](https://github.com/outrightmental/ConversationSimulator/tree/main/.github/ISSUE_TEMPLATE) — all available templates
+- [GitHub issue templates](https://github.com/ConversationSimulator/ConversationSimulator/tree/main/.github/ISSUE_TEMPLATE) — all available templates

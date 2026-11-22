@@ -514,7 +514,7 @@ engine on first run. See [`docs/sidecar-bundling.md`](sidecar-bundling.md).
 
 A build from source asks GitHub once per visit to the Home screen whether a
 newer beta exists, by fetching
-`https://github.com/outrightmental/ConversationSimulator/releases/download/beta-channel/latest.json`.
+`https://github.com/ConversationSimulator/ConversationSimulator/releases/download/beta-channel/latest.json`.
 The request downloads no files: when a newer version is listed, the Home
 screen shows a banner whose **Install** button opens the release page in the
 player's browser. Failures are silent, so an offline machine sees nothing.

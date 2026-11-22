@@ -30,7 +30,7 @@ body:
     attributes:
       label: Pull request URL
       description: Link the open PR that adds this pack to packs/official/.
-      placeholder: "https://github.com/outrightmental/ConversationSimulator/pull/NNN"
+      placeholder: "https://github.com/ConversationSimulator/ConversationSimulator/pull/NNN"
     validations:
       required: false
 

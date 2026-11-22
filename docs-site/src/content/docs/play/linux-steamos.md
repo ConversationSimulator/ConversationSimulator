@@ -26,7 +26,7 @@ The Steam depot ships only the AppImage, renamed to the version-stable
 across releases.
 The `.deb` is not staged, because a depot must not contain installer packages,
 and GitHub releases carry no binaries. To get the `.deb`, build it yourself with
-[`scripts/build-linux.sh`](https://github.com/outrightmental/ConversationSimulator/blob/main/scripts/build-linux.sh).
+[`scripts/build-linux.sh`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/scripts/build-linux.sh).
 
 ---
 
@@ -201,7 +201,7 @@ the general QA matrix in [`docs/QA_STEAM_PLATFORM_MATRIX.md`](/dev/qa-steam-plat
 | Battery draw during text session | < 15 W average |
 
 > The Linux release build bundles llama.cpp's CPU build of `llama-server`
-> ([`runtimes/llama_cpp/download-runtime.sh`](https://github.com/outrightmental/ConversationSimulator/blob/main/runtimes/llama_cpp/download-runtime.sh)
+> ([`runtimes/llama_cpp/download-runtime.sh`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/runtimes/llama_cpp/download-runtime.sh)
 > fetches the `ubuntu-x64` archive), so on Steam Deck the model runs on the CPU.
 > CPU-only inference is slower but fully functional.
 
@@ -256,7 +256,7 @@ If a player's system does not meet the glibc 2.35 minimum:
 3. **Build from source.** Players comfortable with Rust/Node/Python toolchains
    can build directly from the GitHub repository on their own distro. See
    [`docs/platform-notes.md`](/play/platform-notes/) and
-   [`scripts/setup.sh`](https://github.com/outrightmental/ConversationSimulator/blob/main/scripts/setup.sh).
+   [`scripts/setup.sh`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/scripts/setup.sh).
 
 Conversation Simulator does not ship a "legacy" build targeting older
 distributions in v1. If demand for older glibc compatibility is confirmed
@@ -271,4 +271,4 @@ with glibc 2.31 base image).
 - [platform-notes.md](/play/platform-notes/) — Linux build prerequisites and dev environment
 - [QA_STEAM_PLATFORM_MATRIX.md](/dev/qa-steam-platform-matrix/) — full manual and automated QA test matrix
 - [release-checklist.md](/dev/release-checklist/) — release smoke steps and CI gate list
-- [`scripts/build-linux.sh`](https://github.com/outrightmental/ConversationSimulator/blob/main/scripts/build-linux.sh) — local Linux build command
+- [`scripts/build-linux.sh`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/scripts/build-linux.sh) — local Linux build command

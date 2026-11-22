@@ -35,7 +35,7 @@ This is backed by the code, not just by policy:
   (LLM, TTS, STT) is required to clear before opening a connection. Setting
   `LOCAL_MODE = True` makes any play-mode attempt raise `NetworkBlockedError`.
   This contract is enforced by the unit tests in
-  [`services/convsim-core/tests/test_network_policy.py`](https://github.com/outrightmental/ConversationSimulator/blob/main/services/convsim-core/tests/test_network_policy.py), which run in CI.
+  [`services/convsim-core/tests/test_network_policy.py`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/services/convsim-core/tests/test_network_policy.py), which run in CI.
 - The offline smoke test (see [Verifying local-only operation](#verifying-local-only-operation))
   is the end-to-end check. It installs a socket-level network guard that blocks
   any non-localhost connection during a scripted session and records a violation
@@ -189,7 +189,7 @@ request a model.
 ### Pack files
 
 Installed packs are stored at `~/.convsim/packs/` (for user-installed packs)
-or in the repository's [`packs/official/`](https://github.com/outrightmental/ConversationSimulator/tree/main/packs/official/) directory. Pack files are never
+or in the repository's [`packs/official/`](https://github.com/ConversationSimulator/ConversationSimulator/tree/main/packs/official/) directory. Pack files are never
 uploaded or synchronized.
 
 ---
@@ -270,9 +270,9 @@ npx convsim offline-smoke-test --json packs/official/job-interview-basic
 The command exits nonzero on failure, making it suitable as a CI gate.
 
 The same end-to-end verification runs on every CI build in
-[`packages/convsim-cli/tests/offline-smoke-test.test.ts`](https://github.com/outrightmental/ConversationSimulator/blob/main/packages/convsim-cli/tests/offline-smoke-test.test.ts),
+[`packages/convsim-cli/tests/offline-smoke-test.test.ts`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/packages/convsim-cli/tests/offline-smoke-test.test.ts),
 and the underlying network-policy guard is unit-tested in
-[`services/convsim-core/tests/test_network_policy.py`](https://github.com/outrightmental/ConversationSimulator/blob/main/services/convsim-core/tests/test_network_policy.py).
+[`services/convsim-core/tests/test_network_policy.py`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/services/convsim-core/tests/test_network_policy.py).
 
 ---
 

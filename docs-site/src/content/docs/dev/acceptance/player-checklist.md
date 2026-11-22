@@ -43,7 +43,7 @@ Run on a **clean profile** (`~/.convsim/` freshly created or deleted).
 ### P-M1 — Clone and install
 
 ```bash
-git clone https://github.com/outrightmental/ConversationSimulator.git
+git clone https://github.com/ConversationSimulator/ConversationSimulator.git
 cd ConversationSimulator
 ./scripts/setup.sh
 ```

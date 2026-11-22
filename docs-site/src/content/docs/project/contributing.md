@@ -31,7 +31,7 @@ no compilation, no programming experience required.
   content and NPC policies all packs must follow.
 
 To submit an official pack, use the
-[Scenario Pack Submission](https://github.com/outrightmental/ConversationSimulator/blob/main/.github/ISSUE_TEMPLATE/scenario_pack_submission.yml)
+[Scenario Pack Submission](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/.github/ISSUE_TEMPLATE/scenario_pack_submission.yml)
 issue template.
 
 ### Local AI hackers
@@ -47,16 +47,16 @@ loader.
   supported formats, download flow, and hardware requirements.
 - **Performance:** [Performance](/play/performance/) —
   latency targets and graceful degradation strategy.
-- **Entry points in code:** [`services/convsim-core/`](https://github.com/outrightmental/ConversationSimulator/tree/main/services/convsim-core) (FastAPI, Python) and
-  [`packages/prompt-composer/`](https://github.com/outrightmental/ConversationSimulator/tree/main/packages/prompt-composer) (prompt construction).
+- **Entry points in code:** [`services/convsim-core/`](https://github.com/ConversationSimulator/ConversationSimulator/tree/main/services/convsim-core) (FastAPI, Python) and
+  [`packages/prompt-composer/`](https://github.com/ConversationSimulator/ConversationSimulator/tree/main/packages/prompt-composer) (prompt construction).
 
 ### Frontend developers
 
 The web app is React + TypeScript + Vite. The desktop wrapper is Tauri v2.
 
 - **Architecture overview:** [Architecture](/reference/architecture/)
-- **Package layout:** [`apps/web/`](https://github.com/outrightmental/ConversationSimulator/tree/main/apps/web) (browser UI), [`apps/desktop/`](https://github.com/outrightmental/ConversationSimulator/tree/main/apps/desktop) (Tauri),
-  [`packages/shared-types/`](https://github.com/outrightmental/ConversationSimulator/tree/main/packages/shared-types) (shared TypeScript types).
+- **Package layout:** [`apps/web/`](https://github.com/ConversationSimulator/ConversationSimulator/tree/main/apps/web) (browser UI), [`apps/desktop/`](https://github.com/ConversationSimulator/ConversationSimulator/tree/main/apps/desktop) (Tauri),
+  [`packages/shared-types/`](https://github.com/ConversationSimulator/ConversationSimulator/tree/main/packages/shared-types) (shared TypeScript types).
 - **Run locally:**
 
   ```sh
@@ -84,10 +84,10 @@ Work on STT (speech-to-text) or TTS (text-to-speech) integration.
 
 - **Voice smoke tests:** [Voice Smoke Tests](/dev/voice-smoke-tests/) —
   manual and automated tests for input/output audio paths.
-- **Architecture:** the voice stack lives in [`services/convsim-core/`](https://github.com/outrightmental/ConversationSimulator/tree/main/services/convsim-core) under
+- **Architecture:** the voice stack lives in [`services/convsim-core/`](https://github.com/ConversationSimulator/ConversationSimulator/tree/main/services/convsim-core) under
   the speech provider modules.
-- For STT bugs, use the [Speech / STT Issue](https://github.com/outrightmental/ConversationSimulator/blob/main/.github/ISSUE_TEMPLATE/stt_issue.yml)
-  template. For TTS bugs, use the [TTS Issue](https://github.com/outrightmental/ConversationSimulator/blob/main/.github/ISSUE_TEMPLATE/tts_issue.yml)
+- For STT bugs, use the [Speech / STT Issue](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/.github/ISSUE_TEMPLATE/stt_issue.yml)
+  template. For TTS bugs, use the [TTS Issue](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/.github/ISSUE_TEMPLATE/tts_issue.yml)
   template.
 
 ### Game designers
@@ -97,9 +97,9 @@ generation.
 
 - **Full specification:** [SPEC](/reference/spec/) — sections on NPC state
   modelling, scenario events, scoring, and debrief.
-- **Schema reference:** [`schemas/`](https://github.com/outrightmental/ConversationSimulator/tree/main/schemas) — JSON Schema definitions for scenarios,
+- **Schema reference:** [`schemas/`](https://github.com/ConversationSimulator/ConversationSimulator/tree/main/schemas) — JSON Schema definitions for scenarios,
   NPCs, rubrics, safety policies, and pack tests.
-- **Example packs:** [`packs/official/`](https://github.com/outrightmental/ConversationSimulator/tree/main/packs/official) — fully worked packs covering
+- **Example packs:** [`packs/official/`](https://github.com/ConversationSimulator/ConversationSimulator/tree/main/packs/official) — fully worked packs covering
   interviews, negotiations, language practice, difficult conversations, and
   dating confidence and boundaries.
 
@@ -111,7 +111,7 @@ Help maintain the content safety system and review submitted packs.
 - **Privacy:** [Privacy](/trust/privacy/)
 - **Network security:** [Network Security](/trust/network-security/)
 - **Report a safety concern:** use the
-  [Safety Issue](https://github.com/outrightmental/ConversationSimulator/blob/main/.github/ISSUE_TEMPLATE/safety_issue.yml) template.
+  [Safety Issue](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/.github/ISSUE_TEMPLATE/safety_issue.yml) template.
   For responsible disclosure, follow [Security](/project/security/).
 
 ### Language learners and localization contributors
@@ -119,7 +119,7 @@ Help maintain the content safety system and review submitted packs.
 Contribute scenario packs for additional languages or correct language use in
 existing packs.
 
-- **Language Café pack** ([`packs/official/language-cafe/`](https://github.com/outrightmental/ConversationSimulator/tree/main/packs/official/language-cafe)) is the reference
+- **Language Café pack** ([`packs/official/language-cafe/`](https://github.com/ConversationSimulator/ConversationSimulator/tree/main/packs/official/language-cafe)) is the reference
   implementation for multi-language packs.
 - Read [Scenario Authoring](/create/scenario-authoring/) and
   [Official Pack Quality Bar](/create/quality-bar/)
@@ -131,7 +131,7 @@ existing packs.
 ## Development setup
 
 ```sh
-git clone https://github.com/outrightmental/ConversationSimulator
+git clone https://github.com/ConversationSimulator/ConversationSimulator
 cd ConversationSimulator
 ./scripts/setup.sh      # macOS / Linux
 # scripts\setup.ps1    # Windows PowerShell
@@ -220,7 +220,7 @@ Before opening a PR, confirm every applicable item:
 - [ ] NPC characters are clearly fictional (no named real persons)
 - [ ] Safety policy YAML present and validator accepts the pack
 
-See the PR template ([`.github/PULL_REQUEST_TEMPLATE.md`](https://github.com/outrightmental/ConversationSimulator/blob/main/.github/PULL_REQUEST_TEMPLATE.md)) — it embeds this
+See the PR template ([`.github/PULL_REQUEST_TEMPLATE.md`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/.github/PULL_REQUEST_TEMPLATE.md)) — it embeds this
 checklist.
 
 ---

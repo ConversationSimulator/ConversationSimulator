@@ -77,7 +77,7 @@ for f in docs/assets/screenshots/*.png; do
 done
 ```
 
-[`scripts/capture-screenshots.mjs`](https://github.com/outrightmental/ConversationSimulator/blob/main/scripts/capture-screenshots.mjs) plays the
+[`scripts/capture-screenshots.mjs`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/scripts/capture-screenshots.mjs) plays the
 scenario through the real UI — library search, scenario setup, four typed turns, end
 session, debrief — then captures the Creator Workbench and Model Manager, and encodes
 the hero recording from the last exchange with `ffmpeg`. It **refuses to run** when the

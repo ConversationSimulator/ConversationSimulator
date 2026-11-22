@@ -99,7 +99,7 @@ export APPLE_TEAM_ID="TEAMID"
 ```
 
 Tauri's bundler reads these variables automatically, applies
-[`apps/desktop/src-tauri/entitlements.plist`](https://github.com/outrightmental/ConversationSimulator/blob/main/apps/desktop/src-tauri/entitlements.plist) (Hardened Runtime entitlements
+[`apps/desktop/src-tauri/entitlements.plist`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/apps/desktop/src-tauri/entitlements.plist) (Hardened Runtime entitlements
 required for Steamworks and sidecar compatibility — see the file for details),
 signs the `.app` bundle with `codesign --options runtime`, and submits it to
 Apple's notarisation service via `notarytool`.
@@ -574,5 +574,5 @@ For contributor builds on Windows, run the PowerShell equivalent:
 .\runtimes\llama_cpp\download-runtime.ps1
 ```
 
-See [`runtimes/llama_cpp/README.md`](https://github.com/outrightmental/ConversationSimulator/blob/main/runtimes/llama_cpp/README.md) for more
+See [`runtimes/llama_cpp/README.md`](https://github.com/ConversationSimulator/ConversationSimulator/blob/main/runtimes/llama_cpp/README.md) for more
 details.

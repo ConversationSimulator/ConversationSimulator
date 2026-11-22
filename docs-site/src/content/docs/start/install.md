@@ -68,7 +68,7 @@ Check out a **release tag** rather than `main` — tags are the versions we test
 and ship:
 
 ```bash
-git clone https://github.com/outrightmental/ConversationSimulator.git
+git clone https://github.com/ConversationSimulator/ConversationSimulator.git
 cd ConversationSimulator
 git checkout v0.4.0        # latest release tag
 ```

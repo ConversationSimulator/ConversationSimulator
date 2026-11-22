@@ -246,5 +246,5 @@ must not compromise offline-first, local-model, or open-source principles.
 - [Privacy and data policy](/trust/privacy/) — what stays local and how to verify it
 - [Steam edition roadmap](/dev/steam-roadmap/) — release principles, release train, and platform targets for the paid ($9.99) Steam edition
 - [Steam MVP scope and release gates](/dev/steam-mvp-scope/) — minimum playable release features, optional targeted features, pass/fail gates, and post-launch deferrals
-- [GitHub Milestones](https://github.com/outrightmental/ConversationSimulator/milestones) — issue tracking
+- [GitHub Milestones](https://github.com/ConversationSimulator/ConversationSimulator/milestones) — issue tracking
 - [Full specification](/reference/spec/) — technical requirements per milestone

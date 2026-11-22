@@ -6,7 +6,8 @@ white bubble on the app bundle and the store logos, a purple one on the demo,
 a capsule-only purple-and-green drawing on the Steam art, and an older cut of
 the violet and emerald bubbles on the favicons. The official icon is
 ``docs/assets/brand/ConversationSimulatorIcon.svg``; everything else is drawn
-from it by ``publishing/assets/source/gen_icons.py``.
+from it by the studio's icon generator, which is kept with the store artwork
+outside this repository.
 
 test_demo_branding.py checks what each generated file looks like. These tests
 check the rule itself, across the whole tree:
@@ -20,7 +21,6 @@ Pure Python, no renderer; it reads the tracked files only. Owner: platform team.
 """
 from __future__ import annotations
 
-import importlib.util
 import re
 import subprocess
 from pathlib import Path
@@ -28,7 +28,9 @@ from pathlib import Path
 import pytest
 
 _REPO_ROOT = Path(__file__).resolve().parents[2]
-_GEN_ICONS = _REPO_ROOT / "publishing" / "assets" / "source" / "gen_icons.py"
+_BRAND_DIR = _REPO_ROOT / "docs" / "assets" / "brand"
+_ICON_SOURCE = _BRAND_DIR / "ConversationSimulatorIcon.svg"
+_MARK_SOURCE = _BRAND_DIR / "mark.svg"
 
 # Files that may embed an SVG drawing, inline or whole.
 _VECTOR_SUFFIXES = {".svg", ".html", ".astro", ".tsx", ".jsx", ".mdx", ".vue"}
@@ -42,13 +44,6 @@ _RETIRED_FRAGMENTS = (
     'width="36" height="26" rx="8"',      # the 64-unit favicon / logo mark
     'width="218" height="126" rx="26"',   # the capsule-only green bubble
 )
-
-
-def _gen():
-    spec = importlib.util.spec_from_file_location("convsim_gen_icons", _GEN_ICONS)
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
 
 
 def _tracked_vector_files() -> list[Path]:
@@ -70,6 +65,10 @@ def _bubble_paths(body: str) -> list[str]:
     return re.findall(r'<path[^>]*\sd="([^"]+)"', body)
 
 
+def _view_box(svg: str) -> str:
+    return re.search(r'viewBox="([^"]+)"', svg).group(1)
+
+
 def _svg_blocks(text: str) -> list[str]:
     return re.findall(r"<svg\b.*?</svg>", text, re.S | re.I)
 
@@ -77,18 +76,16 @@ def _svg_blocks(text: str) -> list[str]:
 class TestTheSourcesAgree:
     def test_mark_is_the_icons_bubbles(self):
         """mark.svg is the icon without its square, not a second drawing."""
-        gen = _gen()
-        icon, mark = gen.icon_artwork(), gen.mark_artwork()
-        assert icon.side == mark.side, "the two sources are drawn at different sizes"
-        assert _bubble_paths(mark.body) == _bubble_paths(icon.body), (
+        icon, mark = _ICON_SOURCE.read_text(), _MARK_SOURCE.read_text()
+        assert _view_box(icon) == _view_box(mark), "the two sources are drawn at different sizes"
+        assert _bubble_paths(mark) == _bubble_paths(icon), (
             "docs/assets/brand/mark.svg's bubbles are not the icon's"
         )
         for colour in (_YOU, _THEM):
-            assert colour in mark.body.lower() and colour in icon.body.lower()
+            assert colour in mark.lower() and colour in icon.lower()
 
     def test_the_icon_has_its_two_voices(self):
-        gen = _gen()
-        assert len(_bubble_paths(gen.icon_artwork().body)) == 2
+        assert len(_bubble_paths(_ICON_SOURCE.read_text())) == 2
 
 
 class TestOneMarkEverywhere:
@@ -99,7 +96,7 @@ class TestOneMarkEverywhere:
         redrawn mark in a new page — and it is what this catches, wherever in
         the tree it lands.
         """
-        official = _bubble_paths(_gen().mark_artwork().body)
+        official = _bubble_paths(_MARK_SOURCE.read_text())
         offenders = []
         for path in _tracked_vector_files():
             text = path.read_text(errors="replace")
@@ -110,8 +107,7 @@ class TestOneMarkEverywhere:
                     break
         assert not offenders, (
             f"{offenders} draw a violet-and-emerald mark that is not "
-            "docs/assets/brand/mark.svg; generate it with "
-            "publishing/assets/source/gen_icons.py instead"
+            "docs/assets/brand/mark.svg; draw it from that file instead"
         )
 
     def test_no_retired_drawing_survives(self):
@@ -121,9 +117,3 @@ class TestOneMarkEverywhere:
             if any(f in path.read_text(errors="replace") for f in _RETIRED_FRAGMENTS)
         ]
         assert not offenders, f"{offenders} still carry a retired Conversation Simulator mark"
-
-    def test_the_share_card_draws_the_official_mark(self):
-        """og-card.svg is hand-set type around the mark; the mark must be the official one."""
-        gen = _gen()
-        card = (_REPO_ROOT / "website" / "static" / "images" / "og-card.svg").read_text()
-        assert gen.mark_at(107, 127, 100) in card

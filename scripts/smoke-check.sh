@@ -117,12 +117,10 @@ check_file "scripts/release-smoke.ps1"
 check_file "scripts/desktop-smoke.sh"
 check_file "scripts/desktop-smoke.ps1"
 
-# Packaging and audit scripts
+# Packaging scripts
 check_file "scripts/build-core.sh"
 check_file "scripts/build-core.ps1"
 check_file "scripts/build-linux.sh"
-check_file "scripts/depot-audit.sh"
-check_file "scripts/depot-audit.ps1"
 check_file "services/convsim-core/convsim-core.spec"
 check_file "apps/desktop/src-tauri/resources/bin/.gitkeep"
 check_file "apps/desktop/src-tauri/resources/placeholder"
@@ -139,23 +137,13 @@ check_file "docs/linux-steamos-requirements.md"
 
 echo ""
 
-# Steam publishing and depot policy docs
-check_dir  "steam"
-check_file "steam/app_build.vdf.tpl"
-check_file "steam/depot_windows.vdf.tpl"
-check_file "steam/depot_macos.vdf.tpl"
-check_file "steam/depot_linux.vdf.tpl"
-check_dir  "publishing"
-check_file "publishing/STEAM_DEPOT_CONTENTS.md"
-check_file "publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md"
-check_file "publishing/STEAM_APP_REGISTRATION.md"
+# Download policy docs
 check_file "docs/model-download-policy.md"
 check_file "docs/pack-download-policy.md"
-check_file ".github/workflows/steam-deploy.yml"
-# Steam Next Fest demo edition (issue #495): decision record, submission
-# runbook, and the Tauri config overlay the demo build leg applies.
+# Demo edition (issue #495): the decision record, and the Tauri config
+# overlays that a Steam build and a demo build apply.
 check_file "docs/steam-next-fest-demo.md"
-check_file "publishing/STEAM_NEXT_FEST_DEMO.md"
+check_file "apps/desktop/src-tauri/tauri.steam.conf.json"
 check_file "apps/desktop/src-tauri/tauri.demo.conf.json"
 
 echo ""
@@ -192,16 +180,6 @@ check_file "apps/desktop/src-tauri/icons-demo/128x128.png"
 check_file "apps/desktop/src-tauri/icons-demo/128x128@2x.png"
 check_file "apps/desktop/src-tauri/icons-demo/icon.icns"
 check_file "apps/desktop/src-tauri/icons-demo/icon.ico"
-# The Steamworks icons are not compiled into anything — they are uploaded by
-# hand to each app's Graphical Assets (demo gate D-10 for the demo's).  They
-# are checked here because they come off the same icon and the same script
-# (gen_icons.py), so a tree that has the bundle sets but not these is a
-# half-applied regeneration.  The App Icon is the library-list row from issue
-# #499; the Mac Icon field takes each bundle's icon.icns above.
-check_file "publishing/assets/icons/base_app_icon.jpg"
-check_file "publishing/assets/icons/base_shortcut_icon.png"
-check_file "publishing/assets/icons/demo_app_icon.jpg"
-check_file "publishing/assets/icons/demo_shortcut_icon.png"
 
 echo ""
 

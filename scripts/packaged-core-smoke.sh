@@ -51,8 +51,8 @@
 # Exit 2: bad usage.
 #
 # Linux / macOS only. The engine's launch path is platform-independent, and the
-# Windows payload is covered by scripts/depot-audit.ps1 and the artifact
-# inspection tests, so a pwsh twin would re-prove a platform-independent claim.
+# Windows payload is covered by the artifact inspection tests (tests/artifact/),
+# so a pwsh twin would re-prove a platform-independent claim.
 set -uo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -194,7 +194,7 @@ fi
 # A real JSON parser for check 2. grep cannot tell a top-level key from one
 # nested inside `database`, and that distinction is the whole of the check (see
 # `health_contract_violation`). Either interpreter will do: python3 built the
-# binary under test (scripts/build-core.sh) and release.yml sets it up before
+# binary under test (scripts/build-core.sh) and the release build sets it up before
 # this step, and node is needed by check 5 regardless.
 JSON_RUNNER=""
 if command -v python3 >/dev/null 2>&1; then
@@ -447,7 +447,7 @@ fi
 
 CLI_ENTRY="$REPO_ROOT/packages/convsim-cli/dist/index.js"
 if [[ ! -f "$CLI_ENTRY" ]]; then
-    # release.yml reaches here with no dist/, so this build runs on every
+    # The release build reaches here with no dist/, so this build runs on every
     # release. Keep its output: discarding it turned a tsc error into nothing but
     # "convsim CLI not built", which names a command to run rather than the
     # reason the same command just failed.

@@ -246,7 +246,7 @@ jobs:
           PYEOF
 
       # ── The shipping engines (issue #530, Windows and Linux) ─────────────────
-      # Installs both pinned builds exactly the way release.yml bundles them —
+      # Installs both pinned builds exactly the way a release build bundles them —
       # the CPU build flat, the Vulkan build in vulkan/ — with the same scripts,
       # which verify each archive against runtimes/llama_cpp/pin.json and fail
       # on a missing or mismatched digest. Then the CPU build must run
@@ -332,8 +332,8 @@ jobs:
   # The Steam macOS depot once shipped an upstream llama.cpp build whose Metal
   # backend was compiled for macOS 26; dyld killed llama-server at launch on
   # every supported macOS, and the setup wizard misreported it as insufficient
-  # RAM.  This job downloads the pinned runtime exactly the way the release
-  # workflow does (release.yml's "Bundle llama-server" step calls
+  # RAM.  This job downloads the pinned runtime exactly the way a release
+  # build does (its "Bundle llama-server" step calls
   # download-runtime.sh, so it is protected transitively) and fails when any
   # bundled Mach-O binary declares a minimum macOS newer than our floor.
   llama-minos-gate:

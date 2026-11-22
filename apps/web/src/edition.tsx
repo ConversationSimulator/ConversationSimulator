@@ -29,7 +29,7 @@ export const FULL_APP_STEAM_APP_ID = 4963030
 export const FULL_APP_STEAM_URL =
   `https://store.steampowered.com/app/${FULL_APP_STEAM_APP_ID}/Conversation_Simulator/`
 
-/** The paid base app on the Microsoft Store (publishing/MICROSOFT_STORE.md). */
+/** The paid base app on the Microsoft Store. */
 export const FULL_APP_MSSTORE_PRODUCT_ID = '9NTNF4X3GQ95'
 export const FULL_APP_MSSTORE_URL = `https://apps.microsoft.com/detail/${FULL_APP_MSSTORE_PRODUCT_ID}`
 

@@ -28,8 +28,8 @@ serde_json = "1"
 # it, so no separate SDK download is needed to build; set STEAM_SDK_LOCATION
 # only to override the bundled copy. At runtime the matching shared library
 # must sit next to the executable — the Windows Steam depot ships
-# steam_api64.dll for exactly this reason (see release.yml, "Package Windows
-# portable depot layout").
+# steam_api64.dll for exactly this reason (the release build's "Package
+# Windows portable depot layout" step).
 #
 # Off by default so the app builds and runs without any Steam dependency.
 #   cargo tauri build --features steam

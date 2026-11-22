@@ -12,7 +12,7 @@ Typical usage:
   CONVSIM_ARTIFACT_DIR=apps/desktop/src-tauri/target/release/bundle/appimage \
     pytest tests/artifact/ -v
 
-  # Against an organized Steam depot directory (after steam-deploy content prep):
+  # Against an organized Steam depot directory (after the depot content is laid out):
   CONVSIM_ARTIFACT_DIR=steam-content/linux pytest tests/artifact/ -v
 
   # Via the release-smoke --full runner:

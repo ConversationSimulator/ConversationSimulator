@@ -11,10 +11,10 @@
 # linked into the exe and that dependency disappears entirely.  The UCRT
 # (api-ms-win-crt-*) has shipped in-box since Windows 10 and is unaffected.
 #
-# The release workflow additionally ships vcruntime140.dll /
+# The release build additionally ships vcruntime140.dll /
 # vcruntime140_1.dll / msvcp140.dll app-locally in the Steam depot for the
-# bundled llama.cpp runtime binaries, which remain dynamically linked - see
-# ".github/workflows/release.yml" (Package Windows portable depot layout).
+# bundled llama.cpp runtime binaries, which remain dynamically linked (its
+# "Package Windows portable depot layout" step).
 #
 # https://doc.rust-lang.org/reference/linkage.html#static-and-dynamic-c-runtimes
 [target.x86_64-pc-windows-msvc]

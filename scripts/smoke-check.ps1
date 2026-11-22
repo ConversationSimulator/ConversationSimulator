@@ -113,11 +113,9 @@ Check-File "scripts\release-smoke.ps1"
 Check-File "scripts\desktop-smoke.sh"
 Check-File "scripts\desktop-smoke.ps1"
 
-# Packaging and audit scripts
+# Packaging scripts
 Check-File "scripts\build-core.sh"
 Check-File "scripts\build-core.ps1"
-Check-File "scripts\depot-audit.sh"
-Check-File "scripts\depot-audit.ps1"
 Check-File "services\convsim-core\convsim-core.spec"
 Check-File "apps\desktop\src-tauri\resources\bin\.gitkeep"
 Check-File "apps\desktop\src-tauri\resources\placeholder"
@@ -133,19 +131,14 @@ Check-File "docs\release-checklist.md"
 
 Write-Host ""
 
-# Steam publishing and depot policy docs
-Check-Dir  "steam"
-Check-File "steam\app_build.vdf.tpl"
-Check-File "steam\depot_windows.vdf.tpl"
-Check-File "steam\depot_macos.vdf.tpl"
-Check-File "steam\depot_linux.vdf.tpl"
-Check-Dir  "publishing"
-Check-File "publishing\STEAM_DEPOT_CONTENTS.md"
-Check-File "publishing\STEAM_COMPLIANCE_AND_RISK_REGISTER.md"
-Check-File "publishing\STEAM_APP_REGISTRATION.md"
+# Download policy docs
 Check-File "docs\model-download-policy.md"
 Check-File "docs\pack-download-policy.md"
-Check-File ".github\workflows\steam-deploy.yml"
+# Demo edition (issue #495): the decision record, and the Tauri config
+# overlays that a Steam build and a demo build apply.
+Check-File "docs\steam-next-fest-demo.md"
+Check-File "apps\desktop\src-tauri\tauri.steam.conf.json"
+Check-File "apps\desktop\src-tauri\tauri.demo.conf.json"
 
 Write-Host ""
 
@@ -181,16 +174,6 @@ Check-File "apps\desktop\src-tauri\icons-demo\128x128.png"
 Check-File "apps\desktop\src-tauri\icons-demo\128x128@2x.png"
 Check-File "apps\desktop\src-tauri\icons-demo\icon.icns"
 Check-File "apps\desktop\src-tauri\icons-demo\icon.ico"
-# The Steamworks icons are not compiled into anything — they are uploaded by
-# hand to each app's Graphical Assets (demo gate D-10 for the demo's).  They
-# are checked here because they come off the same icon and the same script
-# (gen_icons.py), so a tree that has the bundle sets but not these is a
-# half-applied regeneration.  The App Icon is the library-list row from issue
-# #499; the Mac Icon field takes each bundle's icon.icns above.
-Check-File "publishing\assets\icons\base_app_icon.jpg"
-Check-File "publishing\assets\icons\base_shortcut_icon.png"
-Check-File "publishing\assets\icons\demo_app_icon.jpg"
-Check-File "publishing\assets\icons\demo_shortcut_icon.png"
 
 Write-Host ""
 

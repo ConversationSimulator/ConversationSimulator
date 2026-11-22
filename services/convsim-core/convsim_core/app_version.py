@@ -9,7 +9,7 @@ actually running, so those surfaces use :func:`app_version`, resolved in
 this order:
 
 1. ``CONVSIM_APP_VERSION`` — set by the desktop shell when it launches the
-   core, from the app version ``release.yml`` stamps from the release tag.
+   core, from the app version the release build stamps from the release tag.
    Every packaged build takes this path. A bare version (``0.2.9``) is shown
    in tag form (``v0.2.9``) so it matches the release a maintainer looks up.
 2. ``dev-<short commit hash>`` — convsim-core running from a source checkout

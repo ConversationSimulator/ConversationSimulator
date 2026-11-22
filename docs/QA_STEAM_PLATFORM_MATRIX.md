@@ -20,7 +20,7 @@
 ### OS versions explicitly out of scope for v1
 
 - Windows 8.1 and earlier — no WebView2 support
-- macOS on Intel (x86-64) — not built (issue #563): `release.yml` builds macOS
+- macOS on Intel (x86-64) — not built (issue #563): the release build is macOS
   for Apple Silicon only, so the Steam macOS depot holds an arm64 bundle that
   an Intel Mac cannot run. The store page's system requirements say Apple
   Silicon only. A source build at a release tag still works on an Intel Mac
@@ -99,7 +99,7 @@ SteamOS 3.x in Gaming Mode before G4-02 can be declared PASS.
 | All text is readable at 1280×800 (native resolution) without zooming or horizontal scrolling. | Inspect transcript, meters, debrief | [ ] PASS / [ ] FAIL |
 | No required action is hidden behind a mouse-only hover state. | All screens — controller only | [ ] PASS / [ ] FAIL |
 | DebugDrawer is excluded from the controller focus ring (dev builds only). | TC-11.11 | [ ] PASS / [ ] N/A |
-| Default Steam Input config (`steam/controller_config.vdf`) is loaded automatically. | Launch game; check Steam Input overlay | [ ] PASS / [ ] FAIL |
+| Default Steam Input config is loaded automatically. | Launch game; check Steam Input overlay | [ ] PASS / [ ] FAIL |
 | Offline smoke test passes under SteamOS 3.x (no outbound network during play). | TC-09 on Steam Deck | [ ] PASS / [ ] FAIL |
 | Steam overlay (Shift+Tab) **visibly composites over the app** and closes without breaking the current session. On Windows, "nothing happened" (no visible overlay) is a FAIL even if Steam reports the player In-Game — see TC-11.12. | TC-11.12 | [ ] PASS / [ ] FAIL |
 | Approximate battery impact documented (see §5 performance thresholds). | Observe during TC-11 | [ ] Documented |
@@ -407,4 +407,3 @@ Notes            :
 - [privacy.md](privacy.md) — local-first promise and data handling
 - [network-security.md](network-security.md) — runtime network enforcement
 - [voice-smoke-tests.md](voice-smoke-tests.md) — STT/TTS smoke test procedures
-- [publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md](../publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md) — compliance checklists and risk register

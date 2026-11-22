@@ -25,7 +25,7 @@ Steam store page and the Stage 3/4 release gates.
 
 Notes:
 - macOS 12 Monterey may work but is **not tested** and is excluded from QA coverage.
-- The Steam build is Apple Silicon only (issue #563): `release.yml` builds
+- The Steam build is Apple Silicon only (issue #563): the release is built for
   macOS on one leg, `macos-latest` (arm64), because the GitHub-hosted `macos-13`
   Intel runner is gone. An Intel build would need a second leg or
   cross-compilation (`--target x86_64-apple-darwin`), its own frozen
@@ -79,7 +79,8 @@ unsigned build:
 
 For distributable (Stage 3+) builds, sign and notarise with an Apple Developer
 ID certificate. Set the following environment variables before running
-`tauri build` (or let the CI release workflow set them from secrets):
+`tauri build` (the studio's release build sets them from its own credentials,
+none of which are held in this repository):
 
 ```bash
 # Base64-encoded Developer ID Application .p12 certificate
@@ -102,13 +103,6 @@ Apple's notarisation service via `notarytool`.
 The `convsim-core` PyInstaller sidecar also reads `APPLE_SIGNING_IDENTITY`
 at build time (see `convsim-core.spec`) and signs its embedded Python extensions
 with the same entitlements before Tauri wraps them in the bundle.
-
-> **These are environment-variable names, not secret names.** Tauri requires them
-> verbatim, but the org secrets that feed them in CI are named differently
-> (`MACOS_CODESIGN_CERT_BASE64` → `APPLE_CERTIFICATE`, `APPLE_ID_PASSWORD` →
-> `APPLE_PASSWORD`). See [Apple secrets](#apple-secrets-macos-signing-and-notarisation)
-> below for the full mapping. In CI, `APPLE_SIGNING_IDENTITY` is *derived* from the
-> imported certificate rather than configured — you only set it by hand locally.
 
 See [tauri.app/distribute/sign/macos](https://tauri.app/distribute/sign/macos)
 for more details on the Tauri signing process.
@@ -230,10 +224,9 @@ To run an unsigned build:
 
 For distributable and Steam release builds, signing uses **Google Cloud KMS +
 jsign** so the private key never resides on the build runner. The certificate
-is issued against the KMS key (see the CSR flow in
-[`publishing/WINDOWS_CODE_SIGNING.md`](../publishing/WINDOWS_CODE_SIGNING.md)).
+is issued against the KMS key.
 
-#### Authenticode signing in CI (Release workflow)
+#### Authenticode signing in the release build
 
 Signing runs in two phases controlled by `scripts/jsign-sign.ps1`:
 
@@ -248,29 +241,22 @@ Signing runs in two phases controlled by `scripts/jsign-sign.ps1`:
 
 Both phases share the same script and the same signing priority:
 
-| Priority | Credential secrets | Notes |
-|----------|--------------------|-------|
-| 1. GCP KMS | `GCP_SA_KEY_JSON` + `GCP_KMS_KEY` + `WINDOWS_CODESIGN_CERT` | Org-level; key stays in Cloud HSM |
-| 2. PFX fallback | `WINDOWS_SIGN_CERT_PFX` + `WINDOWS_SIGN_CERT_PASSWORD` | Legacy; key decoded to `RUNNER_TEMP` per build |
+| Priority | Credentials (environment variables) | Notes |
+|----------|-------------------------------------|-------|
+| 1. GCP KMS | `GCP_SA_KEY_JSON` + `GCP_KMS_KEY` + `WINDOWS_CODESIGN_CERT` | Key stays in Cloud HSM |
+| 2. PFX fallback | `CERT_PFX_BASE64` + `CERT_PASSWORD` | Legacy; key decoded to a temporary directory per build |
 | 3. Skip | (neither set) | Fork-friendly; produces unsigned artifact |
 
 Signing is **required** before the Stage 3 private beta gate (G3-01 in
 `docs/steam-mvp-scope.md`).
 
-#### Setting up KMS signing
-
-See [`publishing/WINDOWS_CODE_SIGNING.md`](../publishing/WINDOWS_CODE_SIGNING.md)
-for the full runbook including:
-- Cloud KMS key ring and key creation
-- CSR generation and CA submission
-- Org-level secret configuration
-- Key-version rotation procedure
-- SmartScreen reputation notes
+The key, the certificate and their rotation are the studio's; that runbook is
+kept with the store files, outside this repository.
 
 #### Local signing (manual / one-off)
 
 ```powershell
-# Set environment variables (values from org-level secrets)
+# Set environment variables (your own signing credentials)
 $env:GCP_SA_KEY_JSON       = Get-Content path\to\sa-key.json -Raw
 $env:GCP_KMS_KEY           = 'projects/P/locations/global/keyRings/convsim-signing/cryptoKeys/windows-codesign'
 $env:WINDOWS_CODESIGN_CERT = [Convert]::ToBase64String([IO.File]::ReadAllBytes('fullchain.pem'))
@@ -478,8 +464,8 @@ The `.deb` package declares them as `Depends:` and installs them via apt.
 Linux builds are **not code-signed**. There is no Linux equivalent of macOS
 Gatekeeper or Windows SmartScreen; no signature is required for distribution.
 The release build prints the SHA-256 checksum of each AppImage and `.deb` in
-its log (step "Verify Linux artifact permissions" in `release.yml`). GitHub
-releases carry no binaries; the Linux build reaches players through Steam.
+its log. GitHub releases carry no binaries; the Linux build reaches players
+through Steam.
 
 ### Microphone (PipeWire / PulseAudio)
 
@@ -544,120 +530,16 @@ and verification checklist required for the Steam Deck Verified tier.
 
 ---
 
-## CI secrets and rotation procedures
+## Signing credentials
 
-All secrets live in **GitHub → Settings → Secrets and variables → Actions → Secrets**.
-Variables (non-secret, visible in logs) live under **→ Variables**.
+This repository holds no signing or store credential. Release builds are
+signed in the studio's publishing pipeline, which keeps the Apple and Windows
+credentials, and the procedures for rotating them, with its own runbooks.
 
-### Apple secrets (macOS signing and notarisation)
-
-These are **org-level** secrets on `outrightmental`, shared across repos. Their
-names deliberately differ from the environment variables Tauri reads: the org
-names describe the *credential*, the env vars are dictated by the *tool*. The
-release workflow maps one onto the other in its step `env:` blocks.
-
-| Org secret | Env var it supplies | Contents | Expiry |
-|------------|---------------------|----------|--------|
-| `MACOS_CODESIGN_CERT_BASE64` | `APPLE_CERTIFICATE` | Base64-encoded Developer ID Application `.p12` certificate | Certificates expire after 5 years |
-| `MACOS_CODESIGN_CERT_PASSWORD` | `APPLE_CERTIFICATE_PASSWORD` | Passphrase for the `.p12` file | No expiry |
-| `APPLE_ID` | `APPLE_ID` | Apple ID email of the dedicated notarisation account | No expiry |
-| `APPLE_ID_PASSWORD` | `APPLE_PASSWORD` | App-specific password for the Apple ID | Apple revokes app-specific passwords periodically; rotate when prompted |
-| `APPLE_TEAM_ID` | `APPLE_TEAM_ID` | 10-character Apple Developer Team ID | Permanent (tied to the developer account) |
-
-There is **no `APPLE_SIGNING_IDENTITY` secret.** The identity string
-(`Developer ID Application: NAME (TEAMID)`) is a property of the certificate, so
-CI reads it back out of the keychain with `security find-identity` after importing
-the `.p12` and exports it via `GITHUB_ENV`. Keeping a second secret in sync with
-the first only creates a way for them to disagree — and a typo'd identity is
-invisible until Tauri fails with "no identity found". Set it by hand only for
-**local** signing (see the `export` block earlier in this document).
-
-**Obtaining a certificate:**
-
-1. Log in to [developer.apple.com](https://developer.apple.com) as the team admin.
-2. Navigate to **Certificates, Identifiers & Profiles → Certificates**.
-3. Click **+** and choose **Developer ID Application**. (A Mac Development or
-   Apple Distribution certificate will *not* notarise — CI rejects it.)
-4. Generate a CSR with Keychain Access, upload it, and download the resulting `.cer` file.
-5. Double-click the `.cer` to import it into Keychain Access.
-6. In Keychain Access, find the imported certificate, right-click → **Export** → save as a `.p12` file with a strong passphrase.
-7. Base64-encode it: `base64 -i certificate.p12 | pbcopy`
-8. Store the result as the `MACOS_CODESIGN_CERT_BASE64` org secret.
-9. Store the passphrase as `MACOS_CODESIGN_CERT_PASSWORD`.
-
-**Obtaining an app-specific password:**
-
-1. Sign in to [appleid.apple.com](https://appleid.apple.com).
-2. Navigate to **Sign-In and Security → App-Specific Passwords**.
-3. Click **+**, name it `convsim-notarise-ci`, and copy the generated password.
-4. Store it as the `APPLE_ID_PASSWORD` org secret.
-
-**Rotation procedure (certificate expiry):**
-
-1. Generate a new Developer ID Application certificate on developer.apple.com (step above).
-2. Update `MACOS_CODESIGN_CERT_BASE64` and `MACOS_CODESIGN_CERT_PASSWORD` in org secrets.
-3. Nothing else to update — CI re-derives the signing identity from the new certificate.
-4. Run the **Release preflight** workflow to confirm every credential is present,
-   then trigger a build to confirm signing and notarisation succeed.
-5. Document the rotation date in the compliance register (`publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md`).
-
-**Rotation procedure (app-specific password revoked by Apple):**
-
-1. Generate a new app-specific password on appleid.apple.com.
-2. Update `APPLE_ID_PASSWORD` in org secrets.
-3. Verify that a notarisation run in CI completes without authentication errors.
-
----
-
-### Windows secrets (Authenticode signing)
-
-Signing uses **Google Cloud KMS + jsign** (org-level secrets). The legacy PFX
-secrets remain recognised as a fallback.
-
-| Secret | Level | Contents | Expiry |
-|--------|-------|----------|--------|
-| `GCP_SA_KEY_JSON` | Org | GCP service-account key JSON with KMS signing permissions | Rotate on compromise or per org policy |
-| `GCP_KMS_KEY` | Org | Fully-qualified Cloud KMS key resource path | Permanent (update on key rename) |
-| `WINDOWS_CODESIGN_CERT` | Org | Base64-encoded PEM certificate chain (leaf first) | 1–3 years depending on CA and cert type |
-| `WINDOWS_SIGN_CERT_PFX` | Repo | Base64-encoded PFX file (legacy fallback) | OV: 1–3 yr; EV: 1–2 yr |
-| `WINDOWS_SIGN_CERT_PASSWORD` | Repo | PFX passphrase (legacy fallback) | No expiry |
-
-**Setup and rotation:** See [`publishing/WINDOWS_CODE_SIGNING.md`](../publishing/WINDOWS_CODE_SIGNING.md)
-for the full CSR flow, Cloud KMS configuration, and rotation runbook.
-
-**Rotation procedure summary (KMS path):**
-
-1. If the *certificate* expires but the *KMS key version* is unchanged: issue a new cert
-   against the same key version, update `WINDOWS_CODESIGN_CERT`.
-2. If the *KMS key version* is rotated: create a new key version, issue a new cert
-   against it, update `WINDOWS_CODESIGN_CERT`. The key-version pinning logic in
-   `scripts/jsign-sign.ps1` automatically selects the new version.
-3. Trigger a dispatch build and confirm the "Verify Windows Authenticode signature" step passes.
-4. Document the rotation date in the compliance register.
-
----
-
-### Optional secrets
-
-| Secret | Contents | Used by |
-|--------|----------|---------|
-| `VIRUSTOTAL_API_KEY` | VirusTotal Public API v3 key | Malware scan step in `release.yml` and `desktop-distro.yml` |
-
-**VirusTotal setup:**
-
-1. Create a free account at [virustotal.com](https://www.virustotal.com).
-2. Navigate to your profile → **API Key**.
-3. Copy the key and add it as `VIRUSTOTAL_API_KEY` in repository secrets.
-4. Free tier: 4 file uploads/minute, 500/day.  The malware scan step is
-   non-blocking — VirusTotal detections on freshly compiled Rust/Tauri
-   binaries are often heuristic false positives.  Review results manually
-   and submit false-positive reports through the VirusTotal partner portal
-   or your AV vendor if detections appear on signed release builds.
-
-**Rotation procedure:**
-
-1. Go to your VirusTotal profile → **API Key** → **Regenerate**.
-2. Update `VIRUSTOTAL_API_KEY` in repository secrets.
+A build made from source without credentials is unsigned: the macOS bundle
+carries no Developer ID signature unless the `APPLE_*` variables above are set,
+and `scripts/jsign-sign.ps1` skips Windows signing when it finds no
+credentials.
 
 ---
 

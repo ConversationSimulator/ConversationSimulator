@@ -81,11 +81,11 @@ the mark on the Steam capsules and the share card. The demo icon is the same
 everywhere the demo appears (the Steam demo app, the Microsoft Store demo
 package); the demo's Steam capsules are the full game's with the same badge.
 
-Every one of those files is drawn from the two sources above by
-`publishing/assets/source/gen_icons.py` (and the capsules by
-`gen_capsules.py`). To change the icon, change the source SVG and re-run the
-generators — never edit or draw an output by hand, and never make a new mark
-for a new surface. The acceptance suite fails on any violet-and-emerald
+Every one of those files is drawn from the two sources above by the studio's
+icon and capsule generators, which are kept with the store artwork outside
+this repository. To change the icon, change the source SVG and have the
+generators re-run — never edit or draw an output by hand, and never make a new
+mark for a new surface. The acceptance suite fails on any violet-and-emerald
 drawing in the repository that is not the official one.
 
 Don't recolor it, don't separate the bubbles, don't add a third. The DEMO
@@ -117,8 +117,8 @@ meaning could confuse.
 - **Display ("the playbill")**: [Fraunces](https://github.com/undercasetype/Fraunces)
   (SIL OFL 1.1) — headlines and the wordmark on the website and docs site.
   Warm, literary, a little theatrical; optical sizing on. The hero headline
-  may switch the WONK axis on. Self-hosted (`website/static/fonts/`,
-  `docs-site/public/fonts/`); never loaded from a third-party CDN.
+  may switch the WONK axis on. Self-hosted (`docs-site/public/fonts/` for the
+  docs site); never loaded from a third-party CDN.
 - **UI & body ("the instrument")**: the system stack
   (`system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif`) — everything
   in the app, and body text everywhere. Fast, native, offline-true.

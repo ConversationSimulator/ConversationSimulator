@@ -452,7 +452,6 @@ first-party paid path (see [DLC model](/dev/dlc-model/)).
 - [`docs/STEAM_ROADMAP.md`](/dev/steam-roadmap/) — release train: Stage 5 is the marketplace exploration milestone
 - [`docs/steam-mvp-scope.md`](/dev/steam-mvp-scope/) — what is required for the $9.99 Steam release
 - [`docs/DLC_MODEL.md`](/dev/dlc-model/) — the chosen first-party paid path: premium scenario-pack expansions shipped as Steam DLC from a private repo
-- [`publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md`](https://github.com/outrightmental/ConversationSimulator/blob/main/publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md) — risk SP-05: first-party Steam DLC path for premium scenario packs (IN PROGRESS); only Steam Wallet microtransactions and a third-party creator marketplace remain deferred
 - [`docs/safety-policy.md`](/trust/safety-policy/) — content policy that any marketplace pack must satisfy
 - [`docs/privacy.md`](/trust/privacy/) — local-first promise that marketplace infrastructure must not break
 - [`schemas/pack.schema.json`](https://github.com/outrightmental/ConversationSimulator/blob/main/schemas/pack.schema.json) — current pack manifest schema; see [Schema changes](#schema-changes) above for what would be added

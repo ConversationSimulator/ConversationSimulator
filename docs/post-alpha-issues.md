@@ -68,10 +68,10 @@ health readiness, loopback-only binding, official-pack seeding, an offline
 
 One part of the original acceptance list was deliberately not implemented:
 "CI produces the bundled artifact … as a release asset". Conversation Simulator
-ships prebuilt binaries through **Steam only** — a GitHub release is a changelog
-and a tag, and `release.yml` says so at length. CI does produce the bundled
-installer for all three platforms as build artifacts, and the Steam depot takes
-its payload from them.
+ships prebuilt binaries through its stores only — a GitHub release is a changelog
+and a tag, and `release.yml` says so. The studio's publishing pipeline produces
+the bundled installer for all three platforms from the published release, and
+the Steam depot takes its payload from them.
 
 ---
 
@@ -85,7 +85,7 @@ and a Windows EV certificate. Both have a cost and setup process that is
 not worth completing before the alpha has proven its audience.
 
 **Milestone:** 2 (distribution)  
-**Status:** ✅ **Shipped** during the Hardening phase — Windows Authenticode ([#404](https://github.com/outrightmental/ConversationSimulator/issues/404)) and Apple Developer ID signing + notarization ([#406](https://github.com/outrightmental/ConversationSimulator/issues/406)); see `publishing/` for the runbooks. Auto-update (item 4) is now unblocked.
+**Status:** ✅ **Shipped** during the Hardening phase — Windows Authenticode ([#404](https://github.com/outrightmental/ConversationSimulator/issues/404)) and Apple Developer ID signing + notarization ([#406](https://github.com/outrightmental/ConversationSimulator/issues/406)); the runbooks are kept with the studio's store files, outside this repository. Auto-update (item 4) is now unblocked.
 
 ---
 

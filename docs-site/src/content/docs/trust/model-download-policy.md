@@ -18,8 +18,8 @@ verified_against: v0.4.0
 > and Kokoro models) is covered under [Voice models](#voice-models).
 >
 > **Compliance cross-references:** MD-01 (silent download), MD-02 (checksum),
-> MD-03 (licence disclosure), MD-04 (bundled weights) in
-> [`publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md`](https://github.com/outrightmental/ConversationSimulator/blob/main/publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md).
+> MD-03 (licence disclosure), MD-04 (bundled weights) in the studio's Steam
+> compliance and risk register, kept outside this repository.
 
 ---
 
@@ -534,7 +534,5 @@ this request; Steam delivers updates itself.
 - [`model-registry/registry.yaml`](https://github.com/outrightmental/ConversationSimulator/blob/main/model-registry/registry.yaml) — model metadata
 - [`model-registry/README.md`](https://github.com/outrightmental/ConversationSimulator/blob/main/model-registry/README.md) — registry policy
 - [`schemas/model-registry.schema.json`](https://github.com/outrightmental/ConversationSimulator/blob/main/schemas/model-registry.schema.json) — JSON Schema
-- [`publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md`](https://github.com/outrightmental/ConversationSimulator/blob/main/publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md) — risk register (MD-01–MD-04)
-- [`publishing/STEAM_DEPOT_CONTENTS.md`](https://github.com/outrightmental/ConversationSimulator/blob/main/publishing/STEAM_DEPOT_CONTENTS.md) — what ships in the depot
 - [Choosing how to run the AI](/play/ai-engine/) — player-facing model installation guide
 - [Steam roadmap](/dev/steam-roadmap/) — model download transparency specification

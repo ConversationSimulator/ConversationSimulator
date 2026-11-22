@@ -23,8 +23,7 @@ after the product name, which contains a space, so quote the name in a shell:
 
 The Steam depot ships only the AppImage, renamed to the version-stable
 `ConversationSimulator.AppImage` so the Steamworks launch option keeps working
-across releases
-([`steam-deploy.yml`](https://github.com/outrightmental/ConversationSimulator/blob/main/.github/workflows/steam-deploy.yml)).
+across releases.
 The `.deb` is not staged, because a depot must not contain installer packages,
 and GitHub releases carry no binaries. To get the `.deb`, build it yourself with
 [`scripts/build-linux.sh`](https://github.com/outrightmental/ConversationSimulator/blob/main/scripts/build-linux.sh).
@@ -272,6 +271,4 @@ with glibc 2.31 base image).
 - [platform-notes.md](/play/platform-notes/) — Linux build prerequisites and dev environment
 - [QA_STEAM_PLATFORM_MATRIX.md](/dev/qa-steam-platform-matrix/) — full manual and automated QA test matrix
 - [release-checklist.md](/dev/release-checklist/) — release smoke steps and CI gate list
-- [publishing/STEAM_DEPOT_CONTENTS.md](https://github.com/outrightmental/ConversationSimulator/blob/main/publishing/STEAM_DEPOT_CONTENTS.md) — depot content policy
 - [`scripts/build-linux.sh`](https://github.com/outrightmental/ConversationSimulator/blob/main/scripts/build-linux.sh) — local Linux build command
-- [`scripts/depot-audit.sh`](https://github.com/outrightmental/ConversationSimulator/blob/main/scripts/depot-audit.sh) — pre-upload depot content audit

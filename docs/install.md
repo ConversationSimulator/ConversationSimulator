@@ -251,8 +251,9 @@ and support*. So:
 - GitHub releases → release notes and a source tag. Nothing to download.
 - Steam → the prebuilt, signed, standalone binaries.
 
-The release workflow enforces this: it publishes no binary assets, and its build
-output goes to the Steam depot.
+The release workflow enforces this: it publishes a release's notes and no
+binary assets. The binaries are built from the published release by the
+studio's publishing pipeline, and its build output goes to the stores.
 
 ---
 

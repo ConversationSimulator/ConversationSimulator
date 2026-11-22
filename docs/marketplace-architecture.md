@@ -450,7 +450,6 @@ review, not committed decisions.
 - [`docs/marketplace-demand-spike.md`](marketplace-demand-spike.md) — Stage 5 research spike: signal collection, creator survey, constraint revisit, and go/no-go recommendation
 - [`docs/STEAM_ROADMAP.md`](STEAM_ROADMAP.md) — release train: Stage 5 is the marketplace exploration milestone
 - [`docs/steam-mvp-scope.md`](steam-mvp-scope.md) — what is required for the $9.99 Steam release
-- [`publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md`](../publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md) — risk SP-05: first-party Steam DLC path for premium scenario packs (IN PROGRESS); only Steam Wallet microtransactions and a third-party creator marketplace remain deferred
 - [`docs/safety-policy.md`](safety-policy.md) — content policy that any marketplace pack must satisfy
 - [`docs/privacy.md`](privacy.md) — local-first promise that marketplace infrastructure must not break
 - [`schemas/pack.schema.json`](../schemas/pack.schema.json) — current pack manifest schema; see [Schema changes](#schema-changes) above for what would be added

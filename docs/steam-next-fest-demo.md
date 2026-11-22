@@ -6,7 +6,8 @@
 > decisions behind issue #495's open questions, the exact cut list, and the
 > pass/fail gate a demo build must clear. The Steamworks mechanics (creating
 > the demo app, depots, GitHub variables, the Next Fest registration steps)
-> are in [`publishing/STEAM_NEXT_FEST_DEMO.md`](../publishing/STEAM_NEXT_FEST_DEMO.md).
+> are in the studio's demo submission runbook, kept with the store files
+> outside this repository ("the runbook" below).
 
 The demo is **the same build, narrowed**: download one AI model, pick from
 five curated conversations, and nothing else. It exists so that a first-time
@@ -29,7 +30,7 @@ so the full app is unaffected apart from a new `edition` field in
 | `convsim-core` | `CONVSIM_EDITION=demo` (`ServiceConfig.edition`) | Serves exactly the five curated scenarios (and only the packs they come from), exposes exactly one registry model, refuses session creation for any other scenario, refuses model install for any other model, and refuses pack import and the Creator Workbench API with `EDITION_RESTRICTED` (HTTP 403). Reports `edition: "demo"` plus the curated `scenario_ids` and `model_id` on `/api/health`. |
 | Web UI | `VITE_CONVSIM_EDITION=demo` at build time, or the engine's `/api/health` answer at run time | Home becomes the five-conversation picker plus one upsell card. Library, Logbook and Workbench are not in the navigation and their routes collapse to Home. The first-run wizard offers only "Set me up" (no Ollama, no GGUF). Settings keeps only the privacy controls. The debrief ends with the upsell instead of the voice invite. |
 | Tauri shell | `CONVSIM_EDITION=demo` at compile time (`build.rs` validates it; `lib.rs` passes it to the sidecar) and the `tauri.demo.conf.json` overlay | Product name "Conversation Simulator Demo", its own bundle identifier, its own icon set (see [Store assets](#store-assets)), and the same per-user data directory as the full app (see [Save data](#does-demo-save-data-carry-over)). |
-| CI | `release.yml` → `edition: demo` (workflow_dispatch) | Builds all three platforms as the demo edition, uploads `demo-desktop-*` artifacts, publishes **no** GitHub release, and hands off to `steam-deploy.yml` with `edition: demo`, which targets `STEAM_DEMO_APP_ID` and the demo depots. |
+| Release build | The studio's publishing pipeline, run for the demo edition | Builds all three platforms as the demo edition from the same release tag as the full build, publishes **no** GitHub release, and stages the result on the demo app's depots. |
 
 The curated list lives in **one place**: `services/convsim-core/convsim_core/edition.py`.
 The UI renders whatever the engine reports, so the five cannot drift between
@@ -233,22 +234,21 @@ at about 35 px, where the word is no longer legible but the amber pill is. The
 badge is on every frame, the bundle's 16–32 px ones included, for the same
 reason: its colour is the cue that survives any size.
 
-One generator, `publishing/assets/source/gen_icons.py`, produces the App Icon,
+One generator, kept with the studio's store artwork, produces the App Icon,
 the 256 × 256 **Shortcut Icon** Steam puts on the desktop, and the icon set the
 demo build installs, so the store entry and the app on the player's dock agree;
 Steamworks' **Mac Icon** field takes `icons-demo/icon.icns` from that same set.
-Upload destinations are in the runbook (§4.2).
+Upload destinations are in the runbook.
 
 [steam-icons]: https://partner.steamgames.com/doc/store/assets/community
 
 **The demo has its own capsule and library art** (issue #551: without it the
 demo's library entry and store presence rendered blank).
-`gen_capsules.py --edition demo` draws the full game's capsules with the demo
+The studio's capsule generator draws the full game's capsules with the demo
 icon's amber "DEMO" badge in the lower-right corner of every asset allowed to
 carry the name; the library hero, which Valve keeps free of text, and the
-library logo are the full game's. The set is committed under
-`publishing/assets/capsules/demo/` and still has to be uploaded on App 5343430
-(runbook §4.2).
+library logo are the full game's. The set is kept with the store artwork and
+still has to be uploaded on App 5343430.
 
 Screenshots are demo-edition screenshots of the five
 conversations (the Home picker, one conversation, one debrief) so nothing shown
@@ -320,10 +320,10 @@ own promise.
 | D-04 | Five, and only five | Manual | The demo Home shows the five cards in the curated order; every card starts; typing `/library`, `/workbench` or `/logbook` lands on Home. |
 | D-05 | Coherent conversations | Manual, reference hardware | Each of the five, played to the debrief at `standard` difficulty: no incoherent NPC turn, every debrief has rubric scores (no template fallback), each turn within the documented latency budget. |
 | D-06 | Save data carries over | Manual | Install the demo, download the model, play one session; install the full app on the same machine: no model download is offered, the session appears in the Logbook. |
-| D-07 | Depot audit and signing | CI + manual | `steam-deploy.yml` with `edition: demo` passes the depot audit and artifact inspection for all three platforms; macOS notarised and Windows signed (G3-01) — a demo is under Valve review like any build. |
+| D-07 | Depot audit and signing | CI + manual | The studio's publishing pipeline, run for the demo edition, passes the depot audit and artifact inspection for all three platforms; macOS notarised and Windows signed (G3-01) — a demo is under Valve review like any build. |
 | D-08 | Offline after install | Manual | With the network disconnected after the download, all five conversations play (G2-01 / F-07 for the demo depot). |
 | D-09 | No full-app claims | Manual, publishing owner | Demo store copy and the in-app upsell describe exactly what the demo has (five conversations, one model, text by default with an optional voice download) and what the full app adds; no "free" claims about the paid app. |
-| D-10 | Demo is distinguishable in the Steam client | CI + manual | `tests/acceptance/test_demo_branding.py` passes: `tauri.demo.conf.json` overrides every `bundle.icon` entry, every frame draws the official icon, and the demo's is the base's pixel for pixel outside an amber "DEMO" badge that spells the word; every demo capsule and library asset is at Valve's size, badged where it may carry the name and not on the hero. Manual half: the demo's App Icon (184 × 184 JPG), Shortcut Icon and Mac Icon are uploaded on App 5343430 under Store Presence → Graphical Assets → Community and Client Icons, its capsules and library assets from `publishing/assets/capsules/demo/` under Store Assets and Library Assets on the same page, and the two library entries read apart at a glance. |
+| D-10 | Demo is distinguishable in the Steam client | CI + manual | `tests/acceptance/test_demo_branding.py` passes: `tauri.demo.conf.json` overrides every `bundle.icon` entry, every frame draws the official icon, and the demo's is the base's pixel for pixel outside an amber "DEMO" badge that spells the word. The studio's own checks on the store artwork pass: every demo capsule and library asset is at Valve's size, badged where it may carry the name and not on the hero. Manual half: the demo's App Icon (184 × 184 JPG), Shortcut Icon and Mac Icon are uploaded on App 5343430 under Store Presence → Graphical Assets → Community and Client Icons, its capsules and library assets under Store Assets and Library Assets on the same page, and the two library entries read apart at a glance. |
 
 | D-11 | Optional voice works | Manual, all three platforms | From a conversation brief with voice not installed: **Install voice** completes; push-to-talk transcribes a spoken sentence; the character's opening line and replies are heard; with the network disconnected afterwards, both still work. Cancelling mid-download leaves no `.staging` folder under the voice folder. The engine and models are round-tripped on all three platforms by the Voice smoke workflow; this gate is the part only a person can do, a real microphone and real speakers in the packaged demo. |
 
@@ -385,16 +385,13 @@ watch against the latency budget on reference hardware.
   conversation brief (see [Voice in the demo](#voice-in-the-demo)).
 - Premium DLC, Steam Workshop, Steam Cloud, achievements, rich presence.
 - Any demo-only scenario content. Every card is a shipped conversation.
-- A separate demo repository or a fork of the release pipeline: the demo is a
-  workflow input on the existing one.
+- A separate demo repository or a fork of the release pipeline: the demo is an
+  edition of the same build, from the same release tag.
 
 ---
 
 ## Links
 
-- [`publishing/STEAM_NEXT_FEST_DEMO.md`](../publishing/STEAM_NEXT_FEST_DEMO.md) — registration, build, submission runbook
-- [`publishing/STEAM_APP_REGISTRATION.md`](../publishing/STEAM_APP_REGISTRATION.md) — identifiers, including the demo app's
-- [`publishing/STEAM_STORE_PAGE.md`](../publishing/STEAM_STORE_PAGE.md) — store copy, including the demo section
 - [`steam-mvp-scope.md`](steam-mvp-scope.md) — release gates; the demo gate sits between Stage 3 and Stage 4
 - [`STEAM_ROADMAP.md`](STEAM_ROADMAP.md) — release train, with the Next Fest demo as stage 3½
 - `services/convsim-core/convsim_core/edition.py` — the curated list and the server-side enforcement

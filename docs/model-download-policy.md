@@ -13,8 +13,8 @@
 > and Kokoro models) is covered under [Voice models](#voice-models).
 >
 > **Compliance cross-references:** MD-01 (silent download), MD-02 (checksum),
-> MD-03 (licence disclosure), MD-04 (bundled weights) in
-> [`publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md`](../publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md).
+> MD-03 (licence disclosure), MD-04 (bundled weights) in the studio's Steam
+> compliance and risk register, kept outside this repository.
 
 ---
 
@@ -528,8 +528,6 @@ this request; Steam delivers updates itself.
 - [`model-registry/registry.yaml`](../model-registry/registry.yaml) — model metadata
 - [`model-registry/README.md`](../model-registry/README.md) — registry policy
 - [`schemas/model-registry.schema.json`](../schemas/model-registry.schema.json) — JSON Schema
-- [`publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md`](../publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md) — risk register (MD-01–MD-04)
-- [`publishing/STEAM_DEPOT_CONTENTS.md`](../publishing/STEAM_DEPOT_CONTENTS.md) — what ships in the depot
 - [`docs/local-models.md`](local-models.md) — player-facing model installation guide
 - [`docs/STEAM_ROADMAP.md`](STEAM_ROADMAP.md) — model download transparency specification
 - [`docs/sidecar-bundling.md`](sidecar-bundling.md) — sidecar bundling and executable resolution

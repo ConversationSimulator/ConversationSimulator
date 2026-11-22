@@ -324,15 +324,15 @@ Conversation Simulator is **free and open source, and fairly priced**:
 - **GitHub — free.** Clone this repository, build it with the quickstart above,
   and run it at no cost. The engine and the First Words tutorial are Apache-2.0,
   and the official scenario packs are CC BY 4.0.
-- **Steam — $9.99.** The [Steam edition](publishing/STEAM_STORE_PAGE.md) is the
+- **Steam — $9.99.** The [Steam edition](https://store.steampowered.com/app/4963030/Conversation_Simulator/) is the
   same software, packaged: signed, notarized, auto-updating.
   The price funds continued development; it does not unlock anything the source
   build lacks. The Steam edition makes the same local-first guarantee as the
   open-source build.
 - **Microsoft Store — $9.99 (Windows).** The same full edition for Windows,
   installed and updated by the Microsoft Store, without Steam's features
-  (achievements, Workshop, DLC). See
-  [publishing/MICROSOFT_STORE.md](publishing/MICROSOFT_STORE.md).
+  (achievements, Workshop, DLC). It is
+  [on the Microsoft Store](https://apps.microsoft.com/detail/9NTNF4X3GQ95).
 - **Steam demo — free.** A [demo edition](docs/steam-next-fest-demo.md) of the
   Steam build — one model download, five curated conversations, nothing else —
   ships as a separate free Steam app for Steam Next Fest. Everything you practise
@@ -347,16 +347,31 @@ This free-on-GitHub, fairly-priced-on-Steam pattern has a strong track record �
 Fortress, Shattered Pixel Dungeon, Mindustry, Aseprite — and the reasoning behind it is
 laid out in [docs/landscape.md](docs/landscape.md#business-model-precedents).
 
-The Steam release documents:
+The Steam edition's documents in this repository:
 
 | Document | Purpose |
 |----------|---------|
 | [docs/STEAM_ROADMAP.md](docs/STEAM_ROADMAP.md) | Release principles and release train (Stages 1–5) |
-| [publishing/STEAM_STORE_AND_OPERATIONS.md](publishing/STEAM_STORE_AND_OPERATIONS.md) | Store page operations, launch runbook, support triage |
-| [publishing/STEAM_PUBLISHING_AND_DEPLOYMENT.md](publishing/STEAM_PUBLISHING_AND_DEPLOYMENT.md) | SteamPipe concepts, CI deploy, manual upload, branch promotion, troubleshooting |
 | [docs/STEAM_INTEGRATION.md](docs/STEAM_INTEGRATION.md) | Steam API bridge, Steam Cloud exclusions, achievements, stats, rich presence |
-| [publishing/MACOS_SIGNING_AND_NOTARIZATION.md](publishing/MACOS_SIGNING_AND_NOTARIZATION.md) | macOS Apple Developer ID signing and notarisation |
-| [publishing/WINDOWS_CODE_SIGNING.md](publishing/WINDOWS_CODE_SIGNING.md) | Windows Authenticode signing |
+
+### What this repository is, and how it is released
+
+This repository is the software, and only the software: the app, its engine,
+the official packs and the documentation. The website, the store listings and
+everything that builds, signs and ships the store editions are kept elsewhere.
+
+- **It sends no metrics of any kind.** No telemetry, no analytics, no crash
+  reports, no usage pings — not from the app, and not from anything built out
+  of this repository. See the [local-first promise](#local-first-promise).
+- **A release here is a tag and its notes.** When a `v*` tag is pushed, the
+  [Release workflow](.github/workflows/release.yml) checks the code at the tag
+  and publishes a GitHub release carrying that version's section of
+  [RELEASE\_NOTES.md](RELEASE_NOTES.md). It attaches no binaries, and this
+  repository holds no store or signing credential.
+- **The studio builds and ships from there.** Outright Mental's separate,
+  private pipeline picks up each published release, builds it from the tag,
+  signs it and takes it to the stores. The steps on this side are in
+  [docs/release-checklist.md](docs/release-checklist.md).
 
 ---
 

@@ -68,10 +68,10 @@ brew install ffmpeg
 # 3. drive a real playthrough and write every asset under docs/assets/
 NODE_PATH="$PWD/node_modules" node scripts/capture-screenshots.mjs
 
-# 4. remake the 1x web copies the two sites render (the script prints this
+# 4. remake the 1x web copies the docs site renders (the script prints this
 #    command itself whenever it rewrote a screenshot)
 for f in docs/assets/screenshots/*.png; do
-  for d in website/static/images/screenshots docs-site/public/images/screenshots; do
+  for d in docs-site/public/images/screenshots; do
     magick "$f" -resize 1280x -colors 256 -strip "$d/$(basename "$f")"
   done
 done
@@ -105,10 +105,9 @@ engine and fails the turn in flight; and a run that stops mid-session leaves tha
 open, so the next run's screens carry a "Conversation in progress" banner. End it first
 (`POST /api/sessions/<id>/end`).
 
-The demo app's Steam store screenshots are a separate set, made by
-[`scripts/capture-store-screenshots.mjs`](https://github.com/outrightmental/ConversationSimulator/blob/main/scripts/capture-store-screenshots.mjs)
-against a demo-edition engine on a fresh profile; see
-[`publishing/STEAM_NEXT_FEST_DEMO.md`](https://github.com/outrightmental/ConversationSimulator/blob/main/publishing/STEAM_NEXT_FEST_DEMO.md) §4.2.
+The demo app's Steam store screenshots are a separate set, made by the studio
+against a demo-edition engine on a fresh profile; the script that takes them
+is kept with the store files, outside this repository.
 
 A run that loses a screen keeps going — the other outputs are worth more than the one
 that failed — but it **exits non-zero** and names what it missed. Those files still hold
@@ -123,7 +122,7 @@ re-encoded by hand instead of replayed.
 
 | File | `docs/assets/demo.gif` (3.7 MB) · `docs/assets/demo.mp4` (0.4 MB fallback) |
 |------|-----------------------------------------------------------------------------|
-| Used in | `README.md` — the GIF. The MP4 is the same segment kept as a video source for the Steam trailer and store page (`publishing/STEAM_ASSETS_SPEC.md`); nothing embeds it today. |
+| Used in | `README.md` — the GIF. The MP4 is the same segment kept as a video source for the Steam trailer and store page; nothing embeds it today. |
 | License | CC0-1.0 |
 | Shows | One real turn of 111 s, played back at 6x in 18.5 s (`--hero-speed=6`): the player types a reply, the staged panel says what the turn is doing and when the reply will start, the reply streams in a sentence at a time, the scene updates, and the meters above the transcript move. "Played at 6x speed — this turn took 111 s on the capture machine" is drawn on every frame. |
 | Fictional content | NPC "Elena Vasquez" (Head of Product, stretch-hire interview) — no real person |
@@ -279,7 +278,7 @@ Completed for the current set; re-run it whenever the assets are replaced.
 - [x] The hero's playback speed is drawn on every frame of the GIF and the MP4, with the
       turn's real length, whenever it is not real time (`--hero-speed`).
 - [x] Files placed in `docs/assets/screenshots/`, and derived web copies placed in
-      `website/static/images/screenshots/` and `docs-site/public/images/screenshots/`:
+      `docs-site/public/images/screenshots/`:
       `magick <png> -resize 1280x -colors 256 -strip <dest>` (about a quarter the bytes,
       still sharp at the sizes those pages render).
 - [x] The old hero SVG and the six mockup SVGs are gone from the tree; `demo.gif`
@@ -298,5 +297,5 @@ Completed for the current set; re-run it whenever the assets are replaced.
 |-------|---------|-------|
 | `docs/assets/demo.gif`, `docs/assets/demo.mp4` | CC0-1.0 | Captured from a real session; fictional NPCs only |
 | `docs/assets/screenshots/*.png` | CC0-1.0 | Captured from a real session; fictional NPCs only |
-| Site copies under `website/static/images/` and `docs-site/public/images/` | CC0-1.0 | The same captures at 1×, 256 colours, for page weight |
+| Site copies under `docs-site/public/images/` | CC0-1.0 | The same captures at 1×, 256 colours, for page weight |
 | Future re-captures | CC0-1.0 | Keep the same licence, and re-run the checklist above |

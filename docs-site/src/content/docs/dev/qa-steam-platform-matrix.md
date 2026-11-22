@@ -24,7 +24,7 @@ sidebar:
 ### OS versions explicitly out of scope for v1
 
 - Windows 8.1 and earlier — no WebView2 support
-- macOS on Intel (x86-64) — not built (issue #563): `release.yml` builds macOS
+- macOS on Intel (x86-64) — not built (issue #563): the release build is macOS
   for Apple Silicon only, so the Steam macOS depot holds an arm64 bundle that
   an Intel Mac cannot run. The store page's system requirements say Apple
   Silicon only. A source build at a release tag still works on an Intel Mac
@@ -103,7 +103,7 @@ SteamOS 3.x in Gaming Mode before G4-02 can be declared PASS.
 | All text is readable at 1280×800 (native resolution) without zooming or horizontal scrolling. | Inspect transcript, meters, debrief | [ ] PASS / [ ] FAIL |
 | No required action is hidden behind a mouse-only hover state. | All screens — controller only | [ ] PASS / [ ] FAIL |
 | DebugDrawer is excluded from the controller focus ring (dev builds only). | TC-11.11 | [ ] PASS / [ ] N/A |
-| Default Steam Input config (`steam/controller_config.vdf`) is loaded automatically. | Launch game; check Steam Input overlay | [ ] PASS / [ ] FAIL |
+| Default Steam Input config is loaded automatically. | Launch game; check Steam Input overlay | [ ] PASS / [ ] FAIL |
 | Offline smoke test passes under SteamOS 3.x (no outbound network during play). | TC-09 on Steam Deck | [ ] PASS / [ ] FAIL |
 | Steam overlay (Shift+Tab) **visibly composites over the app** and closes without breaking the current session. On Windows, "nothing happened" (no visible overlay) is a FAIL even if Steam reports the player In-Game — see TC-11.12. | TC-11.12 | [ ] PASS / [ ] FAIL |
 | Approximate battery impact documented (see §5 performance thresholds). | Observe during TC-11 | [ ] Documented |
@@ -385,7 +385,7 @@ following Valve-facing sign-off in addition to the platform QA sign-offs above.
 - [ ] Steam depot content audit (G3-02) confirmed: no model weights in depot.
 - [ ] Store page reviewed: no claims of AI therapy, diagnosis, or legal advice; local-first copy accurate (G4-04).
 - [ ] All compliance checklist items SR-01 through SR-08 signed off (G3-05).
-- [ ] Release-blocking risks in [`STEAM_COMPLIANCE_AND_RISK_REGISTER.md`](https://github.com/outrightmental/ConversationSimulator/blob/main/publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md) show MITIGATED, ACCEPTED, or DEFERRED (G3-04).
+- [ ] Release-blocking risks in the studio's Steam compliance and risk register (kept outside this repository) show MITIGATED, ACCEPTED, or DEFERRED (G3-04).
 
 ```
 Steam review sign-off
@@ -411,4 +411,3 @@ Notes            :
 - [privacy.md](/trust/privacy/) — local-first promise and data handling
 - [network-security.md](/trust/network-security/) — runtime network enforcement
 - [voice-smoke-tests.md](/dev/voice-smoke-tests/) — STT/TTS smoke test procedures
-- [publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md](https://github.com/outrightmental/ConversationSimulator/blob/main/publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md) — compliance checklists and risk register

@@ -454,8 +454,6 @@ for the Stage 5 milestone.
 - [`docs/marketplace-architecture.md`](marketplace-architecture.md) — design baseline: entry gate, distribution path comparison, and scope of schema/signing/moderation/payment changes
 - [`docs/STEAM_ROADMAP.md`](STEAM_ROADMAP.md) — release train: Stage 5 is the marketplace exploration milestone
 - [`docs/steam-mvp-scope.md`](steam-mvp-scope.md) — what shipped in Stage 4; the post-launch baseline
-- [`publishing/POST_LAUNCH_FEEDBACK_SUMMARY.md`](../publishing/POST_LAUNCH_FEEDBACK_SUMMARY.md) — 72-hour and two-week launch feedback; primary source for section 1
-- [`publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md`](../publishing/STEAM_COMPLIANCE_AND_RISK_REGISTER.md) — risk SP-05 (first-party Steam DLC path for premium scenario packs)
 - [`docs/safety-policy.md`](safety-policy.md) — content policy any marketplace pack must satisfy
 - [`docs/privacy.md`](privacy.md) — local-first promise that marketplace infrastructure must not break
 - [`docs/scenario-authoring.md`](scenario-authoring.md) — creator documentation; starting point for section 2 recruits
